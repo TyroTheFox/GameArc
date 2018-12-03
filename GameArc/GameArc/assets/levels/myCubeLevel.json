@@ -1,0 +1,30 @@
+{
+	"GameObjects" : [
+		{
+			"components" : [
+				{
+					"class" : "ColourComponent",
+					"rgba" : [ 0, 0, 0, 1 ]
+				}
+			],
+			"visible" : false,
+			"name" : "background"
+		},
+		{
+			"components": [
+				{
+					"class" : "TransformComponent",
+					"orientation" : [0, 0, 0, 0],
+					"position" : [0,0,-15],
+					"scale" : [1, 1, 1]
+				},
+				{
+					"class" : "ModelComponent",
+					"fileName" : "assets/models/testObj.obj"
+				}
+			],
+			"visible" : true,
+			"name" : "cube00"
+		}
+	]
+}
