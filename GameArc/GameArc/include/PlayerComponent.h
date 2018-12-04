@@ -3,29 +3,37 @@
 
 #pragma once
 #include "Component.h"
-#include "InputHandler.h"
+#include "EventHandler.h"
 #include "TransformComponent.h"
 #include "GameObject.h"
 
-InputHandler * InputHandler::s_instance = 0;
+class KeyEventReciever : public Receiver<KeyEvent>
+{
+public:
+
+	virtual void receive(const KeyEvent& keyevent) /*override*/
+	{
+		std::cout << "Collision event occured with " << keyevent.e1 << " and " << keyevent.e2 << '\n';
+	}
+};
 
 class PlayerComponent : public Component
 {
 private:
-	GameObject * parent;
 	TransformComponent * transform;
 public:
+	GameObject* parent;
+
 	PlayerComponent() {}
 	PlayerComponent(GameObject* p) : parent(p) {
 		if (p->getComponent<TransformComponent>() != nullptr) {
 			transform = p->getComponent<TransformComponent>();
-			EventCallback<TransformComponent, std::string>* callback = new EventCallback<TransformComponent, std::string>(transform, &TransformComponent::OnMessage);
-
-			InputHandler::instance()->registerAction("Jump", callback);
+			KeyEventReciever ker;
+			EventHandler::instance()->subscribe<KeyEvent>(&ker);
 		}
 	}
 	void OnUpdate(float dt) override {
-		InputHandler::instance()->callAction("Jump");
+
 	}
 	void OnMessage(const std::string m) override {}
 	void BuildFromJson(const Json::Value& componentJSON) override {}

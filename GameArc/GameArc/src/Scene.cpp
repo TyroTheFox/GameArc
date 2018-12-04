@@ -7,6 +7,7 @@ Scene::Scene()
 	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
 	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
 	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
+	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<PlayerComponent>(object, p_component); object->getComponent<PlayerComponent>()->parent = object;};
 }
 
 void Scene::loadLevelTxt(std::string levelFile)
@@ -152,7 +153,7 @@ bool Scene::loadLevelJSON(std::string levelFile)
 		return false;
 	}
 
-	for (int i = 0; i < gameObjects.size(); i++) {
+	for (unsigned int i = 0; i < gameObjects.size(); i++) {
 		try {
 			std::string objectName = gameObjects[i]["name"].asString();
 
@@ -165,7 +166,7 @@ bool Scene::loadLevelJSON(std::string levelFile)
 			m_gameObjects[objectName] = new GameObject();
 
 			const Json::Value& components = gameObjects[i]["components"];
-			for (int j = 0; j < components.size(); j++) {
+			for (unsigned int j = 0; j < components.size(); j++) {
 				try {
 					std::string className = components[j]["class"].asString();
 
@@ -184,10 +185,10 @@ std::map<std::string, GameObject*> Scene::getGameObjects()
 	return m_gameObjects;
 }
 
-vector<InputHandler*> Scene::getInputHandlers()
-{
-	return inputHandlers;
-}
+//vector<InputHandler*> Scene::getInputHandlers()
+//{
+//	return inputHandlers;
+//}
 
 /*void Scene::buildLevel()
 {

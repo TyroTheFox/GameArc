@@ -156,8 +156,9 @@
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\ColourComponent.h" />
     <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\Dispatcher.h" />
     <ClInclude Include="include\Event.h" />
-    <ClInclude Include="include\EventCallback.h" />
+    <ClInclude Include="include\EventHandler.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\GLFW_EngineCore.h" />
@@ -177,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameArc.cpp" />
-    <ClCompile Include="src\Event.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GLAD\glad.c" />
     <ClCompile Include="src\GLFW_EngineCore.cpp" />

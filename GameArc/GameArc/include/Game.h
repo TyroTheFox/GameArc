@@ -21,12 +21,12 @@ public:
 	Game();
 	IEngineCore* m_engineInterfacePtr;
 
-	//InputHandler* m_inputHandler;
+	InputHandler* m_inputHandler;
 	//vector<InputHandler*> inputHandlers;
 
 	void update();
 	void render();
-	vector<InputHandler*> getInputHandlers();
+	//vector<InputHandler*> getInputHandlers();
 
 private:
 	GameObject m_playerBackground;
