@@ -2,7 +2,7 @@
 #include "Model.h"
 
 #include "IEngineCore.h"
-#include "InputHandler.h"
+//#include "InputHandler.h"
 #include "GameObject.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -26,7 +26,7 @@ public:
 
 	void update();
 	void render();
-	vector<InputHandler*> getInputHandlers();
+	//vector<InputHandler*> getInputHandlers();
 
 private:
 	GameObject m_playerBackground;

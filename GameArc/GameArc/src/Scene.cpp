@@ -184,10 +184,10 @@ std::map<std::string, GameObject*> Scene::getGameObjects()
 	return m_gameObjects;
 }
 
-vector<InputHandler*> Scene::getInputHandlers()
-{
-	return inputHandlers;
-}
+//vector<InputHandler*> Scene::getInputHandlers()
+//{
+//	return inputHandlers;
+//}
 
 /*void Scene::buildLevel()
 {

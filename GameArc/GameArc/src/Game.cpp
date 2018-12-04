@@ -43,8 +43,8 @@ void Game::render()
 	}
 }
 
-vector<InputHandler*> Game::getInputHandlers()
+/*vector<InputHandler*> Game::getInputHandlers()
 {
 	return m_currentScene->getInputHandlers();
-}
+}*/
 

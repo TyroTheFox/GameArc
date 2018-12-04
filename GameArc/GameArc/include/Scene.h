@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "InputHandler.h"
+//#include "InputHandler.h"
 #include "GameObject.h"
 
 #include <vector>
@@ -23,13 +23,13 @@ class Scene
 public:
 	Scene();
 
-	vector<InputHandler*> inputHandlers;
+	//vector<InputHandler*> inputHandlers;
 
 	void loadLevelTxt(std::string levelFile);
 	bool loadLevelJSON(std::string levelFile);
 
 	std::map<std::string, GameObject*> getGameObjects();
-	vector<InputHandler*> getInputHandlers();
+	//vector<InputHandler*> getInputHandlers();
 
 	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
 
