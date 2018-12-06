@@ -1,5 +1,4 @@
 #pragma once
-//https://ideone.com/GIa77s
 #include <iostream>
 #include <vector>
 
@@ -67,6 +66,10 @@ size_t Event<T>::_id = BaseEvent::nextId++;
 
 class EventHandler
 {
+	// note:
+	// could use one vector for better performance
+	// but I doubt it's noticeable
+
 	typedef std::vector<BaseReceiever*> ReceiverArray;
 	typedef std::vector<ReceiverArray> ImplSubscriberArray;
 
@@ -109,24 +112,52 @@ public:
 		_subscribers[TEvent::GetId()][TReciever::GetId()] = NULL;
 	}
 
-	static EventHandler * instance()
-	{
-		if (!s_instance)
-			s_instance = new EventHandler;
-		return s_instance;
-	}
-
 private:
-	static EventHandler *s_instance;
-	EventHandler();
+
 	ImplSubscriberArray _subscribers;
 };
-EventHandler * EventHandler::s_instance = 0;
-struct KeyEvent : Event<KeyEvent>
-{
-	KeyEvent(int E1, bool E2) : e1(E1),	e2(E2)
-	{}
 
-	int e1;
-	bool e2;
-};
+
+//// collision event information
+//struct Collision
+//	: Event<Collision>
+//{
+//	typedef int Entity; // (for this examples sake)
+//
+//	Collision(Entity E1, Entity E2)
+//		: e1(E1),
+//		e2(E2)
+//	{
+//	}
+//
+//	Entity e1;
+//	Entity e2;
+//};
+//
+//class MyReciever
+//	: public Receiver<Collision>
+//{
+//public:
+//
+//	virtual void receive(const Collision& collision) /*override*/
+//	{
+//		std::cout << "Collision event occured with " << collision.e1 << " and " << collision.e2 << '\n';
+//	}
+//};
+
+//int main(int argc, const char * argv[])
+//{
+//	MyReciever collisionReciever;
+//	EventHandler handler;
+//
+//	// subscribe the reciever for events that fire Collision data
+//	handler.subscribe<Collision>(&collisionReciever);
+//
+//	// make a collision object to send
+//	Collision collision(5, 4);
+//
+//	// emit the event
+//	handler.emit(collision);
+//
+//	return 0;
+//}

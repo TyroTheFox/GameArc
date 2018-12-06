@@ -3,13 +3,13 @@
 #include <utility>
 
 class Dispatcher {
-	template<class C, void(C::*M)() = C::OnMessage>
+	template<class C, void(C::*M)() = C::execute>
 	static void invoke(void *instance) {
 		(static_cast<C*>(instance)->*M)();
 	}
 
 public:
-	template<class C, void(C::*M)() = &C::OnMessage>
+	template<class C, void(C::*M)() = &C::execute>
 	void bind(C *instance) {
 		auto pair = std::make_pair(&invoke<C, M>, instance);
 		targets.push_back(pair);

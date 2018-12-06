@@ -1,24 +1,27 @@
 #pragma once
+#include "global.h"
+#include "EventHandler.h"
 #include <map>
 #include "GameObject.h"
 #include <vector>
 #include "TransformComponent.h"
-#include "EventHandler.h"
+#include <string>
 
-class InputCommand
+
+//class InputCommand
+//{
+//public:
+//	virtual ~InputCommand() {}
+//	virtual void execute() = 0;
+//};
+
+extern EventHandler* eventHandler;
+
+struct KeyEvent : Event<KeyEvent>
 {
 public:
-	virtual ~InputCommand() {}
-	virtual void execute() = 0;
-};
-
-class IncreaseRotateX : public InputCommand
-{
-public:
-	void execute() override {
-		KeyEvent ke = KeyEvent(12, true);
-		EventHandler::instance()->emit(ke);
-	}
+	std::string message;
+	KeyEvent(std::string E1): message(E1){}
 };
 
 //class DecreaseRotateX : public InputCommand
@@ -175,28 +178,29 @@ public:
 //};
 
 struct InputHandler
-{	
+{
+private:
 	GameObject* m_playerCube;
 
-	std::map<int, InputCommand*> m_controlMapping;
-
+	std::map<int, KeyEvent*> m_controlMapping;
+public:
 	InputHandler()
 	{
 		// the idea will be to map the keys directly from a config file that can be loaded in
 		// and changed on the fly
-		m_controlMapping[(int)'S'] = new IncreaseRotateX;
-		//m_controlMapping[(int)'W'] = new DecreaseRotateX;
-		//m_controlMapping[(int)'D'] = new IncreaseRotateY;
-		//m_controlMapping[(int)'A'] = new DecreaseRotateY;
-		//m_controlMapping[(int)'Q'] = new IncreaseRotateZ;
-		//m_controlMapping[(int)'E'] = new DecreaseRotateZ;
+		m_controlMapping[(int)'S'] = new KeyEvent("RotateX");
+		/*m_controlMapping[(int)'W'] = new DecreaseRotateX;
+		m_controlMapping[(int)'D'] = new IncreaseRotateY;
+		m_controlMapping[(int)'A'] = new DecreaseRotateY;
+		m_controlMapping[(int)'Q'] = new IncreaseRotateZ;
+		m_controlMapping[(int)'E'] = new DecreaseRotateZ;
 
-		//m_controlMapping[(int)'H'] = new IncreaseTranslateX;
-		//m_controlMapping[(int)'F'] = new DecreaseTranslateX;
-		//m_controlMapping[(int)'T'] = new IncreaseTranslateY;
-		//m_controlMapping[(int)'G'] = new DecreaseTranslateY;
-		//m_controlMapping[(int)'R'] = new IncreaseTranslateZ;
-		//m_controlMapping[(int)'Y'] = new DecreaseTranslateZ;
+		m_controlMapping[(int)'H'] = new IncreaseTranslateX;
+		m_controlMapping[(int)'F'] = new DecreaseTranslateX;
+		m_controlMapping[(int)'T'] = new IncreaseTranslateY;
+		m_controlMapping[(int)'G'] = new DecreaseTranslateY;
+		m_controlMapping[(int)'R'] = new IncreaseTranslateZ;
+		m_controlMapping[(int)'Y'] = new DecreaseTranslateZ;*/
 
 		/*m_controlMapping[0x25] = new IncreaseTranslateX;
 		m_controlMapping[0x27] = new DecreaseTranslateX;
@@ -205,21 +209,26 @@ struct InputHandler
 		m_controlMapping[0x26] = new IncreaseTranslateZ;
 		m_controlMapping[0x28] = new DecreaseTranslateZ;*/
 
-		//m_controlMapping[(int)'J'] = new IncreaseScaleX;
-		//m_controlMapping[(int)'L'] = new DecreaseScaleX;
-		//m_controlMapping[(int)'I'] = new IncreaseScaleY;
-		//m_controlMapping[(int)'K'] = new DecreaseScaleY;
-		//m_controlMapping[(int)'U'] = new IncreaseScaleZ;
-		//m_controlMapping[(int)'O'] = new DecreaseScaleZ;
+		/*	m_controlMapping[(int)'J'] = new IncreaseScaleX;
+		m_controlMapping[(int)'L'] = new DecreaseScaleX;
+		m_controlMapping[(int)'I'] = new IncreaseScaleY;
+		m_controlMapping[(int)'K'] = new DecreaseScaleY;
+		m_controlMapping[(int)'U'] = new IncreaseScaleZ;
+		m_controlMapping[(int)'O'] = new DecreaseScaleZ;*/
 	}
 
+	void registerInput(char key, KeyEvent* e) {
+		m_controlMapping[(int)key] = e;
+	}
 	void handleInputs(const std::vector<bool>& keyBuffer)
 	{
-		for(const auto& mapEntry : m_controlMapping)
+		for (const auto& mapEntry : m_controlMapping)
 		{
-			if(keyBuffer[mapEntry.first])
+			if (keyBuffer[mapEntry.first])
 			{
-				mapEntry.second->execute();
+				//mapEntry.second->execute();
+				//mapEntry.second->Call();
+				eventHandler->emit<KeyEvent>(*mapEntry.second);
 			}
 		}
 

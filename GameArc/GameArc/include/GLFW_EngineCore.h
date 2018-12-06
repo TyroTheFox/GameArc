@@ -6,8 +6,10 @@
 #include <glm/mat4x4.hpp>
 #include "Camera.h"
 #include "Model.h"
+#include "global.h"
 
 class Game;
+extern InputHandler* inputHandler;
 
 class GLFW_EngineCore : public IEngineCore
 {

@@ -14,7 +14,7 @@
 #include "TransformComponent.h"
 #include "ColourComponent.h"
 #include "ModelComponent.h"
-#include "PlayerComponent.h"
+
 using namespace std;
 
 class Scene
@@ -23,6 +23,7 @@ public:
 	Scene();
 
 	//vector<InputHandler*> inputHandlers;
+
 	void loadLevelTxt(std::string levelFile);
 	bool loadLevelJSON(std::string levelFile);
 

@@ -75,7 +75,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		/*for (InputHandler* handler : game.getInputHandlers()) {
 			handler->handleInputs(m_keyBuffer);
 		}*/
-		game.m_inputHandler->handleInputs(m_keyBuffer);
+		inputHandler->handleInputs(m_keyBuffer);
 		game.update(); // update game logic
 		game.render(); // prepare game to send info to the renderer in engine core
 
