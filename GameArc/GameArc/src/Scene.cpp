@@ -7,7 +7,10 @@ Scene::Scene()
 	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
 	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
 	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
-	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<PlayerComponent>(object, p_component); object->getComponent<PlayerComponent>()->parent = object;};
+	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<PlayerComponent>(object, p_component); 
+		object->getComponent<PlayerComponent>()->parent = object;
+		object->getComponent<PlayerComponent>()->buildEvents();
+	};
 }
 
 void Scene::loadLevelTxt(std::string levelFile)

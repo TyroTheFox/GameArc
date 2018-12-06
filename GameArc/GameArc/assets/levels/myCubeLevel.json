@@ -14,7 +14,7 @@
 			"components": [
 				{
 					"class" : "TransformComponent",
-					"orientation" : [0, 0, 0, 0],
+					"orientation" : [1, 0, 0, 0],
 					"position" : [0,0,-15],
 					"scale" : [1, 1, 1]
 				},

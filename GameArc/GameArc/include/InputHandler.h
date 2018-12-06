@@ -7,21 +7,24 @@
 #include "TransformComponent.h"
 #include <string>
 
+extern Event* keyEvent;
 
-//class InputCommand
-//{
-//public:
-//	virtual ~InputCommand() {}
-//	virtual void execute() = 0;
-//};
-
-extern EventHandler* eventHandler;
-
-struct KeyEvent : Event<KeyEvent>
+class InputCommand
 {
 public:
+	virtual ~InputCommand() {}
+	virtual void execute() = 0;
+};
+
+class KeyInputEvent : public InputCommand
+{
+public:
+	std::string eventName;
 	std::string message;
-	KeyEvent(std::string E1): message(E1){}
+	KeyInputEvent(std::string eN, std::string m) : eventName(eN), message(m) {}
+	void execute() override {
+		keyEvent->notifyHandlerWithMessage(eventName, message);
+	}
 };
 
 //class DecreaseRotateX : public InputCommand
@@ -182,13 +185,16 @@ struct InputHandler
 private:
 	GameObject* m_playerCube;
 
-	std::map<int, KeyEvent*> m_controlMapping;
+	std::map<int, InputCommand*> m_controlMapping;
 public:
 	InputHandler()
 	{
 		// the idea will be to map the keys directly from a config file that can be loaded in
 		// and changed on the fly
-		m_controlMapping[(int)'S'] = new KeyEvent("RotateX");
+		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerTransform", "decreaseTranslateZ");
+		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerTransform", "increaseTranslateZ");
+		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerTransform", "increaseRotateY");
+		m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerTransform", "decreaseRotateY");
 		/*m_controlMapping[(int)'W'] = new DecreaseRotateX;
 		m_controlMapping[(int)'D'] = new IncreaseRotateY;
 		m_controlMapping[(int)'A'] = new DecreaseRotateY;
@@ -217,7 +223,7 @@ public:
 		m_controlMapping[(int)'O'] = new DecreaseScaleZ;*/
 	}
 
-	void registerInput(char key, KeyEvent* e) {
+	void registerInput(char key, InputCommand* e) {
 		m_controlMapping[(int)key] = e;
 	}
 	void handleInputs(const std::vector<bool>& keyBuffer)
@@ -226,9 +232,7 @@ public:
 		{
 			if (keyBuffer[mapEntry.first])
 			{
-				//mapEntry.second->execute();
-				//mapEntry.second->Call();
-				eventHandler->emit<KeyEvent>(*mapEntry.second);
+				mapEntry.second->execute();
 			}
 		}
 

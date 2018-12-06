@@ -14,6 +14,9 @@
 #include "TransformComponent.h"
 #include "ColourComponent.h"
 #include "ModelComponent.h"
+
+extern InputHandler* inputHandler;
+
 class Game
 {
 public:

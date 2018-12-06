@@ -14,6 +14,7 @@
 #include "TransformComponent.h"
 #include "ColourComponent.h"
 #include "ModelComponent.h"
+#include "PlayerComponent.h"
 
 using namespace std;
 

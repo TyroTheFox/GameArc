@@ -1,163 +1,128 @@
 #pragma once
-#include <iostream>
+
 #include <vector>
+#include <utility>
+#include <functional>
+#include <map>
 
-class BaseReceiever
-{
-protected:
-
-	static size_t nextId;
-};
-
-size_t BaseReceiever::nextId = 0;
-
-// if you inherit from this class,
-// you are required to implement
-// void recieve(const TEventData& eventData)
-// where TEventData is an Event (see further down)
-template <typename TEventData>
-class Receiver
-	: public BaseReceiever
-{
+class EventHandler {
 public:
-
-	virtual void receive(const TEventData&) = 0;
-
-	static size_t GetId()
-	{
-		return _id;
-	}
-
+	using Func = std::function<void()>;
+	using FuncInt = std::function<void(int x)>;
+	using FuncMessage = std::function<void(std::string message)>;
 private:
-
-	// used for internal storage
-	// identification
-	static size_t _id;
-};
-
-template<typename T>
-size_t Receiver<T>::_id = BaseReceiever::nextId++;
-
-struct BaseEvent
-{
-protected:
-
-	static size_t nextId;
-};
-
-size_t BaseEvent::nextId = 0;
-
-template <typename T>
-struct Event
-	: public BaseEvent
-{
-	static size_t GetId()
-	{
-		return _id;
-	}
-
-private:
-
-	static size_t _id;
-};
-
-template <typename T>
-size_t Event<T>::_id = BaseEvent::nextId++;
-
-class EventHandler
-{
-	// note:
-	// could use one vector for better performance
-	// but I doubt it's noticeable
-
-	typedef std::vector<BaseReceiever*> ReceiverArray;
-	typedef std::vector<ReceiverArray> ImplSubscriberArray;
-
+	//Functors
+	Func _func; //1
+	FuncInt _funcInt; //2
+	FuncMessage _funcMessage; //3
 public:
+	std::string name;
+	int id;
+	int counter;
 
-	template <typename TEvent>
-	void emit(const TEvent& event)
-	{
-		ReceiverArray& receivers = _subscribers[TEvent::GetId()];
-		for (ReceiverArray::iterator i = receivers.begin(); i != receivers.end(); ++i)
-		{
-			static_cast<Receiver<TEvent>&>(*(*i)).receive(event);
+	const int funcType;
+
+	EventHandler() : id{ 0 }, funcType(1) {
+	}
+
+	EventHandler(const Func &func, const std::string& n) : _func{ func }, name(n), funcType(1){
+		this->id = ++EventHandler::counter;
+	}
+
+	EventHandler(const FuncInt &func, const std::string& n) : _funcInt{ func }, name(n), funcType(2){
+		this->id = ++EventHandler::counter;
+	}
+
+	EventHandler(const FuncMessage &func, const std::string& n) : _funcMessage{ func }, name(n), funcType(3){
+		this->id = ++EventHandler::counter;
+	}
+
+	void operator()() {
+		this->_func();
+	}
+
+	void operator()(int i) {
+		this->_funcInt(i);
+	}
+
+	void operator()(std::string s) {
+		this->_funcMessage(s);
+	}
+
+	void operator=(const EventHandler &func) {
+		if (this->_func == nullptr) {
+			this->_func = func;
+			this->id = ++EventHandler::counter;
+		}
+		else {
+			// Throw as exception or just log it out.
+			std::cerr << "Nope!" << std::endl;
 		}
 	}
 
-	template <typename TEvent, typename TReciever>
-	void subscribe(TReciever* receiver)
-	{
-		size_t eventId = TEvent::GetId();
-		size_t receiverId = TReciever::GetId();
-
-		if (_subscribers.size() <= eventId)
-		{
-			_subscribers.resize(eventId + 1);
-		}
-
-		ReceiverArray& receivers = _subscribers[eventId];
-
-		if (receivers.size() <= receiverId)
-		{
-			receivers.resize(receiverId + 1);
-		}
-
-		receivers[receiverId] = receiver;
+	bool operator==(const EventHandler &del) {
+		return this->id == del.id;
 	}
-
-	template <typename TEvent, typename TReciever>
-	void unsubscribe(TReciever* reciever)
-	{
-		_subscribers[TEvent::GetId()][TReciever::GetId()] = NULL;
+	bool operator!=(nullptr_t) {
+		return this->_func != nullptr || this->_funcInt != nullptr || this->_funcMessage != nullptr;
 	}
-
-private:
-
-	ImplSubscriberArray _subscribers;
 };
 
+class Event {
+	//std::vector<std::unique_ptr<EventHandler>> handlers;
+	std::map<std::string, std::unique_ptr<EventHandler>> handlers;
+public:
+	void notifyAllHandlers() {
+		std::map<std::string, std::unique_ptr<EventHandler>>::iterator func = this->handlers.begin();
+		for (; func != this->handlers.end(); ++func) {
+			if (*func->second != nullptr && (*func->second).id != 0) {
+				((*func->second))();
+			}
+		}
+	}
 
-//// collision event information
-//struct Collision
-//	: Event<Collision>
-//{
-//	typedef int Entity; // (for this examples sake)
-//
-//	Collision(Entity E1, Entity E2)
-//		: e1(E1),
-//		e2(E2)
-//	{
-//	}
-//
-//	Entity e1;
-//	Entity e2;
-//};
-//
-//class MyReciever
-//	: public Receiver<Collision>
-//{
-//public:
-//
-//	virtual void receive(const Collision& collision) /*override*/
-//	{
-//		std::cout << "Collision event occured with " << collision.e1 << " and " << collision.e2 << '\n';
-//	}
-//};
+	void notifyHandler(const std::string name) {
+		(*handlers[name])();
+	}
 
-//int main(int argc, const char * argv[])
-//{
-//	MyReciever collisionReciever;
-//	EventHandler handler;
-//
-//	// subscribe the reciever for events that fire Collision data
-//	handler.subscribe<Collision>(&collisionReciever);
-//
-//	// make a collision object to send
-//	Collision collision(5, 4);
-//
-//	// emit the event
-//	handler.emit(collision);
-//
-//	return 0;
-//}
+	void notifyHandlerWithMessage(const std::string name, const std::string message) {
+		(*handlers[name])(message);
+	}
+
+	void addHandler(const EventHandler &handler) {
+		//this->handlers.push_back(unique_ptr<EventHandler>(new EventHandler{ handler }));
+		this->handlers[handler.name] = std::unique_ptr<EventHandler>(new EventHandler{ handler });
+	}
+
+	void removeHandler(const EventHandler &handler) {
+		std::map<std::string, std::unique_ptr<EventHandler>>::iterator to_remove = this->handlers.begin();
+		for (; to_remove != this->handlers.end(); ++to_remove) {
+			if ((*to_remove->second) == handler) {
+				this->handlers.erase(to_remove);
+				break;
+			}
+		}
+	}
+
+	void operator()(std::string name) {
+		this->notifyHandler(name);
+	}
+
+	Event &operator+=(const EventHandler &handler) {
+		this->addHandler(handler);
+
+		return *this;
+	}
+
+	//Event &operator+=(const EventHandler::Func &handler) {
+	//	this->addHandler(EventHandler{ handler });
+
+	//	return *this;
+	//}
+
+	Event &operator-=(const EventHandler &handler) {
+		this->removeHandler(handler);
+
+		return *this;
+	}
+};
