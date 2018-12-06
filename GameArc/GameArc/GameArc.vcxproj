@@ -157,10 +157,11 @@
     <ClInclude Include="include\ColourComponent.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Dispatcher.h" />
-    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventHandler.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\GLFW_EngineCore.h" />
+    <ClInclude Include="include\global.h" />
     <ClInclude Include="include\IEngineCore.h" />
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\json-forwards.h" />

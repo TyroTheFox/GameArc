@@ -1,6 +1,5 @@
 #pragma once
 #include "Model.h"
-//#include "InputHandler.h"
 #include "GameObject.h"
 
 #include <vector>
@@ -10,7 +9,7 @@
 #include <iostream>
 #include <memory>
 #include <functional>
-//#include "json.h"
+#include "json.h"
 
 #include "TransformComponent.h"
 #include "ColourComponent.h"
