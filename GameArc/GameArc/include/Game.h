@@ -36,4 +36,6 @@ private:
 	Camera m_camera;
 
 	Scene* m_currentScene;
+
+	PlayerComponent* activePlayer;
 };

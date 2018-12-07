@@ -1,11 +1,11 @@
-#ifndef _PLAYERCOMPONENT_H_
-#define _PLAYERCOMPONENT_H_
-
 #pragma once
-#include "Component.h"
-#include "global.h"
-#include "TransformComponent.h"
 #include "GameObject.h"
+#include "Component.h"
+
+#include "global.h"
+
+#include "TransformComponent.h"
+#include "CameraComponent.h"
 
 extern Event* keyEvent;
 
@@ -13,21 +13,23 @@ class PlayerComponent : public Component
 {
 private:
 	TransformComponent * transform;
-	
-public:
+	CameraComponent * camera;
 	GameObject * parent;
-	PlayerComponent() {}
-	PlayerComponent(GameObject* p) : parent(p) {
-		if (p->getComponent<TransformComponent>() != nullptr) {
-			transform = p->getComponent<TransformComponent>();
+public:
+	PlayerComponent() : camera(new CameraComponent){}
+	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)) {
+		if (parent->getComponent<TransformComponent>() != nullptr) {
+			transform = parent->getComponent<TransformComponent>();
 			buildEvents();
 		}
 	}
-	void OnUpdate(float dt) override {}
-	void OnMessage(const std::string m) override {}
-	void BuildFromJson(const Json::Value& componentJSON) override {}
-	void BuildToJson(Json::Value& componentJSON) override {}
-
+	void setParent(GameObject* p) {
+		parent = p;
+		if (parent->getComponent<TransformComponent>() != nullptr) {
+			transform = parent->getComponent<TransformComponent>();
+		}
+		camera->SetParent(parent);
+	}
 	void buildEvents() {
 		//If own transform not set
 		if (transform == nullptr) {
@@ -42,9 +44,17 @@ public:
 			//Get transform comp
 			transform = parent->getComponent<TransformComponent>();
 		}
-		EventHandler::FuncMessage f = [=](std::string message) {transform->OnMessage(message);};
+		EventHandler::FuncMessage f = [=](std::string message) {transform->OnMessage(message); };
 		EventHandler eh(f, "PlayerTransform");
 		keyEvent->addHandler(eh);
 	}
+	void OnUpdate(float dt) override {
+		camera->SetTranslationToParent();
+	}
+	void OnMessage(const std::string m) override {}
+	void BuildFromJson(const Json::Value& componentJSON) override {}
+	void BuildToJson(Json::Value& componentJSON) override {}
+	Camera* GetCamera() {
+		return camera->GetCamera();
+	}
 };
-#endif

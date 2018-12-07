@@ -7,11 +7,26 @@ Game::Game()
 	m_engineInterfacePtr = nullptr;
 	m_currentScene = new Scene();
 	m_currentScene->loadLevelJSON("assets/levels/myCubeLevel.json");
+
+	std::map<std::string, GameObject*>::iterator it;
+	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
+	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+	{
+		if (it->second->getComponent<PlayerComponent>() == nullptr) continue;
+
+		activePlayer = it->second->getComponent<PlayerComponent>();
+	}
 }
 
 void Game::update()
 {
-	
+	// update the camera
+	if (activePlayer == nullptr) {
+		m_engineInterfacePtr->setCamera(&m_camera);
+	}
+	else {
+		m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+	}
 }
 
 void Game::render()
@@ -27,9 +42,6 @@ void Game::render()
 	// e.g. pass object details to the engine to render the next frame
 	m_engineInterfacePtr->renderColouredBackground(redValue, greenValue, blueValue);
 
-	// update the camera (probably don't need to do this each frame)
-	m_engineInterfacePtr->setCamera(&m_camera);
-
 	//for (GameObject* object : m_currentScene->getGameObjects()) {
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
@@ -42,9 +54,3 @@ void Game::render()
 		m_engineInterfacePtr->drawModel(temp, it->second->getComponent<TransformComponent>()->getModelMatrix());
 	}
 }
-
-/*vector<InputHandler*> Game::getInputHandlers()
-{
-	return m_currentScene->getInputHandlers();
-}*/
-

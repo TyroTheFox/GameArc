@@ -154,9 +154,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\CameraComponent.h" />
     <ClInclude Include="include\ColourComponent.h" />
     <ClInclude Include="include\Component.h" />
-    <ClInclude Include="include\Dispatcher.h" />
     <ClInclude Include="include\EventHandler.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
@@ -195,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\levels\myCubeLevel.json" />
+    <None Include="assets\models\testFBX.fbx" />
+    <None Include="assets\shaders\defaultShader.frag" />
+    <None Include="assets\shaders\defaultShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,6 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{6f180b24-7f97-4348-8c1d-7e237b251ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine Objects">
+      <UniqueIdentifier>{a80bbb07-b25e-4896-95fb-c59e5a41d550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine Utilities">
+      <UniqueIdentifier>{fb00f10c-5b43-412f-a5d3-445d60ca54ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine Objects">
+      <UniqueIdentifier>{ce96bbee-9e52-4a30-93a5-cdcfad4323fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine Utilities">
+      <UniqueIdentifier>{71d3d7c0-15ce-4a74-97b6-dc9e85deac18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Level Data">
+      <UniqueIdentifier>{a0b2895e-00d5-4051-b817-1268c8e579a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{7da70b21-5bdd-4b1e-bf9a-75a54b934e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{fbeeede6-d3bb-46d7-971b-c0e81f2ffdd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -21,65 +45,65 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ColourComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="include\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLFW_EngineCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IEngineCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\json.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\json-forwards.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Model.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="include\ModelComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="include\PlayerComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stb_image.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="include\TransformComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="include\Dispatcher.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\InputHandler.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\GLFW_EngineCore.h">
+      <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="include\global.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\IEngineCore.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
     <ClInclude Include="include\EventHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputHandler.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\global.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\json.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\json-forwards.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mesh.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Model.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scene.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb_image.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,33 +114,42 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GLFW_EngineCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\jsoncpp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Model.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stb_image.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\GLAD\glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLFW_EngineCore.cpp">
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jsoncpp.cpp">
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stb_image.c">
+      <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\levels\myCubeLevel.json">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Level Data</Filter>
+    </None>
+    <None Include="assets\models\testFBX.fbx">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="assets\shaders\defaultShader.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\defaultShader.vert">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
