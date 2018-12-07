@@ -26,7 +26,8 @@ public:
 	InputHandler* m_inputHandler;
 	//vector<InputHandler*> inputHandlers;
 
-	void update();
+	void init();
+	void update(float dt);
 	void render();
 	//vector<InputHandler*> getInputHandlers();
 

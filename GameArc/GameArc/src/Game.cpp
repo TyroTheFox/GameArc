@@ -18,13 +18,21 @@ Game::Game()
 	}
 }
 
-void Game::update()
+void Game::init()
 {
 	// update the camera
 	if (activePlayer == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
 	}
 	else {
+		m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+	}
+}
+
+void Game::update(float dt)
+{
+	if (activePlayer != nullptr) {
+		activePlayer->OnUpdate(dt);
 		m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
 	}
 }
@@ -50,7 +58,9 @@ void Game::render()
 		// draw the cube
 		//m_engineInterfacePtr->drawCube(object->getComponent<TransformComponent>()->getModelMatrix());
 		if (it->second->getComponent<ModelComponent>() == nullptr && it->second->getComponent<TransformComponent>() == nullptr) continue;
-		Model* temp = it->second->getComponent<ModelComponent>()->model;
-		m_engineInterfacePtr->drawModel(temp, it->second->getComponent<TransformComponent>()->getModelMatrix());
+		if (it->second->getComponent<ModelComponent>()->active) {
+			Model* temp = it->second->getComponent<ModelComponent>()->model;
+			m_engineInterfacePtr->drawModel(temp, it->second->getComponent<TransformComponent>()->getModelMatrix());
+		}
 	}
 }

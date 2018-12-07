@@ -3,7 +3,6 @@
 #include <fstream>
 #include <sstream>
 #include <glm/detail/type_vec3.hpp>
-#include <glm/mat4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 std::vector<bool> GLFW_EngineCore::m_keyBuffer;
@@ -18,7 +17,6 @@ GLFW_EngineCore::~GLFW_EngineCore()
 
 bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 {
-	
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -46,6 +44,8 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	glfwSetFramebufferSizeCallback(m_window, windowResizeCallbackEvent);
 	glfwSetKeyCallback(m_window, keyCallbackEvent);
 
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	// make space for the keybuffer
 	m_keyBuffer.resize(m_keyBufferSize);
 	std::fill(m_keyBuffer.begin(), m_keyBuffer.end(), false);
@@ -70,18 +70,28 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	game.m_engineInterfacePtr = this;
 
 	// message loop
+	game.init();
 	while (!glfwWindowShouldClose(m_window))
 	{
+		auto start = clock.now();
+
 		/*for (InputHandler* handler : game.getInputHandlers()) {
 			handler->handleInputs(m_keyBuffer);
 		}*/
 		inputHandler->handleInputs(m_keyBuffer);
-		game.update(); // update game logic
+		double xpos, ypos;
+		glfwGetCursorPos(m_window, &xpos, &ypos);
+		inputHandler->handleMouse(glm::vec2(xpos, ypos));
+		game.update(delta); // update game logic
 		game.render(); // prepare game to send info to the renderer in engine core
 
 		// swap buffers
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
+
+		auto finish = clock.now();
+		std::chrono::duration<float> elapsed = finish - start;
+		delta = elapsed.count();
 	}
 
 	return true;
@@ -91,10 +101,6 @@ void GLFW_EngineCore::renderColouredBackground(float r, float g, float b)
 {
 	glClearColor(r, g, b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void GLFW_EngineCore::mouseMoveCallbackEvent(GLFWwindow * window, double xPos, double yPos)
-{
 }
 
 //-----------------------------Private functions------------------------------

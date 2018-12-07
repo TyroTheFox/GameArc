@@ -186,15 +186,19 @@ private:
 	GameObject* m_playerCube;
 
 	std::map<int, InputCommand*> m_controlMapping;
+
+	std::string mouseEventName = "PlayerMouseXY";
+
+	glm::vec2 oldMouseXY = glm::vec2(0);
 public:
 	InputHandler()
 	{
 		// the idea will be to map the keys directly from a config file that can be loaded in
 		// and changed on the fly
-		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerTransform", "decreaseTranslateZ");
-		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerTransform", "increaseTranslateZ");
-		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerTransform", "increaseRotateY");
-		m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerTransform", "decreaseRotateY");
+		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
+		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
+		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
+		m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerMovement", "moveRight");
 		/*m_controlMapping[(int)'W'] = new DecreaseRotateX;
 		m_controlMapping[(int)'D'] = new IncreaseRotateY;
 		m_controlMapping[(int)'A'] = new DecreaseRotateY;
@@ -236,5 +240,14 @@ public:
 			}
 		}
 
+	}
+
+	void handleMouse(const glm::vec2 mouseXY) {
+		if (mouseXY != oldMouseXY) {
+			//Send mouse event
+			keyEvent->notifyHandlerWithVec2(mouseEventName, mouseXY);
+			//Update old with new
+			oldMouseXY = mouseXY;
+		}
 	}
 };

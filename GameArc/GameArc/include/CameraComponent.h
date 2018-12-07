@@ -9,10 +9,21 @@ class CameraComponent : public Component
 private:
 	Camera * camera;
 	TransformComponent * transform;
+
+	//Direction Vector the Camera is facing in
+	float m_directionX{ 0 };
+	float m_directionY{ 0 };
+	float m_directionZ{ 0 };
+
+	glm::vec3 front;
+	glm::vec3 right;
+	glm::vec3 up;
 public:
+	glm::vec2 mouseXY;
 	GameObject * parent;
-	CameraComponent() : camera(new Camera) {}
-	CameraComponent(GameObject* p) : parent(p), camera(new Camera) {
+	glm::vec3 transformOffset;
+	CameraComponent() : camera(new Camera), transformOffset(glm::vec3(0)) {}
+	CameraComponent(GameObject* p) : parent(p), camera(new Camera), transformOffset(glm::vec3(0)) {
 		SetTranslationToParent();
 	}
 	Camera* GetCamera() {
@@ -25,12 +36,46 @@ public:
 	void SetTranslationToParent() {
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
-			camera->m_position = pTransform->position();
+			camera->m_position = -pTransform->position();
 			camera->m_orientation = pTransform->orientation();
 		}
 	}
+	void SetToParentedOffset() {
+		if (parent->getComponent<TransformComponent>() != nullptr) {
+			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
+			camera->m_position = -pTransform->position() + transformOffset;
+			camera->m_orientation = pTransform->orientation();
+		}
+	}
+
+	void ComputeDirectionVector()
+	{
+		//Here, we figure out which way is forward, relative to the Camera
+		//First, we get the Pitch of the Camera (Tilt Up and Down) 
+		glm::vec3 m_angleXYZ = glm::eulerAngles(camera->orientation()) * 3.14159f / 180.f;
+		float pitchRadians = m_angleXYZ.y;
+		//Then we get the Y direction from the Sine of the Pitch
+		m_directionY = sin(pitchRadians);
+		//Then we get the Cosine of the Pitch
+		float m_cosPitch = cos(pitchRadians);
+		//Then the Yaw (Turn Left and Right)
+		float yawRadians = glm::radians(m_angleXYZ.z);
+		//Then we use both to find the X and Z directions
+		m_directionX = sin(yawRadians) * m_cosPitch;
+		m_directionZ = cos(yawRadians) * m_cosPitch;
+		front = glm::vec3(m_directionX, m_directionY, m_directionZ);
+		front = glm::normalize(front);
+		glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		right = glm::normalize(glm::cross(front, worldUp));
+		up = glm::cross(right, front);
+	}
+
 	void OnUpdate(float dt) override {
-		SetTranslationToParent();
+		//SetTranslationToParent();
+		camera->rotate(mouseXY.x, glm::vec3(0.0f, 0.0f, 1.0f));
+		camera->rotate(mouseXY.y, glm::vec3(0.0f, 1.0f, 0.0f));
+		ComputeDirectionVector();
+		camera->lookAt(front);
 	}
 	void OnMessage(const std::string m) override {}
 	void BuildFromJson(const Json::Value& componentJSON) override {

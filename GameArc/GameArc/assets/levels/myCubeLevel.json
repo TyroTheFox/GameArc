@@ -1,33 +1,66 @@
 {
-	"GameObjects" : [
-		{
-			"components" : [
-				{
-					"class" : "ColourComponent",
-					"rgba" : [ 0, 0, 0, 1 ]
-				}
-			],
-			"visible" : false,
-			"name" : "background"
-		},
-		{
-			"components": [
-				{
-					"class" : "TransformComponent",
-					"orientation" : [1, 0, 0, 0],
-					"position" : [0,0,-15],
-					"scale" : [1, 1, 1]
-				},
-				{
-					"class" : "ModelComponent",
-					"fileName" : "assets/models/testObj.obj"
-				},
-				{
-					"class" : "PlayerComponent"
-				}
-			],
-			"visible" : true,
-			"name" : "cube00"
-		}
-	]
+  "GameObjects": [
+    {
+      "components": [
+        {
+          "class": "ColourComponent",
+          "rgba": [ 0, 0, 0, 1 ]
+        }
+      ],
+      "visible": false,
+      "name": "background"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ 0, 0, -15 ],
+          "scale": [ 1, 1, 1 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/testObj.obj",
+          "active":  false
+        },
+        {
+          "class": "PlayerComponent"
+        }
+      ],
+      "visible": true,
+      "name": "cube00"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ -10, 0, -20 ],
+          "scale": [ 1, 1, 1 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/testObj.obj"
+        }
+      ],
+      "visible": true,
+      "name": "cube01"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ 10, 0, -20 ],
+          "scale": [ 1, 1, 1 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/testObj.obj"
+        }
+      ],
+      "visible": true,
+      "name": "cube02"
+    }
+  ]
 }

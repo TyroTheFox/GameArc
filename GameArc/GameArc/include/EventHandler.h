@@ -9,12 +9,14 @@ class EventHandler {
 public:
 	using Func = std::function<void()>;
 	using FuncInt = std::function<void(int x)>;
+	using FuncVec2 = std::function<void(glm::vec2 vec)>;
 	using FuncMessage = std::function<void(std::string message)>;
 private:
 	//Functors
 	Func _func; //1
 	FuncInt _funcInt; //2
-	FuncMessage _funcMessage; //3
+	FuncVec2 _funcVec2; //3
+	FuncMessage _funcMessage; //4
 public:
 	std::string name;
 	int id;
@@ -33,7 +35,11 @@ public:
 		this->id = ++EventHandler::counter;
 	}
 
-	EventHandler(const FuncMessage &func, const std::string& n) : _funcMessage{ func }, name(n), funcType(3){
+	EventHandler(const FuncMessage &func, const std::string& n) : _funcMessage{ func }, name(n), funcType(4){
+		this->id = ++EventHandler::counter;
+	}
+
+	EventHandler(const FuncVec2 &func, const std::string& n) : _funcVec2{ func }, name(n), funcType(3){
 		this->id = ++EventHandler::counter;
 	}
 
@@ -47,6 +53,10 @@ public:
 
 	void operator()(std::string s) {
 		this->_funcMessage(s);
+	}
+
+	void operator()(glm::vec2 vec) {
+		this->_funcVec2(vec);
 	}
 
 	void operator=(const EventHandler &func) {
@@ -87,6 +97,10 @@ public:
 
 	void notifyHandlerWithMessage(const std::string name, const std::string message) {
 		(*handlers[name])(message);
+	}
+
+	void notifyHandlerWithVec2(const std::string name, const glm::vec2 vec) {
+		(*handlers[name])(vec);
 	}
 
 	void addHandler(const EventHandler &handler) {

@@ -5,6 +5,7 @@
 class Component
 {
 public:
+	bool active = true;
 	virtual void OnUpdate(float dt) = 0;
 	virtual void OnMessage(const std::string m) = 0;
 	virtual void BuildFromJson(const Json::Value& componentJSON) = 0;

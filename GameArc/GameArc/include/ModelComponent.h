@@ -20,6 +20,10 @@ public:
 				const Json::Value& fileName = componentJSON["fileName"];
 				model = new Model(fileName.asCString());
 			}
+			if (componentJSON.isMember("active")) {
+				const Json::Value& a = componentJSON["active"];
+				active = a.asBool();
+			}
 		}
 		catch (...) {
 			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;

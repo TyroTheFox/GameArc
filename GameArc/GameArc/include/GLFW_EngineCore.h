@@ -3,7 +3,9 @@
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
+#include <chrono>
 #include "Camera.h"
 #include "Model.h"
 #include "global.h"
@@ -32,6 +34,9 @@ private:
 	static int m_screenHeight;
 	static std::vector<bool> m_keyBuffer;
 	static const int m_keyBufferSize = 400;
+
+	std::chrono::steady_clock clock;
+	float delta = 0;
 
 	static void mouseMoveCallbackEvent(GLFWwindow* window, double xPos, double yPos);
 	static void keyCallbackEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
