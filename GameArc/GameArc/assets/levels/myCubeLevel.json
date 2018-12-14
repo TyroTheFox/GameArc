@@ -20,7 +20,7 @@
         },
         {
           "class": "ModelComponent",
-          "fileName": "assets/models/testObj.obj",
+          "fileName": "assets/models/testFBX.fbx",
           "active":  false
         },
         {
@@ -35,32 +35,16 @@
         {
           "class": "TransformComponent",
           "orientation": [ 1, 0, 0, 0 ],
-          "position": [ -10, 0, -20 ],
-          "scale": [ 1, 1, 1 ]
+          "position": [ -10, -5, -20 ],
+          "scale": [ 10, 10, 10 ]
         },
         {
           "class": "ModelComponent",
-          "fileName": "assets/models/testObj.obj"
+          "fileName": "assets/models/CubeLand.obj"
         }
       ],
       "visible": true,
       "name": "cube01"
-    },
-    {
-      "components": [
-        {
-          "class": "TransformComponent",
-          "orientation": [ 1, 0, 0, 0 ],
-          "position": [ 10, 0, -20 ],
-          "scale": [ 1, 1, 1 ]
-        },
-        {
-          "class": "ModelComponent",
-          "fileName": "assets/models/testObj.obj"
-        }
-      ],
-      "visible": true,
-      "name": "cube02"
     }
   ]
 }

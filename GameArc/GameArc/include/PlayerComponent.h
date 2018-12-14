@@ -18,13 +18,14 @@ private:
 
 	glm::vec3 POVOffset;
 
-	float movementSpeed;
 	//Movement Vectors
 	glm::vec3 front, right, up;
 	glm::vec3 intendedDirection;
 public:
-	PlayerComponent() : camera(new CameraComponent), movementSpeed(2.0f){}
-	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(2.0f) {
+	float movementSpeed;
+
+	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){}
+	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f) {
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 			buildEvents();
@@ -38,6 +39,7 @@ public:
 		camera->SetParent(parent);
 		camera->transformOffset = POVOffset;
 	}
+
 	void buildEvents() {
 		//If own transform not set
 		if (transform == nullptr) {
@@ -59,19 +61,20 @@ public:
 		EventHandler mouseListener(mouseUpdate, "PlayerMouseXY");
 		keyEvent->addHandler(mouseListener);
 	}
+
 	void OnUpdate(float dt) override {
-		if (intendedDirection.length != 0) {
-			if (transform == nullptr) {
-				glm::vec3 forwards = front * (intendedDirection.z * movementSpeed);
-				glm::vec3 sideways = right * (intendedDirection.x * movementSpeed);
-				transform->m_position.x += front.x + right.x;
-				transform->m_position.z += front.z + right.z;
+		camera->OnUpdate(dt);
+		if (glm::length(intendedDirection) != 0.0f) {
+			if (transform != nullptr) {
+				glm::vec3 forwards = camera->front * (intendedDirection.z * movementSpeed);
+				glm::vec3 sideways = camera->right * (intendedDirection.x * movementSpeed);
+				transform->m_position.x += forwards.x + sideways.x;
+				transform->m_position.z += forwards.z + sideways.z;
 			}
 			intendedDirection *= 0;
 		}
-		camera->SetTranslationToParent();
-		camera->OnUpdate(dt);
 	}
+
 	void OnMessage(const std::string m) override {
 		if (m == "moveRight") {
 			intendedDirection.x += 1;
@@ -80,12 +83,13 @@ public:
 			intendedDirection.x -= 1;
 		}
 		else if (m == "moveForwards") {
-			intendedDirection.z += 1;
-		}
-		else if (m == "moveBackwards") {
 			intendedDirection.z -= 1;
 		}
+		else if (m == "moveBackwards") {
+			intendedDirection.z += 1;
+		}
 	}
+
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
 			if (componentJSON.isMember("POVOffset")) {
@@ -106,6 +110,7 @@ public:
 		}
 
 	}
+
 	void BuildToJson(Json::Value& componentJSON) override {}
 	Camera* GetCamera() {
 		return camera->GetCamera();

@@ -274,7 +274,7 @@ void GLFW_EngineCore::initCubeModel()
 void GLFW_EngineCore::setCamera(const Camera* cam)
 {
 	// set the view and projection components of our shader to the camera values
-	glm::mat4 projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 1000.0f);
 	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
@@ -282,7 +282,7 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	// be sure to activate shader when setting uniforms/drawing objects
 	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "objectColour"), 1.0f, 0.6f, 0.61f);
 	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "lightColour"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "lightPos"), 0.0f, 2.0f, -2.0f);
+	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "lightPos"), 0.0f, 100.0f, 10.0f);
 	glUniform3fv(glGetUniformLocation(m_defaultShaderProgram, "viewPos"), 1, glm::value_ptr(cam->position()));
 	
 }
