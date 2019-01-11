@@ -6,6 +6,7 @@
 
 #include "TransformComponent.h"
 #include "CameraComponent.h"
+#include "ModelComponent.h"
 
 extern Event* keyEvent;
 
@@ -14,9 +15,8 @@ class PlayerComponent : public Component
 private:
 	TransformComponent * transform;
 	CameraComponent * camera;
+	ModelComponent * model;
 	GameObject * parent;
-
-	glm::vec3 POVOffset;
 
 	//Movement Vectors
 	glm::vec3 front, right, up;
@@ -25,7 +25,7 @@ public:
 	float movementSpeed;
 
 	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){}
-	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f) {
+	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f){
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 			buildEvents();
@@ -37,7 +37,7 @@ public:
 			transform = parent->getComponent<TransformComponent>();
 		}
 		camera->SetParent(parent);
-		camera->transformOffset = POVOffset;
+		model = parent->getComponent<ModelComponent>();
 	}
 
 	void buildEvents() {
@@ -64,6 +64,13 @@ public:
 
 	void OnUpdate(float dt) override {
 		camera->OnUpdate(dt);
+		if (!camera->firstPersonCamera) {
+			model->active = true;
+		}
+		else
+		{
+			model->active = false;
+		}
 		if (glm::length(intendedDirection) != 0.0f) {
 			if (transform != nullptr) {
 				glm::vec3 forwards = camera->front * (intendedDirection.z * movementSpeed);
@@ -88,21 +95,14 @@ public:
 		else if (m == "moveBackwards") {
 			intendedDirection.z += 1;
 		}
+
+		if (m == "switchCamera") {
+			camera->firstPersonCamera = !camera->firstPersonCamera;
+		}
 	}
 
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
-			if (componentJSON.isMember("POVOffset")) {
-				const Json::Value& offset = componentJSON["POVOffset"];
-				POVOffset.x = offset[0].asFloat();
-				POVOffset.y = offset[1].asFloat();
-				POVOffset.z = offset[2].asFloat();
-			}
-			else {
-				POVOffset.x = 0;
-				POVOffset.y = 0;
-				POVOffset.z = 0;
-			}
 		}
 		catch (...) {
 			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;

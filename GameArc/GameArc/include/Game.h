@@ -15,6 +15,8 @@
 #include "ColourComponent.h"
 #include "ModelComponent.h"
 
+#include "ModelHandler.h"
+
 extern InputHandler* inputHandler;
 
 class Game
@@ -24,12 +26,10 @@ public:
 	IEngineCore* m_engineInterfacePtr;
 
 	InputHandler* m_inputHandler;
-	//vector<InputHandler*> inputHandlers;
 
 	void init();
 	void update(float dt);
 	void render();
-	//vector<InputHandler*> getInputHandlers();
 
 private:
 	GameObject m_playerBackground;

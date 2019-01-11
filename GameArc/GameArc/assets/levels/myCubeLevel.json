@@ -20,8 +20,7 @@
         },
         {
           "class": "ModelComponent",
-          "fileName": "assets/models/testFBX.fbx",
-          "active":  false
+          "fileName": "assets/models/testObj.obj"
         },
         {
           "class": "PlayerComponent"
@@ -29,6 +28,22 @@
       ],
       "visible": true,
       "name": "cube00"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ 15, 0, -15 ],
+          "scale": [ 1, 1, 1 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/testObj.obj"
+        }
+      ],
+      "visible": true,
+      "name": "cube01"
     },
     {
       "components": [
@@ -44,7 +59,7 @@
         }
       ],
       "visible": true,
-      "name": "cube01"
+      "name": "cubeLevel"
     }
   ]
 }

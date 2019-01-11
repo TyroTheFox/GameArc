@@ -19,14 +19,15 @@ public:
 	glm::vec3 right;
 	glm::vec3 up;
 	glm::mat4 viewMatrix;
+	bool firstPersonCamera;
+	float offsetFactor;
 
 	glm::vec2 mouseXY, lastMouseXY;
 	float sensitivity = 0.01f;
 
 	GameObject * parent;
-	glm::vec3 transformOffset;
-	CameraComponent() : camera(new Camera), transformOffset(glm::vec3(0)), lastMouseXY(glm::vec2(300, 400)){}
-	CameraComponent(GameObject* p) : parent(p), camera(new Camera), transformOffset(glm::vec3(0)), lastMouseXY(glm::vec2(300, 400)) {
+	CameraComponent() : camera(new Camera), offsetFactor(30.0f), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {}
+	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {
 		SetTranslationToParent();
 	}
 	Camera* GetCamera() {
@@ -44,11 +45,10 @@ public:
 		}
 	}
 	void SetToParentedOffset() {
-		if (parent->getComponent<TransformComponent>() != nullptr) {
-			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
-			camera->m_position = -pTransform->position() + transformOffset;
-			camera->m_orientation = pTransform->orientation();
-		}
+		/*glm::mat4 rotate = glm::mat4_cast(camera->orientation());
+		viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 20.0f)) * rotate * glm::translate(glm::mat4(1.0f), transformOffset);*/
+
+		camera->m_position -= front * offsetFactor;
 	}
 
 	void ComputeDirectionVector()
@@ -60,7 +60,7 @@ public:
 	}
 
 	void OnUpdate(float dt) override {
-		SetToParentedOffset();
+		SetTranslationToParent();
 		//camera->rotate(mouseXY.x * 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
 		//camera->rotate(mouseXY.y * 0.01f, glm::vec3(1.0f, 0.0f, 0.0f));
 
@@ -74,6 +74,9 @@ public:
 
 		camera->mouseUpdate(xoffset, yoffset);
 		ComputeDirectionVector();
+		if (!firstPersonCamera) {
+			SetToParentedOffset();
+		}
 	}
 	void OnMessage(const std::string m) override {}
 	void BuildFromJson(const Json::Value& componentJSON) override {

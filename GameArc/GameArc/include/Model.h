@@ -2,9 +2,13 @@
 #include <string>
 #include <vector>
 #include "Mesh.h"
+#include "global.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+
+class ModelHandler;
+extern ModelHandler* modelHandler;
 
 class Model
 {
@@ -16,6 +20,7 @@ public:
 
 	static unsigned int TextureFromFile(const char* filepath, const string& directory, bool gamma = false);
 	void loadModel(string path);
+	std::vector<Mesh> getMeshes();
 private:
 
 	std::vector<Mesh> v_meshes;

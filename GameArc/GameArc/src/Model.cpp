@@ -13,17 +13,32 @@ Model::Model(string filepath)
 
 void Model::loadModel(string filepath)
 {
-	Assimp::Importer import;
-	const aiScene *scene = import.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-	{
-		cout << "ERROR::ASSIMP::" << import.GetErrorString() << endl;
-		return;
+	if (modelHandler->checkForModel(filepath)) {
+		Model temp = modelHandler->getModel(filepath);
+		v_meshes = temp.v_meshes;
+		directory = temp.directory;
+		v_textures = temp.v_textures;
 	}
-	directory = filepath.substr(0, filepath.find_last_of('/'));
+	else {
+		Assimp::Importer import;
+		const aiScene *scene = import.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-	processNode(scene->mRootNode, scene);
+		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+		{
+			cout << "ERROR::ASSIMP::" << import.GetErrorString() << endl;
+			return;
+		}
+		directory = filepath.substr(0, filepath.find_last_of('/'));
+
+		processNode(scene->mRootNode, scene);
+
+		modelHandler->registerModel(filepath, this);
+	}
+}
+
+std::vector<Mesh> Model::getMeshes()
+{
+	return v_meshes;
 }
 
 void Model::processNode(aiNode* node, const aiScene* scene)

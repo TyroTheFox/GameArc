@@ -39,9 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,11 +102,11 @@
     <ClInclude Include="include\CameraComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="include\ModelHandler.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameArc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -135,6 +132,9 @@
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\stb_image.c">
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelHandler.cpp">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
   </ItemGroup>
