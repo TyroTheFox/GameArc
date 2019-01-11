@@ -47,6 +47,8 @@ public:
 		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
 		m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerMovement", "moveRight");
 		m_controlMapping[(int)'E'] = new KeyInputEvent("PlayerMovement", "switchCamera");
+
+		m_controlMapping[(int)'Q'] = new KeyInputEvent("ChangeScene", "CubeLevel");
 		/*m_controlMapping[(int)'W'] = new DecreaseRotateX;
 		m_controlMapping[(int)'D'] = new IncreaseRotateY;
 		m_controlMapping[(int)'A'] = new DecreaseRotateY;

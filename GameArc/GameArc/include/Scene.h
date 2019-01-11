@@ -15,6 +15,7 @@
 #include "ColourComponent.h"
 #include "ModelComponent.h"
 #include "PlayerComponent.h"
+#include "EventCameraComponent.h"
 
 using namespace std;
 
@@ -25,11 +26,9 @@ public:
 
 	//vector<InputHandler*> inputHandlers;
 
-	void loadLevelTxt(std::string levelFile);
 	bool loadLevelJSON(std::string levelFile);
 
 	std::map<std::string, GameObject*> getGameObjects();
-	//vector<InputHandler*> getInputHandlers();
 
 	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
 
@@ -38,7 +37,6 @@ public:
 private:
 	GameObject m_playerBackground;
 
-	//vector<GameObject*> m_gameObjects;
 	std::map<std::string, GameObject*> m_gameObjects;
 	std::map<std::string, std::function<void(GameObject* object, const Json::Value& p_component)>> m_componentJsonBuilders;
 	int numElementsToRead;
@@ -48,6 +46,4 @@ private:
 	vector<glm::vec3> translations;
 	vector<glm::quat> rotations;
 	vector<glm::vec3> scalars;
-
-	//void buildLevel();
 };

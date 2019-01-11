@@ -5,8 +5,16 @@
 Game::Game()
 {
 	m_engineInterfacePtr = nullptr;
-	m_currentScene = new Scene();
-	m_currentScene->loadLevelJSON("assets/levels/myCubeLevel.json");
+
+	Scene* temp = new Scene();
+	temp->loadLevelJSON("assets/levels/myCubeLevel.json");
+	sceneList["CubeLevel"] = temp;
+
+	temp = new Scene();
+	temp->loadLevelJSON("assets/levels/scene1.json");
+	sceneList["scene1"] = temp;
+
+	m_currentScene = sceneList["scene1"];
 
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
@@ -15,17 +23,58 @@ Game::Game()
 		if (it->second->getComponent<PlayerComponent>() == nullptr) continue;
 
 		activePlayer = it->second->getComponent<PlayerComponent>();
+		m_MainCamera = activePlayer->GetCamera();
+	}
+	if (activePlayer == nullptr) {
+		for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+		{
+			if (it->second->getComponent<CameraComponent>() != nullptr) {
+
+				CameraComponent* temp = it->second->getComponent<CameraComponent>();
+				m_MainCamera = temp->GetCamera();
+				break;
+			}
+		}
+	}
+
+	EventHandler::FuncMessage nextSceneMessage = [this](std::string message) { this->ChangeScene(message); };
+	EventHandler nextSceneListener(nextSceneMessage, "ChangeScene");
+	keyEvent->addHandler(nextSceneListener);
+}
+
+void Game::ChangeScene(string sceneName) {
+	m_currentScene = sceneList[sceneName];
+
+	std::map<std::string, GameObject*>::iterator it;
+	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
+	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+	{
+		if (it->second->getComponent<PlayerComponent>() == nullptr) continue;
+
+		activePlayer = it->second->getComponent<PlayerComponent>();
+		m_MainCamera = activePlayer->GetCamera();
+	}
+	if (activePlayer == nullptr) {
+		for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+		{
+			if (it->second->getComponent<CameraComponent>() != nullptr) {
+
+				CameraComponent* temp = it->second->getComponent<CameraComponent>();
+				m_MainCamera = temp->GetCamera();
+				break;
+			}
+		}
 	}
 }
 
 void Game::init()
 {
 	// update the camera
-	if (activePlayer == nullptr) {
+	if (m_MainCamera == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
 	}
 	else {
-		m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+		m_engineInterfacePtr->setCamera(m_MainCamera);
 	}
 }
 
@@ -33,7 +82,14 @@ void Game::update(float dt)
 {
 	if (activePlayer != nullptr) {
 		activePlayer->OnUpdate(dt);
-		m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+		//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+	}
+	// update the camera
+	if (m_MainCamera == nullptr) {
+		m_engineInterfacePtr->setCamera(&m_camera);
+	}
+	else {
+		m_engineInterfacePtr->setCamera(m_MainCamera);
 	}
 }
 

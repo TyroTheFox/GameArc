@@ -14,19 +14,16 @@
 #include "TransformComponent.h"
 #include "ColourComponent.h"
 #include "ModelComponent.h"
+#include "global.h"
 
-#include "ModelHandler.h"
-
-extern InputHandler* inputHandler;
+extern Event* keyEvent;
 
 class Game
 {
 public:
 	Game();
+	void ChangeScene(string sceneName);
 	IEngineCore* m_engineInterfacePtr;
-
-	InputHandler* m_inputHandler;
-
 	void init();
 	void update(float dt);
 	void render();
@@ -35,8 +32,10 @@ private:
 	GameObject m_playerBackground;
 
 	Camera m_camera;
+	Camera* m_MainCamera;
 
 	Scene* m_currentScene;
+	std::map<string, Scene*> sceneList;
 
 	PlayerComponent* activePlayer;
 };
