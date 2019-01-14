@@ -1,5 +1,4 @@
-#include "../include/ModelHandler.h"
-
+#include "../Engine/ModelHandler.h"
 ModelHandler::ModelHandler() {}
 
 void ModelHandler::registerModel(std::string fileName, Model* m) {

@@ -74,7 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)GameArc\bin\$(Configuration)\</OutDir>
     <IntDir>temp\$(Configuration)\</IntDir>
-    <IncludePath>include;$(IncludePath)</IncludePath>
+    <IncludePath>Engine;$(IncludePath)</IncludePath>
     <LibraryPath>lib;$(LibraryPath)</LibraryPath>
     <SourcePath>src;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -102,6 +102,9 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -154,31 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Camera.h" />
-    <ClInclude Include="include\CameraComponent.h" />
-    <ClInclude Include="include\ColourComponent.h" />
-    <ClInclude Include="include\Component.h" />
-    <ClInclude Include="include\EventCameraComponent.h" />
-    <ClInclude Include="include\EventHandler.h" />
-    <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\GLFW_EngineCore.h" />
-    <ClInclude Include="include\global.h" />
-    <ClInclude Include="include\IEngineCore.h" />
-    <ClInclude Include="include\InputHandler.h" />
-    <ClInclude Include="include\json-forwards.h" />
-    <ClInclude Include="include\json.h" />
-    <ClInclude Include="include\Mesh.h" />
-    <ClInclude Include="include\Model.h" />
-    <ClInclude Include="include\ModelComponent.h" />
-    <ClInclude Include="include\ModelHandler.h" />
-    <ClInclude Include="include\PlayerComponent.h" />
-    <ClInclude Include="include\Scene.h" />
-    <ClInclude Include="include\stb_image.h" />
-    <ClInclude Include="include\TransformComponent.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="GameArc.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GLAD\glad.c" />
@@ -189,6 +167,30 @@
     <ClCompile Include="src\ModelHandler.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\stb_image.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Camera.h" />
+    <ClInclude Include="Engine\CameraComponent.h" />
+    <ClInclude Include="Engine\ColourComponent.h" />
+    <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\EventCameraComponent.h" />
+    <ClInclude Include="Engine\EventHandler.h" />
+    <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GLFW_EngineCore.h" />
+    <ClInclude Include="Engine\global.h" />
+    <ClInclude Include="Engine\IEngineCore.h" />
+    <ClInclude Include="Engine\InputHandler.h" />
+    <ClInclude Include="Engine\json-forwards.h" />
+    <ClInclude Include="Engine\json.h" />
+    <ClInclude Include="Engine\Mesh.h" />
+    <ClInclude Include="Engine\Model.h" />
+    <ClInclude Include="Engine\ModelComponent.h" />
+    <ClInclude Include="Engine\ModelHandler.h" />
+    <ClInclude Include="Engine\PlayerComponent.h" />
+    <ClInclude Include="Engine\Scene.h" />
+    <ClInclude Include="Engine\stb_image.h" />
+    <ClInclude Include="Engine\TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

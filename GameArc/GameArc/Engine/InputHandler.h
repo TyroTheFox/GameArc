@@ -77,6 +77,45 @@ public:
 		m_controlMapping[(int)'O'] = new DecreaseScaleZ;*/
 	}
 
+	bool loadFromJSON(string inputFile) {
+		std::ifstream inputstream(inputFile);
+		Json::Reader reader;
+		Json::Value obj;
+		reader.parse(inputstream, obj);
+
+		const Json::Value& inputs = obj["Inputs"];
+		if (!inputs) {
+			std::cout << "Exception thrown in loadLevelFromJson(" << inputFile << "), no value for GameObjects." << std::endl;
+			return false;
+		}
+
+		for (unsigned int i = 0; i < inputs.size(); i++) {
+			try {
+				std::string objectName = gameObjects[i]["name"].asString();
+
+				if (gameObjects[i].isMember("visible")) {
+					if (gameObjects[i]["visible"].asBool()) {
+						m_displayCubes.push_back(objectName);
+					}
+				}
+
+				m_gameObjects[objectName] = new GameObject();
+
+				const Json::Value& components = gameObjects[i]["components"];
+				for (unsigned int j = 0; j < components.size(); j++) {
+					try {
+						std::string className = components[j]["class"].asString();
+
+						m_componentJsonBuilders[className](m_gameObjects[objectName], components[j]);
+					}
+					catch (...) { std::cout << "Exception thrown in loadLevelFromJson(" << levelFile << "), in parsing GameObject[" << std::to_string(i) << "], in parsing components[" << std::to_string(j) << "]." << std::endl; }
+				}
+			}
+			catch (...) { std::cout << "Exception thrown in loadLevelFromJson(" << levelFile << "), in parsing GameObject[" << std::to_string(i) << "]." << std::endl; }
+		}
+		return true;
+	}
+
 	void registerInput(char key, InputCommand* e) {
 		m_controlMapping[(int)key] = e;
 	}
