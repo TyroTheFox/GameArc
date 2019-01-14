@@ -50,7 +50,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	m_keyBuffer.resize(m_keyBufferSize);
 	std::fill(m_keyBuffer.begin(), m_keyBuffer.end(), false);
 
-	// set the shaders to the given default ones
+	// set thes to the given default ones
 	setDefaultShaders();
 
 	// set the drawable model as a cube

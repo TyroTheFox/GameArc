@@ -17,6 +17,7 @@ private:
 	CameraComponent * camera;
 	GameObject * parent;
 	string cameraName;
+	string switchToScene;
 
 	//Movement Vectors
 	glm::vec3 front, right, up;
@@ -35,25 +36,12 @@ public:
 		parent = p;
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
+			camera->SetParent(parent);
 		}
-		camera->SetParent(parent);
 	}
 
 	void buildEvents() {
-		//If own transform not set
-		if (transform == nullptr) {
-			//has parent been set?
-			if (parent == nullptr) {
-				return;
-			}
-			//is there a transform comp to grab?
-			if (parent->getComponent<TransformComponent>() == nullptr) {
-				return;
-			}
-			//Get transform comp
-			transform = parent->getComponent<TransformComponent>();
-		}
-		EventHandler::FuncMessage movementMessage = [this](std::string message) { this->OnChangeScene(message); };
+		EventHandler::FuncMessage movementMessage = [this](std::string message) { this->OnChangeScene(this->switchToScene); };
 		EventHandler movementListener(movementMessage, "ChangeScene");
 		keyEvent->addHandler(movementListener);
 	}
@@ -94,16 +82,38 @@ public:
 				camera->GetCamera()->m_orientation.y = 0;
 				camera->GetCamera()->m_orientation.z = 0;
 			}
+			if (componentJSON.isMember("startingYaw")) {
+				const Json::Value& angle = componentJSON["startingYaw"];
+				float a = angle.asFloat();
+				camera->GetCamera()->yaw(a);
+			}
+			if (componentJSON.isMember("startingRoll")) {
+				const Json::Value& angle = componentJSON["startingRoll"];
+				float a = angle.asFloat();
+				camera->GetCamera()->roll(a);
+			}
+			if (componentJSON.isMember("startingPitch")) {
+				const Json::Value& angle = componentJSON["startingPitch"];
+				float a = angle.asFloat();
+				camera->GetCamera()->pitch(a);
+			}
 			if (componentJSON.isMember("FOV")) {
 				const Json::Value& FOV = componentJSON["FOV"];
-				camera->GetCamera()->m_fov = FOV[0].asFloat();
+				camera->GetCamera()->m_fov = FOV.asFloat();
 			}
 			else {
 				camera->GetCamera()->m_fov = 45.0f;
 			}
+			if (componentJSON.isMember("SwitchTo")) {
+				const Json::Value& SwitchTo = componentJSON["SwitchTo"];
+				switchToScene = SwitchTo.asString();
+			}
+			else {
+				switchToScene = "";
+			}
 		}
 		catch (...) {
-			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;
+			std::cout << "Exception thrown in parsing BuildFromJson in EventCameraComponent." << std::endl;
 			throw;
 		}
 

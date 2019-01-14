@@ -22,6 +22,8 @@ class Game
 {
 public:
 	Game();
+	Game(string levelsFile);
+	bool loadFromJSON(string levelsFile);
 	void ChangeScene(string sceneName);
 	IEngineCore* m_engineInterfacePtr;
 	void init();

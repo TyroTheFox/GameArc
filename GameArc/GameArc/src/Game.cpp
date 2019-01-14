@@ -2,19 +2,25 @@
 #include <fstream>
 #include <sstream>
 
-Game::Game()
+Game::Game() {
+
+}
+
+Game::Game(string levelsFile)
 {
 	m_engineInterfacePtr = nullptr;
 
-	Scene* temp = new Scene();
-	temp->loadLevelJSON("assets/levels/myCubeLevel.json");
-	sceneList["CubeLevel"] = temp;
+	loadFromJSON(levelsFile);
 
-	temp = new Scene();
-	temp->loadLevelJSON("assets/levels/scene1.json");
-	sceneList["scene1"] = temp;
+	//Scene* temp = new Scene();
+	//temp->loadLevelJSON("assets/levels/myCubeLevel.json");
+	//sceneList["CubeLevel"] = temp;
 
-	m_currentScene = sceneList["scene1"];
+	//temp = new Scene();
+	//temp->loadLevelJSON("assets/levels/scene1.json");
+	//sceneList["scene1"] = temp;
+
+	//m_currentScene = sceneList["scene1"];
 
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
@@ -34,6 +40,12 @@ Game::Game()
 				m_MainCamera = temp->GetCamera();
 				break;
 			}
+			if (it->second->getComponent<EventCameraComponent>() != nullptr) {
+
+				EventCameraComponent* temp = it->second->getComponent<EventCameraComponent>();
+				m_MainCamera = temp->GetCamera();
+				break;
+			}
 		}
 	}
 
@@ -42,9 +54,38 @@ Game::Game()
 	keyEvent->addHandler(nextSceneListener);
 }
 
-void Game::ChangeScene(string sceneName) {
-	m_currentScene = sceneList[sceneName];
+bool Game::loadFromJSON(string levelsFile) {
+	std::ifstream inputstream(levelsFile);
+	Json::Reader reader;
+	Json::Value obj;
+	reader.parse(inputstream, obj);
 
+	const Json::Value& levels = obj["Levels"];
+	if (!levels) {
+		std::cout << "Exception thrown loading Levels from JSON(" << levelsFile << "), no value for Inputs." << std::endl;
+		return false;
+	}
+
+	for (unsigned int i = 0; i < levels.size(); i++) {
+		try {
+			Scene* temp = new Scene();
+			temp->loadLevelJSON(levels[i]["Address"].asString());
+			string name = levels[i]["Name"].asString();
+			sceneList[name] = temp;
+			if (levels[i]["StartingScene"].asBool()) {
+				m_currentScene = sceneList[name];
+			}
+		}
+		catch (...) { std::cout << "Exception thrown loading Levels from JSON(" << levelsFile << "), in parsing Input[" << std::to_string(i) << "]." << std::endl; }
+	}
+	return true;
+}
+
+void Game::ChangeScene(string sceneName) {
+	if (sceneList.count(sceneName) == 0) {
+		return;
+	}
+	m_currentScene = sceneList[sceneName];
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)

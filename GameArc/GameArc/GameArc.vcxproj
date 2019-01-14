@@ -103,7 +103,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib;freetype.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -167,6 +167,7 @@
     <ClCompile Include="src\ModelHandler.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\stb_image.c" />
+    <ClCompile Include="src\TextWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h" />
@@ -189,8 +190,13 @@
     <ClInclude Include="Engine\ModelHandler.h" />
     <ClInclude Include="Engine\PlayerComponent.h" />
     <ClInclude Include="Engine\Scene.h" />
+    <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="Engine\stb_image.h" />
+    <ClInclude Include="Engine\TextWriter.h" />
     <ClInclude Include="Engine\TransformComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\GenericMobileSystem.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

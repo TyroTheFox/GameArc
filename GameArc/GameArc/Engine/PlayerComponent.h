@@ -105,7 +105,7 @@ public:
 		try {
 		}
 		catch (...) {
-			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;
+			std::cout << "Exception thrown in parsing BuildFromJson in PlayerComponent." << std::endl;
 			throw;
 		}
 

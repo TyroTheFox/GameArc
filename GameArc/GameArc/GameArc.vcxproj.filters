@@ -60,6 +60,9 @@
     <ClCompile Include="src\stb_image.c">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextWriter.cpp">
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -128,5 +131,16 @@
     <ClInclude Include="Engine\TransformComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\TextWriter.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Shader.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\GenericMobileSystem.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>

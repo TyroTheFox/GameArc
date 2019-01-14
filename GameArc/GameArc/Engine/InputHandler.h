@@ -6,6 +6,10 @@
 #include <vector>
 #include "TransformComponent.h"
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include "json.h"
 
 extern Event* keyEvent;
 
@@ -38,10 +42,7 @@ private:
 
 	glm::vec2 oldMouseXY = glm::vec2(0);
 public:
-	InputHandler()
-	{
-		// the idea will be to map the keys directly from a config file that can be loaded in
-		// and changed on the fly
+	InputHandler() {
 		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
 		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
 		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
@@ -49,32 +50,10 @@ public:
 		m_controlMapping[(int)'E'] = new KeyInputEvent("PlayerMovement", "switchCamera");
 
 		m_controlMapping[(int)'Q'] = new KeyInputEvent("ChangeScene", "CubeLevel");
-		/*m_controlMapping[(int)'W'] = new DecreaseRotateX;
-		m_controlMapping[(int)'D'] = new IncreaseRotateY;
-		m_controlMapping[(int)'A'] = new DecreaseRotateY;
-		m_controlMapping[(int)'Q'] = new IncreaseRotateZ;
-		m_controlMapping[(int)'E'] = new DecreaseRotateZ;
-
-		m_controlMapping[(int)'H'] = new IncreaseTranslateX;
-		m_controlMapping[(int)'F'] = new DecreaseTranslateX;
-		m_controlMapping[(int)'T'] = new IncreaseTranslateY;
-		m_controlMapping[(int)'G'] = new DecreaseTranslateY;
-		m_controlMapping[(int)'R'] = new IncreaseTranslateZ;
-		m_controlMapping[(int)'Y'] = new DecreaseTranslateZ;*/
-
-		/*m_controlMapping[0x25] = new IncreaseTranslateX;
-		m_controlMapping[0x27] = new DecreaseTranslateX;
-		m_controlMapping[0x21] = new IncreaseTranslateY;
-		m_controlMapping[0x22] = new DecreaseTranslateY;
-		m_controlMapping[0x26] = new IncreaseTranslateZ;
-		m_controlMapping[0x28] = new DecreaseTranslateZ;*/
-
-		/*	m_controlMapping[(int)'J'] = new IncreaseScaleX;
-		m_controlMapping[(int)'L'] = new DecreaseScaleX;
-		m_controlMapping[(int)'I'] = new IncreaseScaleY;
-		m_controlMapping[(int)'K'] = new DecreaseScaleY;
-		m_controlMapping[(int)'U'] = new IncreaseScaleZ;
-		m_controlMapping[(int)'O'] = new DecreaseScaleZ;*/
+	}
+	InputHandler(string inputFile)
+	{
+		loadFromJSON(inputFile);
 	}
 
 	bool loadFromJSON(string inputFile) {
@@ -85,33 +64,18 @@ public:
 
 		const Json::Value& inputs = obj["Inputs"];
 		if (!inputs) {
-			std::cout << "Exception thrown in loadLevelFromJson(" << inputFile << "), no value for GameObjects." << std::endl;
+			std::cout << "Exception thrown loading Inputs from JSON(" << inputFile << "), no value for Inputs." << std::endl;
 			return false;
 		}
 
 		for (unsigned int i = 0; i < inputs.size(); i++) {
 			try {
-				std::string objectName = gameObjects[i]["name"].asString();
-
-				if (gameObjects[i].isMember("visible")) {
-					if (gameObjects[i]["visible"].asBool()) {
-						m_displayCubes.push_back(objectName);
-					}
-				}
-
-				m_gameObjects[objectName] = new GameObject();
-
-				const Json::Value& components = gameObjects[i]["components"];
-				for (unsigned int j = 0; j < components.size(); j++) {
-					try {
-						std::string className = components[j]["class"].asString();
-
-						m_componentJsonBuilders[className](m_gameObjects[objectName], components[j]);
-					}
-					catch (...) { std::cout << "Exception thrown in loadLevelFromJson(" << levelFile << "), in parsing GameObject[" << std::to_string(i) << "], in parsing components[" << std::to_string(j) << "]." << std::endl; }
-				}
+				char key = *inputs[i]["Key"].asCString();
+				string eventName = inputs[i]["EventName"].asString();
+				string eventMessage = inputs[i]["EventMessage"].asString();
+				m_controlMapping[(int)key] = new KeyInputEvent(eventName, eventMessage);
 			}
-			catch (...) { std::cout << "Exception thrown in loadLevelFromJson(" << levelFile << "), in parsing GameObject[" << std::to_string(i) << "]." << std::endl; }
+			catch (...) { std::cout << "Exception thrown loading Inputs from JSON(" << inputFile << "), in parsing Input[" << std::to_string(i) << "]." << std::endl; }
 		}
 		return true;
 	}

@@ -16,13 +16,19 @@ public:
 
 	void OnMessage(const std::string m) override
 	{
-		if (m == "increase")
-		{
-			m_colourValue += COLOUR_ADJUSTMENT_VALUE;
+		try {
+			if (m == "increase")
+			{
+				m_colourValue += COLOUR_ADJUSTMENT_VALUE;
+			}
+			else if (m == "decrease")
+			{
+				m_colourValue -= COLOUR_ADJUSTMENT_VALUE;
+			}
 		}
-		else if (m == "decrease")
-		{
-			m_colourValue -= COLOUR_ADJUSTMENT_VALUE;
+		catch (...) {
+			std::cout << "Exception thrown in parsing BuildFromJson in ColourComponent." << std::endl;
+			throw;
 		}
 	}
 

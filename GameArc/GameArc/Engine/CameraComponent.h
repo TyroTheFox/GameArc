@@ -114,7 +114,7 @@ public:
 			}
 		}
 		catch (...) {
-			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;
+			std::cout << "Exception thrown in parsing BuildFromJson in CameraComponent." << std::endl;
 			throw;
 		}
 	}

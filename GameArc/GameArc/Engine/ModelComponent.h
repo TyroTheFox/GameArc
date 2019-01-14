@@ -1,5 +1,3 @@
-#ifndef _MODELCOMPONENT_H_
-#define _MODELCOMPONENT_H_
 #pragma once
 #include "Component.h"
 #include "Model.h"
@@ -26,11 +24,10 @@ public:
 			}
 		}
 		catch (...) {
-			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;
+			std::cout << "Exception thrown in parsing BuildFromJson in ModelComponent." << std::endl;
 			throw;
 		}
 	}	
 	void BuildToJson(Json::Value& componentJSON) override {}
 private:
 };
-#endif
