@@ -27,7 +27,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -189,13 +189,6 @@
     <ClCompile Include="src\ModelHandler.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\stb_image.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\levels\myCubeLevel.json" />
-    <None Include="assets\levels\scene1.json" />
-    <None Include="assets\models\testFBX.fbx" />
-    <None Include="assets\shaders\defaultShader.frag" />
-    <None Include="assets\shaders\defaultShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

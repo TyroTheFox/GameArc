@@ -28,15 +28,6 @@
     <Filter Include="Source Files\Engine Utilities">
       <UniqueIdentifier>{71d3d7c0-15ce-4a74-97b6-dc9e85deac18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Level Data">
-      <UniqueIdentifier>{a0b2895e-00d5-4051-b817-1268c8e579a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Models">
-      <UniqueIdentifier>{7da70b21-5bdd-4b1e-bf9a-75a54b934e33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders">
-      <UniqueIdentifier>{fbeeede6-d3bb-46d7-971b-c0e81f2ffdd1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -140,22 +131,5 @@
     <ClCompile Include="src\ModelHandler.cpp">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\levels\myCubeLevel.json">
-      <Filter>Resource Files\Level Data</Filter>
-    </None>
-    <None Include="assets\models\testFBX.fbx">
-      <Filter>Resource Files\Models</Filter>
-    </None>
-    <None Include="assets\shaders\defaultShader.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="assets\shaders\defaultShader.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="assets\levels\scene1.json">
-      <Filter>Resource Files\Level Data</Filter>
-    </None>
   </ItemGroup>
 </Project>
