@@ -2,10 +2,8 @@
 
 TextWriter::TextWriter(GLfloat WIDTH, GLfloat HEIGHT) {
 	// Compile and setup the shader
-	shader = new Shader("shaders/text.vs", "shaders/text.frag");
-	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(WIDTH), 0.0f, static_cast<GLfloat>(HEIGHT));
-	shader->use();
-	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	shader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
+	projection = glm::ortho(0.0f, static_cast<GLfloat>(WIDTH), 0.0f, static_cast<GLfloat>(HEIGHT));
 
 	// FreeType
 	FT_Library ft;
@@ -15,7 +13,7 @@ TextWriter::TextWriter(GLfloat WIDTH, GLfloat HEIGHT) {
 
 	// Load font as face
 	FT_Face face;
-	if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
+	if (FT_New_Face(ft, "assets/fonts/GenericMobileSystem.ttf", 0, &face))
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
 	// Set size to load glyphs as
@@ -80,14 +78,26 @@ TextWriter::TextWriter(GLfloat WIDTH, GLfloat HEIGHT) {
 	glBindVertexArray(0);
 }
 
+void TextWriter::SetWindowSize(float WIDTH, float HEIGHT) {
+	projection = glm::ortho(0.0f, static_cast<GLfloat>(WIDTH), 0.0f, static_cast<GLfloat>(HEIGHT));
+}
+
 void TextWriter::DrawNormalText(std::string text, float x, float y, float scale) {
-	RenderText(text, 25.0f, 25.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+	RenderText(text, x, y, scale, glm::vec3(1.0f, 1.0f, 1.0f));
+}
+
+void TextWriter::DrawErrorText(std::string text, float x, float y, float scale) {
+	RenderText(text, x, y, scale , glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
 void TextWriter::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Activate corresponding render state	
 	shader->use();
+	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniform3f(glGetUniformLocation(shader->ID, "textColor"), color.x, color.y, color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);

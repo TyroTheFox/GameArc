@@ -9,6 +9,7 @@ Game::Game() {
 Game::Game(string levelsFile)
 {
 	m_engineInterfacePtr = nullptr;
+	debugHelper = new DebugHelper();
 
 	loadFromJSON(levelsFile);
 
@@ -52,6 +53,8 @@ Game::Game(string levelsFile)
 	EventHandler::FuncMessage nextSceneMessage = [this](std::string message) { this->ChangeScene(message); };
 	EventHandler nextSceneListener(nextSceneMessage, "ChangeScene");
 	keyEvent->addHandler(nextSceneListener);
+
+	debugHelper->WriteToConsole("Game Set Up Successfully");
 }
 
 bool Game::loadFromJSON(string levelsFile) {
@@ -63,6 +66,7 @@ bool Game::loadFromJSON(string levelsFile) {
 	const Json::Value& levels = obj["Levels"];
 	if (!levels) {
 		std::cout << "Exception thrown loading Levels from JSON(" << levelsFile << "), no value for Inputs." << std::endl;
+		debugHelper->WriteToConsole("Exception thrown loading Levels from JSON(" + levelsFile + "), no value for Inputs.");
 		return false;
 	}
 
@@ -76,7 +80,10 @@ bool Game::loadFromJSON(string levelsFile) {
 				m_currentScene = sceneList[name];
 			}
 		}
-		catch (...) { std::cout << "Exception thrown loading Levels from JSON(" << levelsFile << "), in parsing Input[" << std::to_string(i) << "]." << std::endl; }
+		catch (...) { 
+			std::cout << "Exception thrown loading Levels from JSON(" << levelsFile << "), in parsing Input[" << std::to_string(i) << "]." << std::endl; 
+			debugHelper->WriteToConsole("Exception thrown loading Levels from JSON(" + levelsFile + "), in parsing Input[" + std::to_string(i) + "].");
+		}
 	}
 	return true;
 }
@@ -106,6 +113,7 @@ void Game::ChangeScene(string sceneName) {
 			}
 		}
 	}
+	debugHelper->WriteToConsole("SceneChanged to " + sceneName);
 }
 
 void Game::init()
@@ -121,6 +129,7 @@ void Game::init()
 
 void Game::update(float dt)
 {
+	debugHelper->update(dt);
 	if (activePlayer != nullptr) {
 		activePlayer->OnUpdate(dt);
 		//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
@@ -160,4 +169,5 @@ void Game::render()
 			m_engineInterfacePtr->drawModel(temp, it->second->getComponent<TransformComponent>()->getModelMatrix());
 		}
 	}
+	debugHelper->render();
 }

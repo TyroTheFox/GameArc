@@ -14,6 +14,7 @@
 #include "TransformComponent.h"
 #include "ColourComponent.h"
 #include "ModelComponent.h"
+#include "DebugHelper.h"
 #include "global.h"
 
 extern Event* keyEvent;
@@ -40,4 +41,6 @@ private:
 	std::map<string, Scene*> sceneList;
 
 	PlayerComponent* activePlayer;
+
+	DebugHelper* debugHelper;
 };

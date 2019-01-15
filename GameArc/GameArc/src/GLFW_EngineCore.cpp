@@ -5,7 +5,7 @@
 #include <glm/detail/type_vec3.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-std::vector<bool> GLFW_EngineCore::m_keyBuffer;
+std::vector<int> GLFW_EngineCore::m_keyBuffer;
 int GLFW_EngineCore::m_screenWidth;
 int GLFW_EngineCore::m_screenHeight;
 
@@ -48,7 +48,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 
 	// make space for the keybuffer
 	m_keyBuffer.resize(m_keyBufferSize);
-	std::fill(m_keyBuffer.begin(), m_keyBuffer.end(), false);
+	std::fill(m_keyBuffer.begin(), m_keyBuffer.end(), 0);
 
 	// set thes to the given default ones
 	setDefaultShaders();
@@ -110,7 +110,10 @@ void GLFW_EngineCore::keyCallbackEvent(GLFWwindow* window, int key, int scancode
 	{
 		return;
 	}
-	m_keyBuffer[key] = ((action == GLFW_PRESS || action == GLFW_REPEAT));
+	
+	//m_keyBuffer[key] = ((action == GLFW_PRESS || action == GLFW_REPEAT));
+
+	m_keyBuffer[key] = action;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -128,9 +131,9 @@ void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, i
 
 void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 {
+	glUseProgram(m_defaultShaderProgram);
 	// set the model component of our shader to the object model
 	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-
 	model->render(m_defaultShaderProgram);
 }
 
@@ -273,6 +276,7 @@ void GLFW_EngineCore::initCubeModel()
 
 void GLFW_EngineCore::setCamera(const Camera* cam)
 {
+	glUseProgram(m_defaultShaderProgram);
 	// set the view and projection components of our shader to the camera values
 	glm::mat4 projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 1000.0f);
 	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -289,6 +293,7 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 
 void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)
 {
+	glUseProgram(m_defaultShaderProgram);
 	// set the model component of our shader to the cube model
 	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 

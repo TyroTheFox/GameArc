@@ -3,8 +3,6 @@
 #include <iostream>
 #include <map>
 #include <string>
-// GLFW
-#include <GLFW/glfw3.h>
 // GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -23,14 +21,16 @@ struct Character {
     GLuint Advance;    // Horizontal offset to advance to next glyph
 };
 
-std::map<GLchar, Character> Characters;
-GLuint VAO, VBO;
-
 class TextWriter {
 public:
 	Shader* shader;
 	TextWriter(GLfloat WIDTH, GLfloat HEIGHT);
+	void SetWindowSize(float WIDTH, float HEIGHT);
 	void DrawNormalText(std::string text, float x, float y, float scale);
+	void DrawErrorText(std::string text, float x, float y, float scale);
 private:
+	glm::mat4 projection;
+	std::map<GLchar, Character> Characters;
+	GLuint VAO, VBO;
 	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
 };

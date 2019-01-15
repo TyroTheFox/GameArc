@@ -103,7 +103,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib;freetype.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc140-d.lib;freetype.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameArc.cpp" />
+    <ClCompile Include="src\DebugHelper.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GLAD\glad.c" />
     <ClCompile Include="src\GLFW_EngineCore.cpp" />
@@ -174,8 +175,10 @@
     <ClInclude Include="Engine\CameraComponent.h" />
     <ClInclude Include="Engine\ColourComponent.h" />
     <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\DebugHelper.h" />
     <ClInclude Include="Engine\EventCameraComponent.h" />
     <ClInclude Include="Engine\EventHandler.h" />
+    <ClInclude Include="Engine\ft2build.h" />
     <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GLFW_EngineCore.h" />
@@ -197,6 +200,10 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\GenericMobileSystem.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\TextWriter.frag" />
+    <None Include="assets\shaders\TextWriter.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

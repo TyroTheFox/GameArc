@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Engine Utilities">
       <UniqueIdentifier>{71d3d7c0-15ce-4a74-97b6-dc9e85deac18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{5e336c83-6bbe-434a-b9a5-c53db1df3040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{8bc309bd-ca2f-46b1-b31b-9d0056c05eae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameArc.cpp">
@@ -61,6 +67,9 @@
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\TextWriter.cpp">
+      <Filter>Source Files\Engine Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugHelper.cpp">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,10 +146,24 @@
     <ClInclude Include="Engine\Shader.h">
       <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\DebugHelper.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ft2build.h">
+      <Filter>Header Files\Engine Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\TextWriter.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\TextWriter.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\GenericMobileSystem.ttf">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Fonts</Filter>
     </Font>
   </ItemGroup>
 </Project>
