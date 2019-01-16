@@ -39,6 +39,12 @@
     <None Include="assets\shaders\TextWriter.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="assets\inputs.json">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="assets\levels.json">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Testbed.cpp">

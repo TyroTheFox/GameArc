@@ -45,18 +45,19 @@ public:
 	}
 };
 
-struct InputHandler
+class InputHandler
 {
 private:
-	GameObject* m_playerCube;
-
 	std::map<int, InputCommand*> m_controlMapping;
+	std::map<int, InputCommand*> m_debugMapping;
 
 	std::string mouseEventName = "PlayerMouseXY";
 
 	glm::vec2 oldMouseXY = glm::vec2(0);
+
+	bool disableInput = false;
 public:
-	InputHandler() {
+	InputHandler(){
 		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
 		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
 		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
@@ -68,6 +69,17 @@ public:
 	InputHandler(string inputFile)
 	{
 		loadFromJSON(inputFile);
+
+		KeyInputFuncEvent* keyEvent = new KeyInputFuncEvent("ToggleDebugConsole");
+		keyEvent->onKeyUp = true;
+		m_debugMapping[(int)'`'] = keyEvent;
+		keyEvent = new KeyInputFuncEvent("DebugEnterHit");
+		keyEvent->onKeyUp = true;
+		m_debugMapping[257] = keyEvent;
+	}
+
+	void setDisableInput(bool dI) {
+		disableInput = dI;
 	}
 
 	bool loadFromJSON(string inputFile) {
@@ -112,7 +124,27 @@ public:
 	}
 	void handleInputs(const std::vector<int>& keyBuffer)
 	{
-		for (const auto& mapEntry : m_controlMapping)
+		if (!disableInput) {
+			for (const auto& mapEntry : m_controlMapping)
+			{
+				if (keyBuffer[mapEntry.first] == 1 || keyBuffer[mapEntry.first] == 2)
+				{
+					if (mapEntry.second->onKeyUp) {
+						mapEntry.second->keyPressed = true;
+					}
+					else {
+						mapEntry.second->execute();
+					}
+				}
+
+				if (keyBuffer[mapEntry.first] == 0 && mapEntry.second->keyPressed) {
+					//Check for Release (0)
+					mapEntry.second->execute();
+					mapEntry.second->keyPressed = false;
+				}
+			}
+		}
+		for (const auto& mapEntry : m_debugMapping)
 		{
 			if (keyBuffer[mapEntry.first] == 1 || keyBuffer[mapEntry.first] == 2)
 			{
@@ -130,7 +162,23 @@ public:
 				mapEntry.second->keyPressed = false;
 			}
 		}
+	}
 
+	void handleConsoleInput(char c) {
+		if (disableInput) {
+			//if (charBuffer.size() > 0) {
+				//std::string temp = "";
+				//for (const unsigned int i : charBuffer) {
+					//char c = charBuffer.at(0);
+					if (c != '`') {
+						//temp.append(&c);
+						keyEvent->notifyHandlerWithint("DebugConsoleInput", c);
+					}
+				//}
+					
+				//charBuffer.clear();
+			//}
+		}
 	}
 
 	void handleMouse(const glm::vec2 mouseXY) {

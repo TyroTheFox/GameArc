@@ -16,10 +16,14 @@ private:
 	std::vector<std::string> consoleLines;
 	int lineLimit = 5;
 	float timePassed = 0.0f, removeConsoleLine = 5.0f;
-	bool displayConsole = false;
+
+	std::string consoleInput;
 public:
+	bool displayConsole = false;
 	DebugHelper(IEngineCore* enginePtr);
 	void ToggleDisplayConsole();
+	void HandleInputLine(int i);
+	void ProcessInputLine();
 	void update(float dt);
 	void render();
 	void WriteToConsole(std::string message);

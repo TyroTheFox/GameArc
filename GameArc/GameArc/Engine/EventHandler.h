@@ -104,6 +104,10 @@ public:
 		(*handlers[name])(vec);
 	}
 
+	void notifyHandlerWithint(const std::string name, const int i) {
+		(*handlers[name])(i);
+	}
+
 	void addHandler(const EventHandler &handler) {
 		//this->handlers.push_back(unique_ptr<EventHandler>(new EventHandler{ handler }));
 		this->handlers[handler.name] = std::unique_ptr<EventHandler>(new EventHandler{ handler });

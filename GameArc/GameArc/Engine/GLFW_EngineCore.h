@@ -42,6 +42,7 @@ private:
 	static int m_screenWidth;
 	static int m_screenHeight;
 	static std::vector<int> m_keyBuffer;
+	static std::vector<unsigned int> m_charBuffer;
 	static const int m_keyBufferSize = 400;
 
 	std::chrono::steady_clock clock;
@@ -49,6 +50,7 @@ private:
 
 	static void mouseMoveCallbackEvent(GLFWwindow* window, double xPos, double yPos);
 	static void keyCallbackEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void characterCallbackEvent(GLFWwindow * window, unsigned int codepoint);
 	static void windowResizeCallbackEvent(GLFWwindow* window, int width, int height);
 	
 	

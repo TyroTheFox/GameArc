@@ -54,7 +54,7 @@ Game::Game(string levelsFile)
 
 void Game::init()
 {
-	debugHelper = new DebugHelper(m_engineInterfacePtr);
+	//debugHelper = new DebugHelper(m_engineInterfacePtr);
 	// update the camera
 	if (m_MainCamera == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
@@ -128,6 +128,7 @@ void Game::ChangeScene(string sceneName) {
 void Game::update(float dt)
 {
 	debugHelper->update(dt);
+	inputHandler->setDisableInput(debugHelper->displayConsole);
 	//if (activePlayer != nullptr) {
 	//	activePlayer->OnUpdate(dt);
 	//	//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());

@@ -31,11 +31,6 @@
       "EventName": "PlayerMovement",
       "EventMessage": "switchCamera",
       "OnKeyUp": true
-    },
-    {
-      "Key": "`",
-      "EventName": "ToggleDebugConsole",
-      "OnKeyUp": true
     }
   ]
 }

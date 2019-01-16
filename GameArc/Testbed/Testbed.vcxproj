@@ -158,6 +158,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\inputs.json" />
+    <None Include="assets\levels.json" />
     <None Include="assets\levels\myCubeLevel.json" />
     <None Include="assets\levels\scene1.json" />
     <None Include="assets\shaders\defaultShader.frag" />

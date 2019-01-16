@@ -22,11 +22,12 @@ extern Event* keyEvent;
 class Game
 {
 public:
+	DebugHelper * debugHelper;
+	IEngineCore* m_engineInterfacePtr;
 	Game();
 	Game(string levelsFile);
 	bool loadFromJSON(string levelsFile);
 	void ChangeScene(string sceneName);
-	IEngineCore* m_engineInterfacePtr;
 	void init();
 	void update(float dt);
 	void render();
@@ -41,6 +42,4 @@ private:
 	std::map<string, Scene*> sceneList;
 
 	PlayerComponent* activePlayer;
-
-	DebugHelper* debugHelper;
 };

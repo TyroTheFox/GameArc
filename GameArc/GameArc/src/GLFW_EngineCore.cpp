@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 std::vector<int> GLFW_EngineCore::m_keyBuffer;
+std::vector<unsigned int> GLFW_EngineCore::m_charBuffer;
 int GLFW_EngineCore::m_screenWidth;
 int GLFW_EngineCore::m_screenHeight;
 
@@ -43,6 +44,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	// callback functions
 	glfwSetFramebufferSizeCallback(m_window, windowResizeCallbackEvent);
 	glfwSetKeyCallback(m_window, keyCallbackEvent);
+	glfwSetCharCallback(m_window, characterCallbackEvent);
 
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -84,11 +86,11 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		inputHandler->handleMouse(glm::vec2(xpos, ypos));
 		game.update(delta); // update game logic
 		game.render(); // prepare game to send info to the renderer in engine core
-
+		
 		// swap buffers
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
-
+		
 		auto finish = clock.now();
 		std::chrono::duration<float> elapsed = finish - start;
 		delta = elapsed.count();
@@ -119,6 +121,12 @@ void GLFW_EngineCore::keyCallbackEvent(GLFWwindow* window, int key, int scancode
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void GLFW_EngineCore::characterCallbackEvent(GLFWwindow* window, unsigned int codepoint)
+{
+	char c = codepoint;
+	inputHandler->handleConsoleInput(c);
 }
 
 void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, int height)
