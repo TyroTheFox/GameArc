@@ -15,9 +15,9 @@ class EventCameraComponent : public Component
 private:
 	TransformComponent * transform;
 	CameraComponent * camera;
-	GameObject * parent;
 	string cameraName;
 	string switchToScene;
+	EventHandler movementListener;
 
 	//Movement Vectors
 	glm::vec3 front, right, up;
@@ -26,32 +26,28 @@ public:
 	float movementSpeed;
 
 	EventCameraComponent() : camera(new CameraComponent), cameraName("default"){}
-	EventCameraComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), cameraName("default") {
-		if (parent->getComponent<TransformComponent>() != nullptr) {
-			transform = parent->getComponent<TransformComponent>();
-			buildEvents();
-		}
+	EventCameraComponent(GameObject* p) : camera(new CameraComponent(p)), cameraName("default") {	}
+	void OnSetUp() override {
+		buildEvents();
 	}
 	void setParent(GameObject* p) {
 		parent = p;
-		if (parent->getComponent<TransformComponent>() != nullptr) {
-			transform = parent->getComponent<TransformComponent>();
-			camera->SetParent(parent);
-		}
+		camera->SetParent(parent);
 	}
 
 	void buildEvents() {
-		EventHandler::FuncMessage movementMessage = [this](std::string message) { this->OnChangeScene(this->switchToScene); };
-		EventHandler movementListener(movementMessage, "ChangeScene");
+		EventHandler::Func movementMessage = [this]() { this->OnChangeScene(this->switchToScene); };
+		movementListener = EventHandler(movementMessage, "ChangeScene");
 		keyEvent->addHandler(movementListener);
 	}
 
 	void OnUpdate(float dt) override {
-		camera->OnUpdate(dt);
+		//camera->OnUpdate(dt);
 	}
-
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	void OnChangeScene(const std::string m) {
 		keyEvent->notifyHandlerWithMessage("NextScene", m);
+		keyEvent->removeHandler("ChangeScene");
 	}
 
 	void OnMessage(const std::string m) override {}

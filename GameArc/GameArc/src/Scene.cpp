@@ -9,19 +9,18 @@ Scene::Scene()
 	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
 	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
 		attachComponent<PlayerComponent>(object, p_component); 
-		object->getComponent<PlayerComponent>()->setParent(object);
-		object->getComponent<PlayerComponent>()->buildEvents();
 	};
 	m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
 		attachComponent<EventCameraComponent>(object, p_component);
-		object->getComponent<EventCameraComponent>()->setParent(object);
 		object->getComponent<EventCameraComponent>()->buildEvents();
 	};
+	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
 }
 
 template<typename T> void Scene::attachComponent(GameObject* object, const Json::Value& p_component) {
 	T * component = new T();
 	component->BuildFromJson(p_component);
+	component->debug = debug;
 	object->addComponent<T>(component);
 }
 

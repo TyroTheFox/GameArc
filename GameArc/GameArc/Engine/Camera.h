@@ -17,9 +17,9 @@ class Camera
 {
 private:
 	float m_yaw;
-	float m_pitch;
 	float m_roll;
 public:
+	float m_pitch;
 	glm::vec3 m_position;
 	glm::quat m_orientation;
 	float m_fov;
@@ -49,12 +49,12 @@ public:
 		m_yaw += x;
 
 		float newPitch = m_pitch + y;
-		if (newPitch < lowPitchBound && newPitch > -upPitchBound) {
+		if (newPitch < upPitchBound && newPitch > -lowPitchBound) {
 			m_pitch = newPitch;
 		}
 		else {
-			if (newPitch > lowPitchBound) m_pitch = lowPitchBound;
-			if (newPitch < -upPitchBound) m_pitch = -upPitchBound;
+			if (newPitch > upPitchBound) m_pitch = upPitchBound;
+			if (newPitch < -lowPitchBound) m_pitch = -lowPitchBound;
 		}
 
 		yaw(m_yaw);

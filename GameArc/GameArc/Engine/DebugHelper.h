@@ -1,10 +1,13 @@
 #pragma once
-#include "global.h"
 #include <string>
 #include <vector>
+#include "IEngineCore.h"
 #include "TextWriter.h"
+#include "global.h"
 
 extern Event* keyEvent;
+class IEngineCore;
+class TextWriter;
 
 class DebugHelper {
 private:
@@ -15,10 +18,9 @@ private:
 	float timePassed = 0.0f, removeConsoleLine = 5.0f;
 	bool displayConsole = false;
 public:
-	DebugHelper();
-	void setWindowSize(float x, float y);
-	void update(float dt);
+	DebugHelper(IEngineCore* enginePtr);
 	void ToggleDisplayConsole();
+	void update(float dt);
 	void render();
 	void WriteToConsole(std::string message);
 };

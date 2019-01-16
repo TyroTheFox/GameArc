@@ -10,7 +10,14 @@ public:
 	Model* model;
 	ModelComponent() {}
 	ModelComponent(Model* m) : model(m) {}
+	void OnSetUp() override {	}
 	void OnUpdate(float dt) override {}
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {
+		if (parent->getComponent<ModelComponent>() == nullptr && parent->getComponent<TransformComponent>() == nullptr) return;
+		if (parent->getComponent<ModelComponent>()->active) {
+			m_engineInterfacePtr->drawModel(model, parent->getComponent<TransformComponent>()->getModelMatrix());
+		}
+	}
 	void OnMessage(const std::string m) override {}
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {

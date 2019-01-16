@@ -8,9 +8,6 @@ Game::Game() {
 
 Game::Game(string levelsFile)
 {
-	m_engineInterfacePtr = nullptr;
-	debugHelper = new DebugHelper();
-
 	loadFromJSON(levelsFile);
 
 	//Scene* temp = new Scene();
@@ -53,7 +50,18 @@ Game::Game(string levelsFile)
 	EventHandler::FuncMessage nextSceneMessage = [this](std::string message) { this->ChangeScene(message); };
 	EventHandler nextSceneListener(nextSceneMessage, "ChangeScene");
 	keyEvent->addHandler(nextSceneListener);
+}
 
+void Game::init()
+{
+	debugHelper = new DebugHelper(m_engineInterfacePtr);
+	// update the camera
+	if (m_MainCamera == nullptr) {
+		m_engineInterfacePtr->setCamera(&m_camera);
+	}
+	else {
+		m_engineInterfacePtr->setCamera(m_MainCamera);
+	}
 	debugHelper->WriteToConsole("Game Set Up Successfully");
 }
 
@@ -75,6 +83,7 @@ bool Game::loadFromJSON(string levelsFile) {
 			Scene* temp = new Scene();
 			temp->loadLevelJSON(levels[i]["Address"].asString());
 			string name = levels[i]["Name"].asString();
+			temp->debug = debugHelper;
 			sceneList[name] = temp;
 			if (levels[i]["StartingScene"].asBool()) {
 				m_currentScene = sceneList[name];
@@ -116,23 +125,18 @@ void Game::ChangeScene(string sceneName) {
 	debugHelper->WriteToConsole("SceneChanged to " + sceneName);
 }
 
-void Game::init()
-{
-	// update the camera
-	if (m_MainCamera == nullptr) {
-		m_engineInterfacePtr->setCamera(&m_camera);
-	}
-	else {
-		m_engineInterfacePtr->setCamera(m_MainCamera);
-	}
-}
-
 void Game::update(float dt)
 {
 	debugHelper->update(dt);
-	if (activePlayer != nullptr) {
-		activePlayer->OnUpdate(dt);
-		//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+	//if (activePlayer != nullptr) {
+	//	activePlayer->OnUpdate(dt);
+	//	//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
+	//}
+	std::map<std::string, GameObject*>::iterator it;
+	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
+	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+	{
+		it->second->updateAllComponents(dt);
 	}
 	// update the camera
 	if (m_MainCamera == nullptr) {
@@ -161,6 +165,7 @@ void Game::render()
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
+		it->second->renderAllComponents(m_engineInterfacePtr);
 		// draw the cube
 		//m_engineInterfacePtr->drawCube(object->getComponent<TransformComponent>()->getModelMatrix());
 		if (it->second->getComponent<ModelComponent>() == nullptr && it->second->getComponent<TransformComponent>() == nullptr) continue;

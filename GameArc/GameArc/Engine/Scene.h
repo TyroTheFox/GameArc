@@ -16,23 +16,24 @@
 #include "ModelComponent.h"
 #include "PlayerComponent.h"
 #include "EventCameraComponent.h"
+#include "TextUIComponent.h"
+
+#include "DebugHelper.h"
 
 using namespace std;
 
 class Scene
 {
 public:
-	Scene();
-
+	DebugHelper* debug;
+	vector<string> m_displayCubes;
 	//vector<InputHandler*> inputHandlers;
-
+	Scene();
 	bool loadLevelJSON(std::string levelFile);
 
 	std::map<std::string, GameObject*> getGameObjects();
 
 	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
-
-	vector<string> m_displayCubes;
 
 private:
 	GameObject m_playerBackground;

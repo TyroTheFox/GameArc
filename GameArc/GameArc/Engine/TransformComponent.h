@@ -1,5 +1,3 @@
-#ifndef _TRANSCOMPONENT_H_
-#define _TRANSCOMPONENT_H_
 #pragma once
 #include "Component.h"
 #include <iostream>
@@ -21,8 +19,9 @@ public:
 	TransformComponent(const glm::vec3& pos) : m_position(pos), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}
 	TransformComponent(const glm::vec3& pos, const glm::quat& orient) : m_position(pos), m_orientation(orient), m_scale(1.0f) {}
 	TransformComponent(const glm::vec3& pos, const glm::quat& orient, const glm::vec3& scale) : m_position(pos), m_orientation(orient), m_scale(scale) {}
-
+	void OnSetUp() override {	}
 	void OnUpdate(float dt) override{}
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	void OnMessage(const std::string m) override
 	{
 		if (m == "increaseRotateX") {
@@ -183,4 +182,3 @@ public:
 	void pitch(float angle) { rotate(angle, 1.0f, 0.0f, 0.0f); }
 	void roll(float angle) { rotate(angle, 0.0f, 0.0f, 1.0f); }
 };
-#endif

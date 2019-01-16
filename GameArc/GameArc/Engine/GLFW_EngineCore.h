@@ -8,9 +8,17 @@
 #include <chrono>
 #include "Camera.h"
 #include "Model.h"
+#include "TextWriter.h"
+// GL includes
+#include "Shader.h"
+// FreeType
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "global.h"
 
 class Game;
+struct Character;
 extern InputHandler* inputHandler;
 
 class GLFW_EngineCore : public IEngineCore
@@ -25,6 +33,7 @@ public:
 	void setCamera(const Camera* cam) override;
 	void drawCube(const glm::mat4& modelMatrix) override;
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
+	void drawText(std::string text, Shader * shader, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
 
 private:
 	GLFWwindow* m_window;
@@ -32,7 +41,7 @@ private:
 	
 	static int m_screenWidth;
 	static int m_screenHeight;
-	static std::vector<bool> m_keyBuffer;
+	static std::vector<int> m_keyBuffer;
 	static const int m_keyBufferSize = 400;
 
 	std::chrono::steady_clock clock;

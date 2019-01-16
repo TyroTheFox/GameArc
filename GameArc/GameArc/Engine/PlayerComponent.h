@@ -16,7 +16,6 @@ private:
 	TransformComponent * transform;
 	CameraComponent * camera;
 	ModelComponent * model;
-	GameObject * parent;
 
 	//Movement Vectors
 	glm::vec3 front, right, up;
@@ -24,20 +23,32 @@ private:
 public:
 	float movementSpeed;
 
-	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){}
-	PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f){
+	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){	}
+	void OnSetUp() override {
+		if (parent->getComponent<TransformComponent>() != nullptr) {
+			transform = parent->getComponent<TransformComponent>();
+		}
+		camera->SetParent(parent);
+		if (parent->getComponent<ModelComponent>() != nullptr) {
+			model = parent->getComponent<ModelComponent>();
+		}
+		buildEvents();
+	}
+	/*PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f){
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 			buildEvents();
 		}
-	}
+	}*/
 	void setParent(GameObject* p) {
 		parent = p;
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 		}
 		camera->SetParent(parent);
-		model = parent->getComponent<ModelComponent>();
+		if (parent->getComponent<ModelComponent>() != nullptr) {
+			model = parent->getComponent<ModelComponent>();
+		}
 	}
 
 	void buildEvents() {
@@ -81,7 +92,7 @@ public:
 			intendedDirection *= 0;
 		}
 	}
-
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	void OnMessage(const std::string m) override {
 		if (m == "moveRight") {
 			intendedDirection.x += 1;

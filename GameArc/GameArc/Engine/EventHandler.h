@@ -119,6 +119,11 @@ public:
 		}
 	}
 
+	void removeHandler(const std::string name) {
+		std::map<std::string, std::unique_ptr<EventHandler>>::iterator to_remove = this->handlers.find(name);
+		this->handlers.erase(to_remove);
+	}
+
 	void operator()(std::string name) {
 		this->notifyHandler(name);
 	}

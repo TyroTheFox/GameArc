@@ -162,9 +162,8 @@
     <None Include="assets\levels\scene1.json" />
     <None Include="assets\shaders\defaultShader.frag" />
     <None Include="assets\shaders\defaultShader.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="assets\levels\myCubeLevel.txt" />
+    <None Include="assets\shaders\TextWriter.frag" />
+    <None Include="assets\shaders\TextWriter.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GLAD\glad.c" />

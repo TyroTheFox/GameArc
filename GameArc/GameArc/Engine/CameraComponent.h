@@ -19,6 +19,8 @@ public:
 	glm::vec3 right;
 	glm::vec3 up;
 	glm::mat4 viewMatrix;
+	
+	float xoffset, yoffset;
 	bool firstPersonCamera;
 	float offsetFactor;
 
@@ -30,6 +32,7 @@ public:
 	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {
 		SetTranslationToParent();
 	}
+	void OnSetUp() override{	}
 	Camera* GetCamera() {
 		return camera;
 	}
@@ -64,8 +67,8 @@ public:
 		//camera->rotate(mouseXY.x * 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
 		//camera->rotate(mouseXY.y * 0.01f, glm::vec3(1.0f, 0.0f, 0.0f));
 
-		float xoffset = mouseXY.x - lastMouseXY.x;
-		float yoffset = mouseXY.y - lastMouseXY.y; // reversed since y-coordinates range from bottom to top
+		xoffset = mouseXY.x - lastMouseXY.x;
+		yoffset = mouseXY.y - lastMouseXY.y; // reversed since y-coordinates range from bottom to top
 		lastMouseXY.x = mouseXY.x;
 		lastMouseXY.y = mouseXY.y;
 
@@ -75,9 +78,16 @@ public:
 		camera->mouseUpdate(xoffset, yoffset);
 		ComputeDirectionVector();
 		if (!firstPersonCamera) {
+			camera->upPitchBound = 1.6f;
+			camera->lowPitchBound = 0.1f;
 			SetToParentedOffset();
 		}
+		else {
+			camera->upPitchBound = 1.8f;
+			camera->lowPitchBound = 1.8f;
+		}
 	}
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	void OnMessage(const std::string m) override {}
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {

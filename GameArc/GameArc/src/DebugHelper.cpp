@@ -1,16 +1,13 @@
 #include "../Engine/DebugHelper.h"
 
-DebugHelper::DebugHelper()
+DebugHelper::DebugHelper(IEngineCore* enginePtr)
 {
-	textWriter = new TextWriter(800, 600);
+	textWriter = new TextWriter();
+	textWriter->m_engineInterfacePtr = enginePtr;
 
 	EventHandler::Func displayMessage = [this] { this->ToggleDisplayConsole(); };
 	EventHandler displayListener(displayMessage, "ToggleDebugConsole");
 	keyEvent->addHandler(displayListener);
-}
-
-void DebugHelper::setWindowSize(float x, float y) {
-	textWriter->SetWindowSize(x, y);
 }
 
 void DebugHelper::update(float dt)

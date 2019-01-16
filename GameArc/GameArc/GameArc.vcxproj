@@ -195,6 +195,7 @@
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="Engine\stb_image.h" />
+    <ClInclude Include="Engine\TextUIComponent.h" />
     <ClInclude Include="Engine\TextWriter.h" />
     <ClInclude Include="Engine\TransformComponent.h" />
   </ItemGroup>

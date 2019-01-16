@@ -8,12 +8,12 @@ class ColourComponent : public Component
 {
 public:
 	ColourComponent() : m_colourValue(0) {};
-
+	void OnSetUp() override {	}
 	void OnUpdate(float dt) override
 	{
 
 	}
-
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	void OnMessage(const std::string m) override
 	{
 		try {

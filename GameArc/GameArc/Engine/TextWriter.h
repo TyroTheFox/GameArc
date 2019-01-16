@@ -9,9 +9,12 @@
 #include <glm/gtc/type_ptr.hpp>
 // GL includes
 #include "Shader.h"
+#include "IEngineCore.h"
 // FreeType
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+class IEngineCore;
 
 /// Holds all state information relevant to a character as loaded using FreeType
 struct Character {
@@ -23,13 +26,13 @@ struct Character {
 
 class TextWriter {
 public:
+	IEngineCore * m_engineInterfacePtr;
 	Shader* shader;
-	TextWriter(GLfloat WIDTH, GLfloat HEIGHT);
-	void SetWindowSize(float WIDTH, float HEIGHT);
+	TextWriter();
 	void DrawNormalText(std::string text, float x, float y, float scale);
 	void DrawErrorText(std::string text, float x, float y, float scale);
+	void SetEnginePtr(IEngineCore * enginePtr);
 private:
-	glm::mat4 projection;
 	std::map<GLchar, Character> Characters;
 	GLuint VAO, VBO;
 	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color);
