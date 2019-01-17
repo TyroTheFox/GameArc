@@ -76,6 +76,9 @@ public:
 		keyEvent = new KeyInputFuncEvent("DebugEnterHit");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[257] = keyEvent;
+		keyEvent = new KeyInputFuncEvent("DebugBackspaceHit");
+		keyEvent->onKeyUp = true;
+		m_debugMapping[259] = keyEvent;
 	}
 
 	void setDisableInput(bool dI) {
@@ -166,18 +169,9 @@ public:
 
 	void handleConsoleInput(char c) {
 		if (disableInput) {
-			//if (charBuffer.size() > 0) {
-				//std::string temp = "";
-				//for (const unsigned int i : charBuffer) {
-					//char c = charBuffer.at(0);
-					if (c != '`') {
-						//temp.append(&c);
-						keyEvent->notifyHandlerWithint("DebugConsoleInput", c);
-					}
-				//}
-					
-				//charBuffer.clear();
-			//}
+			if (c != '`') {
+				keyEvent->notifyHandlerWithint("DebugConsoleInput", c);
+			}
 		}
 	}
 

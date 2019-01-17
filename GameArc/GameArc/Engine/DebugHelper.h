@@ -15,7 +15,7 @@ class TextWriter;
 
 class TextParser {
 public:
-	using InterpFunc = std::function<void(std::string)>;
+	using InterpFunc = std::function<void(std::vector<std::string>)>;
 private:
 	std::map<std::string, InterpFunc> parsedTokens;
 public:
@@ -28,9 +28,15 @@ public:
 		std::stringstream ss(command);
 		std::string token, argToken;
 		ss >> token;
-		std::getline(ss, argToken);
+		std::vector<std::string> argTokens;
+		while (!ss.eof()) {
+			//std::getline(ss, argToken);
+			ss >> argToken;
+			argTokens.push_back(argToken);
+		}
+		
 		if (parsedTokens.count(token) > 0) {
-			parsedTokens[token](argToken);
+			parsedTokens[token](argTokens);
 		}
 		else {
 			return false;
@@ -54,6 +60,7 @@ public:
 	DebugHelper(IEngineCore* enginePtr);
 	void ToggleDisplayConsole();
 	void HandleInputLine(int i);
+	void DeleteLastChar();
 	void ProcessInputLine();
 	void update(float dt);
 	void render();

@@ -17,6 +17,38 @@ Scene::Scene()
 	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
 }
 
+Scene::Scene(DebugHelper* d)
+{
+	debug = d;
+	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
+	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
+	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
+	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) {
+		attachComponent<PlayerComponent>(object, p_component);
+	};
+	m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) {
+		attachComponent<EventCameraComponent>(object, p_component);
+		object->getComponent<EventCameraComponent>()->buildEvents();
+	};
+	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
+
+	debug->AddConsoleCommand("delete", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		std::string name = s.at(0);
+		std::map<std::string, GameObject*>::iterator it;
+		std::map<std::string, GameObject*> objects = this->getGameObjects();
+		it = objects.find(name);
+		if (it != objects.end()) {
+			objects.erase(name);
+			this->setGameObjects(objects);
+			this->debug->WriteToConsole("Deleted " + name);
+		}
+		else {
+			this->debug->WriteToConsole("Cannot find " + name);
+		}
+	}));
+}
+
 template<typename T> void Scene::attachComponent(GameObject* object, const Json::Value& p_component) {
 	T * component = new T();
 	component->debug = debug;
@@ -48,7 +80,7 @@ bool Scene::loadLevelJSON(std::string levelFile)
 			}
 
 			m_gameObjects[objectName] = new GameObject();
-
+			m_gameObjects[objectName]->name = objectName;
 			const Json::Value& components = gameObjects[i]["components"];
 			for (unsigned int j = 0; j < components.size(); j++) {
 				try {
@@ -69,4 +101,8 @@ bool Scene::loadLevelJSON(std::string levelFile)
 std::map<std::string, GameObject*> Scene::getGameObjects()
 {
 	return m_gameObjects;
+}
+
+void Scene::setGameObjects(std::map<std::string, GameObject*> go) {
+	m_gameObjects = go;
 }

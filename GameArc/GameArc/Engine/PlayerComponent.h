@@ -28,20 +28,21 @@ public:
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 		}
+		camera->debug = debug;
 		camera->SetParent(parent);
+		camera->OnSetUp();
 		if (parent->getComponent<ModelComponent>() != nullptr) {
 			model = parent->getComponent<ModelComponent>();
 		}
 		buildEvents();
 
-		debug->AddConsoleCommand("setplayerspeed", TextParser::InterpFunc([this](std::string s) {this->movementSpeed = std::stof(s); this->debug->WriteToConsole("Player Movement Speed set to" + s); }));
+		debug->AddConsoleCommand("setplayerspeed", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			this->movementSpeed = std::stof(s.at(0)); 
+			this->debug->WriteToConsole("Player Movement Speed set to " + s.at(0)); 
+		}));
 	}
-	/*PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f){
-		if (parent->getComponent<TransformComponent>() != nullptr) {
-			transform = parent->getComponent<TransformComponent>();
-			buildEvents();
-		}
-	}*/
+
 	void setParent(GameObject* p) {
 		parent = p;
 		if (parent->getComponent<TransformComponent>() != nullptr) {

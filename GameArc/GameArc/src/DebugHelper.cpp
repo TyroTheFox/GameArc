@@ -18,6 +18,10 @@ DebugHelper::DebugHelper(IEngineCore* enginePtr)
 	EventHandler::Func consoleEnterHit = [this] { this->ProcessInputLine(); };
 	EventHandler consoleEnterHitListener(consoleEnterHit, "DebugEnterHit");
 	keyEvent->addHandler(consoleEnterHitListener);
+
+	EventHandler::Func consoleBackspaceHit = [this] { this->DeleteLastChar(); };
+	EventHandler consoleBackspaceHitListener(consoleBackspaceHit, "DebugBackspaceHit");
+	keyEvent->addHandler(consoleBackspaceHitListener);
 }
 
 void DebugHelper::update(float dt)
@@ -45,12 +49,15 @@ void DebugHelper::HandleInputLine(int i) {
 	consoleInput += c;
 }
 
+void DebugHelper::DeleteLastChar() { if (consoleInput.size() > 0) {consoleInput.pop_back(); }
+}
+
 void DebugHelper::ProcessInputLine() {
 	if (textParser->ParseToken(consoleInput)) {
 		WriteToConsole(consoleInput);
 	}
 	else {
-		WriteToConsole("Command Not Recognised");
+		WriteToConsole("Command '" + consoleInput + "' Not Recognised");
 	}
 	consoleInput = "";
 }
@@ -59,7 +66,7 @@ void DebugHelper::render()
 {
 	if (displayConsole) {
 
-		textWriter->DrawNormalText("> " + consoleInput, consoleX, consoleY + (spacing * (lineLimit + 2)), 0.5f);
+		textWriter->DrawNormalText("> " + consoleInput + "_", consoleX, consoleY + (spacing * (lineLimit + 2)), 0.5f);
 
 		int i = 0;
 		for (std::string line : consoleLines) {

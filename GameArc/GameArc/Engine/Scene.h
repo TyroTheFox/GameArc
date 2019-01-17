@@ -29,9 +29,11 @@ public:
 	vector<string> m_displayCubes;
 	//vector<InputHandler*> inputHandlers;
 	Scene();
+	Scene(DebugHelper* d);
 	bool loadLevelJSON(std::string levelFile);
 
 	std::map<std::string, GameObject*> getGameObjects();
+	void setGameObjects(std::map<std::string, GameObject*> go);
 
 	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
 

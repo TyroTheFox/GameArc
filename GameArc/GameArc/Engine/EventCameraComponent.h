@@ -29,6 +29,34 @@ public:
 	EventCameraComponent(GameObject* p) : camera(new CameraComponent(p)), cameraName("default") {	}
 	void OnSetUp() override {
 		buildEvents();
+		debug->AddConsoleCommand("setecrot", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (this->parent->name == s.at(0)) {
+				if (s.size() > 1) {
+					camera->GetCamera()->yaw(std::stof(s.at(1)));
+				}
+				if (s.size() > 2) {
+					camera->GetCamera()->roll(std::stof(s.at(2)));
+				}
+				if (s.size() > 3) {
+					camera->GetCamera()->pitch(std::stof(s.at(3)));
+				}
+				this->debug->WriteToConsole("Event Camera " + s.at(0) + " rotated");
+			}
+		}));
+		debug->AddConsoleCommand("setectran", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (this->parent->name == s.at(0)) {
+				if (s.size() > 1) {
+					camera->GetCamera()->m_position.x = std::stof(s.at(1));
+				}
+				if (s.size() > 2) {
+					camera->GetCamera()->m_position.y = std::stof(s.at(2));
+				}
+				if (s.size() > 3) {
+					camera->GetCamera()->m_position.z = std::stof(s.at(3));
+				}
+				this->debug->WriteToConsole("Event Camera " + s.at(0) + " moved");
+			}
+		}));
 	}
 	void setParent(GameObject* p) {
 		parent = p;

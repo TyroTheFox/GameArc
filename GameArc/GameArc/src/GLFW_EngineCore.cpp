@@ -21,7 +21,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
+	
 	m_screenWidth = width;
 	m_screenHeight = height;
 

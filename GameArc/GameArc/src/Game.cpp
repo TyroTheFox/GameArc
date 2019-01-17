@@ -11,16 +11,6 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	debugHelper = debug;
 	loadFromJSON(levelsFile);
 
-	//Scene* temp = new Scene();
-	//temp->loadLevelJSON("assets/levels/myCubeLevel.json");
-	//sceneList["CubeLevel"] = temp;
-
-	//temp = new Scene();
-	//temp->loadLevelJSON("assets/levels/scene1.json");
-	//sceneList["scene1"] = temp;
-
-	//m_currentScene = sceneList["scene1"];
-
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
@@ -51,6 +41,8 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	EventHandler::FuncMessage nextSceneMessage = [this](std::string message) { this->ChangeScene(message); };
 	EventHandler nextSceneListener(nextSceneMessage, "ChangeScene");
 	keyEvent->addHandler(nextSceneListener);
+
+	debug->AddConsoleCommand("changescene", TextParser::InterpFunc([this](std::vector<std::string> s) { this->ChangeScene(s.at(0)); }));
 }
 
 void Game::init()
@@ -81,8 +73,7 @@ bool Game::loadFromJSON(string levelsFile) {
 
 	for (unsigned int i = 0; i < levels.size(); i++) {
 		try {
-			Scene* temp = new Scene();
-			temp->debug = debugHelper;
+			Scene* temp = new Scene(debugHelper);
 			temp->loadLevelJSON(levels[i]["Address"].asString());
 			string name = levels[i]["Name"].asString();
 			sceneList[name] = temp;
@@ -168,13 +159,6 @@ void Game::render()
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
 		it->second->renderAllComponents(m_engineInterfacePtr);
-		// draw the cube
-		//m_engineInterfacePtr->drawCube(object->getComponent<TransformComponent>()->getModelMatrix());
-		if (it->second->getComponent<ModelComponent>() == nullptr && it->second->getComponent<TransformComponent>() == nullptr) continue;
-		if (it->second->getComponent<ModelComponent>()->active) {
-			Model* temp = it->second->getComponent<ModelComponent>()->model;
-			m_engineInterfacePtr->drawModel(temp, it->second->getComponent<TransformComponent>()->getModelMatrix());
-		}
 	}
 	debugHelper->render();
 }

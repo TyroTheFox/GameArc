@@ -32,7 +32,16 @@ public:
 	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {
 		SetTranslationToParent();
 	}
-	void OnSetUp() override{	}
+	void OnSetUp() override{
+		debug->AddConsoleCommand("setfpc", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			this->firstPersonCamera = std::stoi(s.at(0)); this->debug->WriteToConsole("Set First Person Camera to " + s.at(0)); }));
+		debug->AddConsoleCommand("setcamoffset", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			this->offsetFactor = std::stof(s.at(0)); this->debug->WriteToConsole("Set Distance From Player in Third Person Mode to " + s.at(0)); }));
+		debug->AddConsoleCommand("setmousesen", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			this->sensitivity = std::stof(s.at(0)); this->debug->WriteToConsole("Set Mouse Sensitivity to " + s.at(0)); }));
+		debug->AddConsoleCommand("setfov", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			this->GetCamera()->setFOV(std::stof(s.at(0))); this->debug->WriteToConsole("Set Camera FOV to " + s.at(0)); }));
+	}
 	Camera* GetCamera() {
 		return camera;
 	}

@@ -10,7 +10,20 @@ public:
 	Model* model;
 	ModelComponent() {}
 	ModelComponent(Model* m) : model(m) {}
-	void OnSetUp() override {	}
+	void OnSetUp() override {
+		//debug->AddConsoleCommand("changemodel", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		//	if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
+		//	if (this->parent->name == s.at(0)) {
+		//		if (s.size() > 1) {
+		//			model = new Model(s.at(1));
+		//			this->debug->WriteToConsole("Model " + s.at(0) + " changed to " + s.at(1));
+		//		}
+		//		else {
+		//			if (s.size() <= 0) { this->debug->WriteToConsole("Need a model directory"); }
+		//		}
+		//	}
+		//}));
+	}
 	void OnUpdate(float dt) override {}
 	void OnRender(IEngineCore* m_engineInterfacePtr) override {
 		if (parent->getComponent<ModelComponent>() == nullptr && parent->getComponent<TransformComponent>() == nullptr) return;

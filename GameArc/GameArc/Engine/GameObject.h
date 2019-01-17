@@ -9,6 +9,7 @@ class IEngineCore;
 class GameObject
 {
 public:
+	std::string name = "object";
 	template <typename T>
 	T* getComponent()
 	{

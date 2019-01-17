@@ -12,7 +12,20 @@ private:
 	float scale;
 public:
 	TextUIComponent() : scale(1.0f), text("") { textWriter = new TextWriter(); }
-	void OnSetUp() override {	}
+	void OnSetUp() override {	
+		debug->AddConsoleCommand("changetext", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
+			if (this->parent->name == s.at(0)) {
+				if (s.size() > 1) {
+					this->SetText(s.at(1));
+					this->debug->WriteToConsole("Set Text " + s.at(0) + " changed to " + s.at(1));
+				}
+				else {
+					if (s.size() <= 0) { this->debug->WriteToConsole("Missing Text"); }
+				}
+			}
+		}));
+	}
 	void SetText(std::string t) { text = t;	}
 	std::string GetText() { return text; }
 	void SetPosition(float x, float y) { position = glm::vec2(x, y); }
