@@ -5,6 +5,8 @@ DebugHelper::DebugHelper(IEngineCore* enginePtr)
 	textWriter = new TextWriter();
 	textWriter->m_engineInterfacePtr = enginePtr;
 
+	textParser = new TextParser();
+
 	EventHandler::Func displayMessage = [this] { this->ToggleDisplayConsole(); };
 	EventHandler displayListener(displayMessage, "ToggleDebugConsole");
 	keyEvent->addHandler(displayListener);
@@ -40,10 +42,16 @@ void DebugHelper::ToggleDisplayConsole() {
 
 void DebugHelper::HandleInputLine(int i) {
 	char c = i;
-	consoleInput.append(&c);
+	consoleInput += c;
 }
 
 void DebugHelper::ProcessInputLine() {
+	if (textParser->ParseToken(consoleInput)) {
+		WriteToConsole(consoleInput);
+	}
+	else {
+		WriteToConsole("Command Not Recognised");
+	}
 	consoleInput = "";
 }
 
@@ -64,4 +72,8 @@ void DebugHelper::render()
 void DebugHelper::WriteToConsole(std::string message)
 {
 	consoleLines.push_back(message);
+}
+
+void DebugHelper::AddConsoleCommand(std::string commandName, TextParser::InterpFunc f) {
+	textParser->AddToken(commandName, f);
 }

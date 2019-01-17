@@ -6,8 +6,9 @@ Game::Game() {
 
 }
 
-Game::Game(string levelsFile)
+Game::Game(string levelsFile, DebugHelper* debug)
 {
+	debugHelper = debug;
 	loadFromJSON(levelsFile);
 
 	//Scene* temp = new Scene();
@@ -81,9 +82,9 @@ bool Game::loadFromJSON(string levelsFile) {
 	for (unsigned int i = 0; i < levels.size(); i++) {
 		try {
 			Scene* temp = new Scene();
+			temp->debug = debugHelper;
 			temp->loadLevelJSON(levels[i]["Address"].asString());
 			string name = levels[i]["Name"].asString();
-			temp->debug = debugHelper;
 			sceneList[name] = temp;
 			if (levels[i]["StartingScene"].asBool()) {
 				m_currentScene = sceneList[name];

@@ -25,7 +25,7 @@ public:
 	DebugHelper * debugHelper;
 	IEngineCore* m_engineInterfacePtr;
 	Game();
-	Game(string levelsFile);
+	Game(string levelsFile, DebugHelper* debug);
 	bool loadFromJSON(string levelsFile);
 	void ChangeScene(string sceneName);
 	void init();

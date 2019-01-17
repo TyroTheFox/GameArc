@@ -33,6 +33,8 @@ public:
 			model = parent->getComponent<ModelComponent>();
 		}
 		buildEvents();
+
+		debug->AddConsoleCommand("setplayerspeed", TextParser::InterpFunc([this](std::string s) {this->movementSpeed = std::stof(s); this->debug->WriteToConsole("Player Movement Speed set to" + s); }));
 	}
 	/*PlayerComponent(GameObject* p) : parent(p), camera(new CameraComponent(p)), movementSpeed(0.5f){
 		if (parent->getComponent<TransformComponent>() != nullptr) {

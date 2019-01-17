@@ -3,11 +3,41 @@
 #include <vector>
 #include "IEngineCore.h"
 #include "TextWriter.h"
+#include <iostream>
+#include <sstream>
+#include <map>
+#include <functional>
 #include "global.h"
 
 extern Event* keyEvent;
 class IEngineCore;
 class TextWriter;
+
+class TextParser {
+public:
+	using InterpFunc = std::function<void(std::string)>;
+private:
+	std::map<std::string, InterpFunc> parsedTokens;
+public:
+	TextParser() {
+	}
+	void AddToken(std::string token, InterpFunc f) {
+		parsedTokens[token] = f;
+	}
+	bool ParseToken(std::string command) {
+		std::stringstream ss(command);
+		std::string token, argToken;
+		ss >> token;
+		std::getline(ss, argToken);
+		if (parsedTokens.count(token) > 0) {
+			parsedTokens[token](argToken);
+		}
+		else {
+			return false;
+		}
+		return true;
+	}
+};
 
 class DebugHelper {
 private:
@@ -17,7 +47,8 @@ private:
 	int lineLimit = 5;
 	float timePassed = 0.0f, removeConsoleLine = 5.0f;
 
-	std::string consoleInput;
+	std::string consoleInput = "";
+	TextParser* textParser;
 public:
 	bool displayConsole = false;
 	DebugHelper(IEngineCore* enginePtr);
@@ -27,4 +58,5 @@ public:
 	void update(float dt);
 	void render();
 	void WriteToConsole(std::string message);
+	void AddConsoleCommand(std::string commandName, TextParser::InterpFunc f);
 };

@@ -19,8 +19,8 @@ Scene::Scene()
 
 template<typename T> void Scene::attachComponent(GameObject* object, const Json::Value& p_component) {
 	T * component = new T();
-	component->BuildFromJson(p_component);
 	component->debug = debug;
+	component->BuildFromJson(p_component);
 	object->addComponent<T>(component);
 }
 
