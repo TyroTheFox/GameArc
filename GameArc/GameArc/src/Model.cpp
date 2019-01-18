@@ -21,6 +21,7 @@ void Model::loadModel(string filepath)
 	}
 	else {
 		Assimp::Importer import;
+		
 		const aiScene *scene = import.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -192,6 +193,6 @@ unsigned int Model::TextureFromFile(const char* filepath, const string& director
 		std::cout << "Texture failed to load from: " << filepath << std::endl;
 		stbi_image_free(textureData);
 	}
-
+	
 	return textureID;
 }

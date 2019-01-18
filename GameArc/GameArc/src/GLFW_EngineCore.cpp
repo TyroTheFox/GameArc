@@ -101,6 +101,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 
 void GLFW_EngineCore::renderColouredBackground(float r, float g, float b)
 {
+	phong->use();
 	glClearColor(r, g, b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -139,13 +140,20 @@ void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, i
 
 void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 {
-	glUseProgram(m_defaultShaderProgram);
+	Shader* temp;
+	if (model->GetTextureSize() > 0) {
+		temp = texturePhong;
+	}
+	else {
+		temp = phong;
+	}
+	temp->use();
 	// set the model component of our shader to the object model
-	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-	model->render(m_defaultShaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+	model->render(temp->ID);
 }
 
-void GLFW_EngineCore::drawText(std::string text, Shader* shader, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
+void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
 								std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO)
 {
 
@@ -155,9 +163,9 @@ void GLFW_EngineCore::drawText(std::string text, Shader* shader, GLfloat x, GLfl
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Activate corresponding render state	
-	shader->use();
-	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniform3f(glGetUniformLocation(shader->ID, "textColor"), color.x, color.y, color.z);
+	textWriterShader->use();
+	glUniformMatrix4fv(glGetUniformLocation(textWriterShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniform3f(glGetUniformLocation(textWriterShader->ID, "textColor"), color.x, color.y, color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 
@@ -201,71 +209,78 @@ void GLFW_EngineCore::drawText(std::string text, Shader* shader, GLfloat x, GLfl
 // loading some default shaders to get things up and running
 void GLFW_EngineCore::setDefaultShaders()
 {
-	// Load contents of vertex file
-	std::ifstream inFile("assets/shaders/defaultShader.vert");
-	if (!inFile) {
-		fprintf(stderr, "Error opening file: shader\n");
-		exit(1);
-	}
+	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
 
-	std::stringstream code;
-	code << inFile.rdbuf();
-	inFile.close();
-	std::string codeStr(code.str());
-	const GLchar* vertex_shader[] = { codeStr.c_str() };
+	//// Load contents of vertex file
+	//std::ifstream inFile("assets/shaders/defaultShader.vert");
+	//if (!inFile) {
+	//	fprintf(stderr, "Error opening file: shader\n");
+	//	exit(1);
+	//}
 
-	// Load contents of fragment file
-	std::ifstream inFile2("assets/shaders/defaultShader.frag");
-	if (!inFile2) {
-		fprintf(stderr, "Error opening file: shader\n");
-		exit(1);
-	}
+	//std::stringstream code;
+	//code << inFile.rdbuf();
+	//inFile.close();
+	//std::string codeStr(code.str());
+	//const GLchar* vertex_shader[] = { codeStr.c_str() };
 
-	std::stringstream code2;
-	code2 << inFile2.rdbuf();
-	inFile2.close();
-	std::string codeStr2(code2.str());
-	const GLchar* fragment_shader[] = { codeStr2.c_str() };
-	
-	// vertex shader
-	int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, vertex_shader, NULL);
-	glCompileShader(vertexShader);	
-	// check for shader compile errors
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-	// fragment shader
-	int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, fragment_shader, NULL);
-	glCompileShader(fragmentShader);
-	// check for shader compile errors
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-	// link shaders
-	m_defaultShaderProgram = glCreateProgram();
-	glAttachShader(m_defaultShaderProgram, vertexShader);
-	glAttachShader(m_defaultShaderProgram, fragmentShader);
-	glLinkProgram(m_defaultShaderProgram);
-	// check for linking errors
-	glGetProgramiv(m_defaultShaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(m_defaultShaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	//// Load contents of fragment file
+	//std::ifstream inFile2("assets/shaders/defaultShader.frag");
+	//if (!inFile2) {
+	//	fprintf(stderr, "Error opening file: shader\n");
+	//	exit(1);
+	//}
 
-	glUseProgram(m_defaultShaderProgram);
+	texturePhong = new Shader("assets/shaders/surfaceTexture.vert", "assets/shaders/surfaceTexture.frag");
+
+	// Compile and setup the shader
+	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
+
+	//std::stringstream code2;
+	//code2 << inFile2.rdbuf();
+	//inFile2.close();
+	//std::string codeStr2(code2.str());
+	//const GLchar* fragment_shader[] = { codeStr2.c_str() };
+	//
+	//// vertex shader
+	//int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	//glShaderSource(vertexShader, 1, vertex_shader, NULL);
+	//glCompileShader(vertexShader);	
+	//// check for shader compile errors
+	//int success;
+	//char infoLog[512];
+	//glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	//if (!success)
+	//{
+	//	glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+	//	std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+	//}
+	//// fragment shader
+	//int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	//glShaderSource(fragmentShader, 1, fragment_shader, NULL);
+	//glCompileShader(fragmentShader);
+	//// check for shader compile errors
+	//glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	//if (!success)
+	//{
+	//	glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+	//	std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+	//}
+	//// link shaders
+	//m_defaultShaderProgram = glCreateProgram();
+	//glAttachShader(m_defaultShaderProgram, vertexShader);
+	//glAttachShader(m_defaultShaderProgram, fragmentShader);
+	//glLinkProgram(m_defaultShaderProgram);
+	//// check for linking errors
+	//glGetProgramiv(m_defaultShaderProgram, GL_LINK_STATUS, &success);
+	//if (!success) {
+	//	glGetProgramInfoLog(m_defaultShaderProgram, 512, NULL, infoLog);
+	//	std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	//}
+	//glDeleteShader(vertexShader);
+	//glDeleteShader(fragmentShader);
+
+	//glUseProgram(m_defaultShaderProgram);
 }
 
 // a simple function to initialise a cube model in memory
@@ -336,26 +351,38 @@ void GLFW_EngineCore::initCubeModel()
 
 void GLFW_EngineCore::setCamera(const Camera* cam)
 {
-	glUseProgram(m_defaultShaderProgram);
+	phong->use();
 	// set the view and projection components of our shader to the camera values
 	glm::mat4 projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 1000.0f);
-	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
+	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "objectColour"), 1.0f, 0.6f, 0.61f);
-	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "lightColour"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(glGetUniformLocation(m_defaultShaderProgram, "lightPos"), 0.0f, 100.0f, 10.0f);
-	glUniform3fv(glGetUniformLocation(m_defaultShaderProgram, "viewPos"), 1, glm::value_ptr(cam->position()));
+	glUniform3f(glGetUniformLocation(phong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
+	glUniform3f(glGetUniformLocation(phong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
+	glUniform3f(glGetUniformLocation(phong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
+	glUniform3fv(glGetUniformLocation(phong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
+	texturePhong->use();
+	// set the view and projection components of our shader to the camera values
+	projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 1000.0f);
+	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
+
+	// be sure to activate shader when setting uniforms/drawing objects
+	glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
+	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
+	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
+	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
 	
 }
 
 void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)
 {
-	glUseProgram(m_defaultShaderProgram);
+	glUseProgram(phong->ID);
 	// set the model component of our shader to the cube model
-	glUniformMatrix4fv(glGetUniformLocation(m_defaultShaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 	// the only thing we can draw so far is the cube, so we know it is bound already
 	// this will obviously have to change later

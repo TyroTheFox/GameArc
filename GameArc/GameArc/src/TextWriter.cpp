@@ -1,9 +1,6 @@
 #include "TextWriter.h"
 
 TextWriter::TextWriter() {
-	// Compile and setup the shader
-	shader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
-
 	// FreeType
 	FT_Library ft;
 	// All functions return a value different than 0 whenever an error occurred
@@ -90,7 +87,7 @@ void TextWriter::SetEnginePtr(IEngineCore * enginePtr) {
 }
 
 void TextWriter::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color) {
-	m_engineInterfacePtr->drawText(text, shader, x, y, scale, color, Characters, VAO, VBO);
+	m_engineInterfacePtr->drawText(text, x, y, scale, color, Characters, VAO, VBO);
 }
 
 //void TextWriter::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)

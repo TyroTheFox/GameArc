@@ -13,6 +13,7 @@ extern ModelHandler* modelHandler;
 class Model
 {
 public:
+	bool textureLoaded = false;
 	Model();
 	Model(string filepath);
 
@@ -21,6 +22,7 @@ public:
 	static unsigned int TextureFromFile(const char* filepath, const string& directory, bool gamma = false);
 	void loadModel(string path);
 	std::vector<Mesh> getMeshes();
+	inline int GetTextureSize() { return v_textures.size(); }
 private:
 
 	std::vector<Mesh> v_meshes;

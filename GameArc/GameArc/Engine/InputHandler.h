@@ -58,13 +58,13 @@ private:
 	bool disableInput = false;
 public:
 	InputHandler(){
-		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
-		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
-		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
-		m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerMovement", "moveRight");
-		m_controlMapping[(int)'E'] = new KeyInputEvent("PlayerMovement", "switchCamera");
+		//m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
+		//m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
+		//m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
+		//m_controlMapping[(int)'D'] = new KeyInputEvent("PlayerMovement", "moveRight");
+		//m_controlMapping[(int)'E'] = new KeyInputEvent("PlayerMovement", "switchCamera");
 
-		m_controlMapping[(int)'Q'] = new KeyInputEvent("ChangeScene", "CubeLevel");
+		//m_controlMapping[(int)'Q'] = new KeyInputEvent("ChangeScene", "CubeLevel");
 	}
 	InputHandler(string inputFile)
 	{
@@ -73,12 +73,17 @@ public:
 		KeyInputFuncEvent* keyEvent = new KeyInputFuncEvent("ToggleDebugConsole");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[(int)'`'] = keyEvent;
+		//Debug - Enter
 		keyEvent = new KeyInputFuncEvent("DebugEnterHit");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[257] = keyEvent;
+		//Debug - Backspace
 		keyEvent = new KeyInputFuncEvent("DebugBackspaceHit");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[259] = keyEvent;
+		//Debug - Right Shift
+		keyEvent = new KeyInputFuncEvent("DebugShiftHit");
+		m_debugMapping[344] = keyEvent;
 	}
 
 	void setDisableInput(bool dI) {

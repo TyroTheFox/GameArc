@@ -11,18 +11,18 @@ public:
 	ModelComponent() {}
 	ModelComponent(Model* m) : model(m) {}
 	void OnSetUp() override {
-		//debug->AddConsoleCommand("changemodel", TextParser::InterpFunc([this](std::vector<std::string> s) {
-		//	if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
-		//	if (this->parent->name == s.at(0)) {
-		//		if (s.size() > 1) {
-		//			model = new Model(s.at(1));
-		//			this->debug->WriteToConsole("Model " + s.at(0) + " changed to " + s.at(1));
-		//		}
-		//		else {
-		//			if (s.size() <= 0) { this->debug->WriteToConsole("Need a model directory"); }
-		//		}
-		//	}
-		//}));
+		debug->AddConsoleCommand("changemodel", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
+			if (this->parent->name == s.at(0)) {
+				if (s.size() > 1) {
+					model = new Model(s.at(1));
+					this->debug->WriteToConsole("Model " + s.at(0) + " changed to " + s.at(1));
+				}
+				else {
+					if (s.size() <= 0) { this->debug->WriteToConsole("Need a model directory"); }
+				}
+			}
+		}));
 	}
 	void OnUpdate(float dt) override {}
 	void OnRender(IEngineCore* m_engineInterfacePtr) override {
@@ -38,6 +38,13 @@ public:
 				const Json::Value& fileName = componentJSON["fileName"];
 				model = new Model(fileName.asCString());
 			}
+			/*if (componentJSON.isMember("textureFileName") && componentJSON.isMember("textureDirectory")) {
+				const Json::Value& fileName = componentJSON["textureFileName"];
+				const Json::Value& directory = componentJSON["textureDirectory"];
+				if (model != nullptr) {
+					model->TextureFromFile(fileName.asCString(), directory.asCString());
+				}
+			}*/
 			if (componentJSON.isMember("active")) {
 				const Json::Value& a = componentJSON["active"];
 				active = a.asBool();

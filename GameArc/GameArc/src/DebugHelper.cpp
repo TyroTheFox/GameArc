@@ -22,6 +22,10 @@ DebugHelper::DebugHelper(IEngineCore* enginePtr)
 	EventHandler::Func consoleBackspaceHit = [this] { this->DeleteLastChar(); };
 	EventHandler consoleBackspaceHitListener(consoleBackspaceHit, "DebugBackspaceHit");
 	keyEvent->addHandler(consoleBackspaceHitListener);
+
+	EventHandler::FuncInt consoleShiftHit = [this](int i) { caps = i; };
+	EventHandler consoleShiftHitListener(consoleShiftHit, "DebugShiftHit");
+	keyEvent->addHandler(consoleShiftHitListener);
 }
 
 void DebugHelper::update(float dt)
@@ -46,11 +50,13 @@ void DebugHelper::ToggleDisplayConsole() {
 
 void DebugHelper::HandleInputLine(int i) {
 	char c = i;
+	if (caps) {
+		c = toupper(c);
+	}
 	consoleInput += c;
 }
 
-void DebugHelper::DeleteLastChar() { if (consoleInput.size() > 0) {consoleInput.pop_back(); }
-}
+void DebugHelper::DeleteLastChar() { if (consoleInput.size() > 0) { consoleInput.pop_back(); } }
 
 void DebugHelper::ProcessInputLine() {
 	if (textParser->ParseToken(consoleInput)) {

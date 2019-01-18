@@ -24,6 +24,7 @@ extern InputHandler* inputHandler;
 class GLFW_EngineCore : public IEngineCore
 {
 public:
+	float delta = 0;
 	~GLFW_EngineCore() override;
 
 	bool initWindow(int width, int height, std::string windowName) override;
@@ -33,11 +34,14 @@ public:
 	void setCamera(const Camera* cam) override;
 	void drawCube(const glm::mat4& modelMatrix) override;
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
-	void drawText(std::string text, Shader * shader, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
+	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
 
 private:
 	GLFWwindow* m_window;
-	GLuint m_defaultShaderProgram;
+	//GLuint m_defaultShaderProgram;
+	Shader* phong;
+	Shader* texturePhong;
+	Shader* textWriterShader;
 	
 	static int m_screenWidth;
 	static int m_screenHeight;
@@ -46,7 +50,7 @@ private:
 	static const int m_keyBufferSize = 400;
 
 	std::chrono::steady_clock clock;
-	float delta = 0;
+	
 
 	static void mouseMoveCallbackEvent(GLFWwindow* window, double xPos, double yPos);
 	static void keyCallbackEvent(GLFWwindow* window, int key, int scancode, int action, int mods);

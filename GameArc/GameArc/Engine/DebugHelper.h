@@ -55,6 +55,7 @@ private:
 
 	std::string consoleInput = "";
 	TextParser* textParser;
+	bool caps = false;
 public:
 	bool displayConsole = false;
 	DebugHelper(IEngineCore* enginePtr);

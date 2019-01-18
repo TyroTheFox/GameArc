@@ -27,7 +27,6 @@ struct Character {
 class TextWriter {
 public:
 	IEngineCore * m_engineInterfacePtr;
-	Shader* shader;
 	TextWriter();
 	void DrawNormalText(std::string text, float x, float y, float scale);
 	void DrawErrorText(std::string text, float x, float y, float scale);
