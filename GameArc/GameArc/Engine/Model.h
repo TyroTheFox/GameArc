@@ -14,6 +14,7 @@ class Model
 {
 public:
 	bool textureLoaded = false;
+	bool loadedFromHandler = false;
 	Model();
 	Model(string filepath);
 

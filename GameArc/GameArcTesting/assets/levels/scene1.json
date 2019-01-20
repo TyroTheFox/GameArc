@@ -1,0 +1,103 @@
+{
+  "GameObjects": [
+    {
+      "components": [
+        {
+          "class": "ColourComponent",
+          "rgba": [ 0, 0, 0, 1 ]
+        }
+      ],
+      "visible": false,
+      "name": "background"
+    },
+    {
+      "components": [
+        {
+          "class": "EventCameraComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ -7, -10, -10 ],
+          "startingPitch": 0.6,
+          "startingYaw": -0.6,
+          "SwitchTo": "CubeLevel"
+        }
+      ],
+      "visible": true,
+      "name": "cube00"
+    },
+    {
+      "components": [
+        {
+          "class": "TextUIComponent",
+          "position": [ 480, 200 ],
+          "text": "GameArc Engine"
+        }
+      ],
+      "visible": true,
+      "name": "text00"
+    },
+    {
+      "components": [
+        {
+          "class": "TextUIComponent",
+          "position": [ 480, 170 ],
+          "text": "Push Space To Begin",
+          "scale": 0.5
+        }
+      ],
+      "visible": true,
+      "name": "text01"
+    },
+    {
+      "components": [
+        {
+          "class": "TextUIComponent",
+          "position": [ 10, 570 ],
+          "text": "WASD - Move",
+          "scale": 0.5
+        }
+      ],
+      "visible": true,
+      "name": "text02"
+    },
+    {
+      "components": [
+        {
+          "class": "TextUIComponent",
+          "position": [ 10, 550 ],
+          "text": "Mouse - Look",
+          "scale": 0.5
+        }
+      ],
+      "visible": true,
+      "name": "text03"
+    },
+    {
+      "components": [
+        {
+          "class": "TextUIComponent",
+          "position": [ 10, 530 ],
+          "text": "` - Console",
+          "scale": 0.5
+        }
+      ],
+      "visible": true,
+      "name": "text04"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ 0, 0, 0 ],
+          "scale": [ 0.5, 0.5, 0.5 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/CubeLand.obj"
+        }
+      ],
+      "visible": true,
+      "name": "cubeLevel"
+    }
+  ]
+}

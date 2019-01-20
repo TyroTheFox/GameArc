@@ -18,6 +18,7 @@ void Model::loadModel(string filepath)
 		v_meshes = temp.v_meshes;
 		directory = temp.directory;
 		v_textures = temp.v_textures;
+		loadedFromHandler = true;
 	}
 	else {
 		Assimp::Importer import;

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameArc", "GameArc\GameArc.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Testbed", "Testbed\Testbed.vcxproj", "{CE5A30E7-9A27-4524-B1B2-1D6957F0F2C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameArcTesting", "GameArcTesting\GameArcTesting.vcxproj", "{9071CAED-D7F3-46CA-817A-5EA964818EF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -37,6 +39,16 @@ Global
 		{CE5A30E7-9A27-4524-B1B2-1D6957F0F2C4}.Release|x64.Build.0 = Release|x64
 		{CE5A30E7-9A27-4524-B1B2-1D6957F0F2C4}.Release|x86.ActiveCfg = Release|Win32
 		{CE5A30E7-9A27-4524-B1B2-1D6957F0F2C4}.Release|x86.Build.0 = Release|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Debug|ARM.ActiveCfg = Debug|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Debug|x64.ActiveCfg = Debug|x64
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Debug|x64.Build.0 = Debug|x64
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Debug|x86.ActiveCfg = Debug|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Debug|x86.Build.0 = Debug|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Release|ARM.ActiveCfg = Release|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Release|x64.ActiveCfg = Release|x64
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Release|x64.Build.0 = Release|x64
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Release|x86.ActiveCfg = Release|Win32
+		{9071CAED-D7F3-46CA-817A-5EA964818EF8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <iostream>
+#include <memory>
 
 class EventHandler {
 public:
@@ -45,18 +46,22 @@ public:
 	}
 
 	void operator()() {
+		if(this->_func != nullptr)
 		this->_func();
 	}
 
 	void operator()(int i) {
+		if (this->_funcInt != nullptr)
 		this->_funcInt(i);
 	}
 
 	void operator()(std::string s) {
+		if (this->_funcMessage != nullptr)
 		this->_funcMessage(s);
 	}
 
 	void operator()(glm::vec2 vec) {
+		if (this->_funcVec2 != nullptr)
 		this->_funcVec2(vec);
 	}
 
@@ -93,19 +98,19 @@ public:
 	}
 
 	void notifyHandler(const std::string name) {
-		(*handlers[name])();
+		if(handlers[name] != nullptr) (*handlers[name])();
 	}
 
 	void notifyHandlerWithMessage(const std::string name, const std::string message) {
-		(*handlers[name])(message);
+		if (handlers[name] != nullptr) (*handlers[name])(message);
 	}
 
 	void notifyHandlerWithVec2(const std::string name, const glm::vec2 vec) {
-		(*handlers[name])(vec);
+		if (handlers[name] != nullptr) (*handlers[name])(vec);
 	}
 
 	void notifyHandlerWithint(const std::string name, const int i) {
-		(*handlers[name])(i);
+		if (handlers[name] != nullptr) (*handlers[name])(i);
 	}
 
 	void addHandler(const EventHandler &handler) {

@@ -19,6 +19,7 @@ public:
 	virtual ~InputCommand() {}
 	bool onKeyUp = false;
 	bool keyPressed = false;
+	std::string eventType;
 	virtual void execute() = 0;
 };
 
@@ -27,10 +28,22 @@ class KeyInputEvent : public InputCommand
 public:
 	std::string eventName;
 	std::string message;
-	KeyInputEvent(std::string eN, std::string m) : eventName(eN), message(m) {}
-	KeyInputEvent(std::string eN, std::string m, bool onUp) : eventName(eN), message(m) { onKeyUp = onUp; }
+	KeyInputEvent(std::string eN, std::string m) : eventName(eN), message(m) { eventType = "KeyInputEvent"; }
+	KeyInputEvent(std::string eN, std::string m, bool onUp) : eventName(eN), message(m) { onKeyUp = onUp; eventType = "KeyInputEvent"; }
 	void execute() override {
 		keyEvent->notifyHandlerWithMessage(eventName, message);
+	}
+};
+
+class KeyInputIntEvent : public InputCommand
+{
+public:
+	std::string eventName;
+	int message;
+	KeyInputIntEvent(std::string eN, int m) : eventName(eN) { message = m; eventType = "KeyInputIntEvent"; }
+	KeyInputIntEvent(std::string eN, int m, bool onUp) : eventName(eN), message(m) { message = m; onKeyUp = onUp; eventType = "KeyInputIntEvent"; }
+	void execute() override {
+		keyEvent->notifyHandlerWithint(eventName, message);
 	}
 };
 
@@ -38,8 +51,8 @@ class KeyInputFuncEvent : public InputCommand
 {
 public:
 	std::string eventName;
-	KeyInputFuncEvent(std::string eN) : eventName(eN){}
-	KeyInputFuncEvent(std::string eN, bool onUp) : eventName(eN) { onKeyUp = onUp; }
+	KeyInputFuncEvent(std::string eN) : eventName(eN){ eventType = "KeyInputFuncEvent"; }
+	KeyInputFuncEvent(std::string eN, bool onUp) : eventName(eN) { onKeyUp = onUp; eventType = "KeyInputFuncEvent"; }
 	void execute() override {
 		keyEvent->notifyHandler(eventName);
 	}
@@ -48,15 +61,14 @@ public:
 class InputHandler
 {
 private:
-	std::map<int, InputCommand*> m_controlMapping;
-	std::map<int, InputCommand*> m_debugMapping;
-
 	std::string mouseEventName = "PlayerMouseXY";
 
 	glm::vec2 oldMouseXY = glm::vec2(0);
 
 	bool disableInput = false;
 public:
+	std::map<int, InputCommand*> m_controlMapping;
+	std::map<int, InputCommand*> m_debugMapping;
 	InputHandler(){
 		//m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
 		//m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
@@ -65,11 +77,16 @@ public:
 		//m_controlMapping[(int)'E'] = new KeyInputEvent("PlayerMovement", "switchCamera");
 
 		//m_controlMapping[(int)'Q'] = new KeyInputEvent("ChangeScene", "CubeLevel");
+		
+		setUpDebugControls();
 	}
 	InputHandler(string inputFile)
 	{
 		loadFromJSON(inputFile);
+		setUpDebugControls();
+	}
 
+	void setUpDebugControls() {
 		KeyInputFuncEvent* keyEvent = new KeyInputFuncEvent("ToggleDebugConsole");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[(int)'`'] = keyEvent;
@@ -82,8 +99,8 @@ public:
 		keyEvent->onKeyUp = true;
 		m_debugMapping[259] = keyEvent;
 		//Debug - Right Shift
-		keyEvent = new KeyInputFuncEvent("DebugShiftHit");
-		m_debugMapping[344] = keyEvent;
+		KeyInputIntEvent* keyIntEvent = new KeyInputIntEvent("DebugShiftHit", 1);
+		m_debugMapping[344] = keyIntEvent;
 	}
 
 	void setDisableInput(bool dI) {

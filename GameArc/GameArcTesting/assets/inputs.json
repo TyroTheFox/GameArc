@@ -1,0 +1,36 @@
+{
+  "Inputs": [
+    {
+      "Key": " ",
+      "EventName": "ChangeScene",
+      "EventMessage": "CubeLevel",
+      "OnKeyUp": true
+    },
+    {
+      "Key": "W",
+      "EventName": "PlayerMovement",
+      "EventMessage": "moveForwards"
+    },
+    {
+      "Key": "S",
+      "EventName": "PlayerMovement",
+      "EventMessage": "moveBackwards"
+    },
+    {
+      "Key": "A",
+      "EventName": "PlayerMovement",
+      "EventMessage": "moveLeft"
+    },
+    {
+      "Key": "D",
+      "EventName": "PlayerMovement",
+      "EventMessage": "moveRight"
+    },
+    {
+      "Key": "Q",
+      "EventName": "PlayerMovement",
+      "EventMessage": "switchCamera",
+      "OnKeyUp": true
+    }
+  ]
+}

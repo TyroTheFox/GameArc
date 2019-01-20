@@ -23,7 +23,7 @@
     <ProjectGuid>{9071CAED-D7F3-46CA-817A-5EA964818EF8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameArcTesting</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -163,9 +163,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\unittest1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Font Include="assets\fonts\GenericMobileSystem.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -181,9 +178,15 @@
     <None Include="assets\shaders\TextWriter.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\GameArc\bin\Debug\GameArc.lib">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </Library>
+    <ClCompile Include="src\GLAD\glad.c" />
+    <ClCompile Include="src\stb_image.c" />
+    <ClCompile Include="src\unittest1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\ft2build.h" />
+    <ClInclude Include="include\json-forwards.h" />
+    <ClInclude Include="include\json.h" />
+    <ClInclude Include="include\stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
