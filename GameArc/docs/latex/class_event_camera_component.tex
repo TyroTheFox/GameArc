@@ -1,0 +1,130 @@
+\hypertarget{class_event_camera_component}{\section{Event\+Camera\+Component Class Reference}
+\label{class_event_camera_component}\index{Event\+Camera\+Component@{Event\+Camera\+Component}}
+}
+
+
+External event object.  
+
+
+
+
+{\ttfamily \#include $<$Event\+Camera\+Component.\+h$>$}
+
+Inheritance diagram for Event\+Camera\+Component\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_event_camera_component}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_event_camera_component_abc07b7411c3fc4976b9b1c2d986cfbfc}{\hyperlink{class_event_camera_component_abc07b7411c3fc4976b9b1c2d986cfbfc}{Event\+Camera\+Component} ()}\label{class_event_camera_component_abc07b7411c3fc4976b9b1c2d986cfbfc}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_event}{Event} handler for sending change scene message. \end{DoxyCompactList}\item 
+\hypertarget{class_event_camera_component_ac4fb242d4e7c859481e520bd990e7f3d}{\hyperlink{class_event_camera_component_ac4fb242d4e7c859481e520bd990e7f3d}{Event\+Camera\+Component} (\hyperlink{class_game_object}{Game\+Object} $\ast$p)}\label{class_event_camera_component_ac4fb242d4e7c859481e520bd990e7f3d}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_event_camera_component_a603f483159f572389fd4f507e8cde88c}{On\+Set\+Up} () override
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_event_camera_component_af7f1cde6285041f3d33707c52c52261e}{set\+Parent} (\hyperlink{class_game_object}{Game\+Object} $\ast$p)
+\item 
+void \hyperlink{class_event_camera_component_a6a2c0f4293f3f7d35296c9e00709ad40}{build\+Events} ()
+\item 
+void \hyperlink{class_event_camera_component_aa834641aeb7cc8ae509f6cc997a44c99}{On\+Update} (float dt) override
+\begin{DoxyCompactList}\small\item\em Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
+\hypertarget{class_event_camera_component_a88ef296a079e3021d756ef03c56cfe70}{void \hyperlink{class_event_camera_component_a88ef296a079e3021d756ef03c56cfe70}{On\+Render} (\hyperlink{class_i_engine_core}{I\+Engine\+Core} $\ast$m\+\_\+engine\+Interface\+Ptr) override}\label{class_event_camera_component_a88ef296a079e3021d756ef03c56cfe70}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to update component variables. \end{DoxyCompactList}\item 
+void \hyperlink{class_event_camera_component_a2eb23cc4f6598a99afacf89d999476e2}{On\+Change\+Scene} (const std\+::string m)
+\begin{DoxyCompactList}\small\item\em Called on render call, doesn't do anything. \end{DoxyCompactList}\item 
+\hypertarget{class_event_camera_component_a0de9c713b1c9cbb98b8528080fb81adb}{void \hyperlink{class_event_camera_component_a0de9c713b1c9cbb98b8528080fb81adb}{On\+Message} (const std\+::string m) override}\label{class_event_camera_component_a0de9c713b1c9cbb98b8528080fb81adb}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to draw component variables. \end{DoxyCompactList}\item 
+void \hyperlink{class_event_camera_component_a47edd4b0e80549fa677b3ff02465e62e}{Build\+From\+Json} (const \hyperlink{class_json_1_1_value}{Json\+::\+Value} \&component\+J\+S\+O\+N) override
+\begin{DoxyCompactList}\small\item\em Called on event call, does nothing. \end{DoxyCompactList}\item 
+\hypertarget{class_event_camera_component_ae8ffe14e924fbd153eb2101acf180fed}{\hyperlink{class_camera}{Camera} $\ast$ {\bfseries Get\+Camera} ()}\label{class_event_camera_component_ae8ffe14e924fbd153eb2101acf180fed}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+External event object. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_event_camera_component_a6a2c0f4293f3f7d35296c9e00709ad40}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!build\+Events@{build\+Events}}
+\index{build\+Events@{build\+Events}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{build\+Events}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::build\+Events (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_event_camera_component_a6a2c0f4293f3f7d35296c9e00709ad40}
+Builds camera events for changing scene \hypertarget{class_event_camera_component_a47edd4b0e80549fa677b3ff02465e62e}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!Build\+From\+Json@{Build\+From\+Json}}
+\index{Build\+From\+Json@{Build\+From\+Json}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{Build\+From\+Json}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::\+Build\+From\+Json (
+\begin{DoxyParamCaption}
+\item[{const {\bf Json\+::\+Value} \&}]{component\+J\+S\+O\+N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_event_camera_component_a47edd4b0e80549fa677b3ff02465e62e}
+
+
+Called on event call, does nothing. 
+
+Builds component from J\+S\+O\+N values 
+
+Implements \hyperlink{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}{Component}.
+
+\hypertarget{class_event_camera_component_a2eb23cc4f6598a99afacf89d999476e2}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!On\+Change\+Scene@{On\+Change\+Scene}}
+\index{On\+Change\+Scene@{On\+Change\+Scene}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{On\+Change\+Scene}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::\+On\+Change\+Scene (
+\begin{DoxyParamCaption}
+\item[{const std\+::string}]{m}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_event_camera_component_a2eb23cc4f6598a99afacf89d999476e2}
+
+
+Called on render call, doesn't do anything. 
+
+Notifies event object with the next scene the \hyperlink{class_game}{Game} class should switch to \hypertarget{class_event_camera_component_a603f483159f572389fd4f507e8cde88c}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!On\+Set\+Up@{On\+Set\+Up}}
+\index{On\+Set\+Up@{On\+Set\+Up}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{On\+Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::\+On\+Set\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_event_camera_component_a603f483159f572389fd4f507e8cde88c}
+
+
+Constructor. 
+
+Called when added to object, sets up component events 
+
+Implements \hyperlink{class_component_a27f86131a87b858143069631fade78fb}{Component}.
+
+\hypertarget{class_event_camera_component_aa834641aeb7cc8ae509f6cc997a44c99}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!On\+Update@{On\+Update}}
+\index{On\+Update@{On\+Update}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{On\+Update}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::\+On\+Update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_event_camera_component_aa834641aeb7cc8ae509f6cc997a44c99}
+
+
+Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. 
+
+Called on update call, doesn't do anything 
+
+Implements \hyperlink{class_component_ab71d7f4b6d8792287a9b0c9e045acbe0}{Component}.
+
+\hypertarget{class_event_camera_component_af7f1cde6285041f3d33707c52c52261e}{\index{Event\+Camera\+Component@{Event\+Camera\+Component}!set\+Parent@{set\+Parent}}
+\index{set\+Parent@{set\+Parent}!Event\+Camera\+Component@{Event\+Camera\+Component}}
+\subsubsection[{set\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}void Event\+Camera\+Component\+::set\+Parent (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\+Object} $\ast$}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_event_camera_component_af7f1cde6285041f3d33707c52c52261e}
+Sets camera parent 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_event_camera_component_8h}{Event\+Camera\+Component.\+h}\end{DoxyCompactItemize}

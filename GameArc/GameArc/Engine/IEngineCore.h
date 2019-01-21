@@ -1,10 +1,18 @@
 #pragma once
+/**
+* \class IEngine Core
+* \file IEngineCore.h
+* \brief A basis template for engine cores
+*
+* A template to base all engine cores on and allow for the engine core to be swapped out whenever needed
+*/
 #include <string>
 #include <iostream>
 #include "Model.h"
 #include "TextWriter.h"
 #include <glm/mat4x4.hpp>
 
+///Forward Declared
 class Camera;
 class Game;
 class Model;
@@ -14,15 +22,14 @@ class IEngineCore
 {
 public:
 
-	virtual ~IEngineCore() {}
+	virtual ~IEngineCore() {}///Deconstructor
 
-	virtual bool initWindow(int width, int height, std::string windowName) = 0;
-	virtual bool runEngine(Game& game) = 0;
+	virtual bool initWindow(int width, int height, std::string windowName) = 0;///Initialise the game window and variables
+	virtual bool runEngine(Game& game) = 0;///Begin game update and render loops
 
-	// some simple drawing tools - will want to move these to a proper renderer class later
-	virtual void renderColouredBackground(float r, float g, float b) = 0;
-	virtual	void setCamera(const Camera* cam) = 0;
-	virtual void drawCube(const glm::mat4& modelMatrix) = 0;
-	virtual void drawModel(Model* model, const glm::mat4& modelMatrix) = 0;
-	virtual void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) = 0;
+	virtual void renderColouredBackground(float r, float g, float b) = 0;///Draws a coloured background
+	virtual	void setCamera(const Camera* cam) = 0;///Sets current camera object
+	virtual void drawCube(const glm::mat4& modelMatrix) = 0;///Draws a cube based on internal test cube
+	virtual void drawModel(Model* model, const glm::mat4& modelMatrix) = 0;///Draws a given model using a given transformation matrix
+	virtual void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) = 0;///Draws 2D text to the screen
 };

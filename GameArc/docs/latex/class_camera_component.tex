@@ -1,0 +1,192 @@
+\hypertarget{class_camera_component}{\section{Camera\+Component Class Reference}
+\label{class_camera_component}\index{Camera\+Component@{Camera\+Component}}
+}
+Inheritance diagram for Camera\+Component\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_camera_component}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_camera_component_a6f14fb3dfa5ca8cfbaae2936413837d8}{\hyperlink{class_camera_component_a6f14fb3dfa5ca8cfbaae2936413837d8}{Camera\+Component} ()}\label{class_camera_component_a6f14fb3dfa5ca8cfbaae2936413837d8}
+
+\begin{DoxyCompactList}\small\item\em Attached game object. \end{DoxyCompactList}\item 
+\hyperlink{class_camera_component_ac13478a138aae597e2a2383a23809993}{Camera\+Component} (\hyperlink{class_game_object}{Game\+Object} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_component_acd54d4b23d9005e9774f1c18e5a770f4}{On\+Set\+Up} () override
+\begin{DoxyCompactList}\small\item\em The \hyperlink{class_game}{Game} \hyperlink{class_object}{Object} the \hyperlink{class_component}{Component} is attached to. \end{DoxyCompactList}\item 
+\hyperlink{class_camera}{Camera} $\ast$ \hyperlink{class_camera_component_a1dfd5d80dc742c0f5b4ffdee800ef65c}{Get\+Camera} ()
+\item 
+void \hyperlink{class_camera_component_a7c539add4157eec66586dd6f9c8e6484}{Set\+Parent} (\hyperlink{class_game_object}{Game\+Object} $\ast$p)
+\item 
+void \hyperlink{class_camera_component_aa0d12f5b387e651246a0679669501440}{Set\+Translation\+To\+Parent} ()
+\item 
+void \hyperlink{class_camera_component_a0fea5ba248b0d18b9c412429092504b6}{Set\+To\+Parented\+Offset} ()
+\item 
+\hypertarget{class_camera_component_a09c8c13788174831d14f6b600da0aa73}{void \hyperlink{class_camera_component_a09c8c13788174831d14f6b600da0aa73}{Compute\+Direction\+Vector} ()}\label{class_camera_component_a09c8c13788174831d14f6b600da0aa73}
+
+\begin{DoxyCompactList}\small\item\em Gets direction vectors from translation matrix. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_component_aa0391037fd478ea1a602835ea64091ba}{On\+Update} (float dt) override
+\begin{DoxyCompactList}\small\item\em Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a4ef61a586b2c0a3e975150263d31d68b}{void \hyperlink{class_camera_component_a4ef61a586b2c0a3e975150263d31d68b}{On\+Render} (\hyperlink{class_i_engine_core}{I\+Engine\+Core} $\ast$m\+\_\+engine\+Interface\+Ptr) override}\label{class_camera_component_a4ef61a586b2c0a3e975150263d31d68b}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to update component variables. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a1cd7e6036568be5bf45d249d8f96a596}{void \hyperlink{class_camera_component_a1cd7e6036568be5bf45d249d8f96a596}{On\+Message} (const std\+::string m) override}\label{class_camera_component_a1cd7e6036568be5bf45d249d8f96a596}
+
+\begin{DoxyCompactList}\small\item\em Called every render call, not used. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_component_ae356a12312239d399984ac5b5aaa7adf}{Build\+From\+Json} (const \hyperlink{class_json_1_1_value}{Json\+::\+Value} \&component\+J\+S\+O\+N) override
+\begin{DoxyCompactList}\small\item\em Called on event fire, not used. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{m\+\_\+direction\+X} \{ 0 \}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera}{Camera} object. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a89b5e6d77f8def9bdcdda71be27cd83f}{float {\bfseries m\+\_\+direction\+Y} \{ 0 \}}\label{class_camera_component_a89b5e6d77f8def9bdcdda71be27cd83f}
+
+\item 
+\hypertarget{class_camera_component_abfe4cac0ee5fc5768bdedada791b925e}{float {\bfseries m\+\_\+direction\+Z} \{ 0 \}}\label{class_camera_component_abfe4cac0ee5fc5768bdedada791b925e}
+
+\item 
+\hypertarget{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}{glm\+::vec3 {\bfseries front} = glm\+::vec3(0.\+0f, 0.\+0f, 1.\+0f)}\label{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}
+
+\item 
+\hypertarget{class_camera_component_a62040ca115beaa48627fe56d330647c0}{glm\+::vec3 \hyperlink{class_camera_component_a62040ca115beaa48627fe56d330647c0}{right}}\label{class_camera_component_a62040ca115beaa48627fe56d330647c0}
+
+\begin{DoxyCompactList}\small\item\em Front movement vector. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a639f14e0057198d84ed8de71c3df3303}{glm\+::vec3 \hyperlink{class_camera_component_a639f14e0057198d84ed8de71c3df3303}{up}}\label{class_camera_component_a639f14e0057198d84ed8de71c3df3303}
+
+\begin{DoxyCompactList}\small\item\em Right movement vector. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_aa9ba12dfc1a9b7b06bf79fdb0a91a3e2}{glm\+::mat4 \hyperlink{class_camera_component_aa9ba12dfc1a9b7b06bf79fdb0a91a3e2}{view\+Matrix}}\label{class_camera_component_aa9ba12dfc1a9b7b06bf79fdb0a91a3e2}
+
+\begin{DoxyCompactList}\small\item\em Up movement vector. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}{float \hyperlink{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}{xoffset}}\label{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}
+
+\begin{DoxyCompactList}\small\item\em Movement matrix. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}{float {\bfseries yoffset}}\label{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}
+
+\item 
+\hypertarget{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}{bool \hyperlink{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}{first\+Person\+Camera}}\label{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}
+
+\begin{DoxyCompactList}\small\item\em Mouse movement offsets. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a8d1632f720f6478ceb2c146aee4a35b1}{float \hyperlink{class_camera_component_a8d1632f720f6478ceb2c146aee4a35b1}{offset\+Factor}}\label{class_camera_component_a8d1632f720f6478ceb2c146aee4a35b1}
+
+\begin{DoxyCompactList}\small\item\em First person camera switch (switch to 3rd person if false) \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}{glm\+::vec2 \hyperlink{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}{mouse\+X\+Y}}\label{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}
+
+\begin{DoxyCompactList}\small\item\em Distance from central point when in 3rd person mode. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}{glm\+::vec2 {\bfseries last\+Mouse\+X\+Y}}\label{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}
+
+\item 
+\hypertarget{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}{float \hyperlink{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}{sensitivity} = 0.\+01f}\label{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}
+
+\begin{DoxyCompactList}\small\item\em Current and previous tick mouse positions. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_ae70994c6a86c59b0e6ab7482eb2cd403}{\hyperlink{class_game_object}{Game\+Object} $\ast$ \hyperlink{class_camera_component_ae70994c6a86c59b0e6ab7482eb2cd403}{parent}}\label{class_camera_component_ae70994c6a86c59b0e6ab7482eb2cd403}
+
+\begin{DoxyCompactList}\small\item\em Mouse movement sensitivity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_camera_component_ac13478a138aae597e2a2383a23809993}{\index{Camera\+Component@{Camera\+Component}!Camera\+Component@{Camera\+Component}}
+\index{Camera\+Component@{Camera\+Component}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Camera\+Component}]{\setlength{\rightskip}{0pt plus 5cm}Camera\+Component\+::\+Camera\+Component (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\+Object} $\ast$}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_camera_component_ac13478a138aae597e2a2383a23809993}
+
+
+Constructor. 
+
+Constructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_camera_component_ae356a12312239d399984ac5b5aaa7adf}{\index{Camera\+Component@{Camera\+Component}!Build\+From\+Json@{Build\+From\+Json}}
+\index{Build\+From\+Json@{Build\+From\+Json}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Build\+From\+Json}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+Build\+From\+Json (
+\begin{DoxyParamCaption}
+\item[{const {\bf Json\+::\+Value} \&}]{component\+J\+S\+O\+N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_camera_component_ae356a12312239d399984ac5b5aaa7adf}
+
+
+Called on event fire, not used. 
+
+Builds component from J\+S\+O\+N values 
+
+Implements \hyperlink{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}{Component}.
+
+\hypertarget{class_camera_component_a1dfd5d80dc742c0f5b4ffdee800ef65c}{\index{Camera\+Component@{Camera\+Component}!Get\+Camera@{Get\+Camera}}
+\index{Get\+Camera@{Get\+Camera}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Get\+Camera}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera}$\ast$ Camera\+Component\+::\+Get\+Camera (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_camera_component_a1dfd5d80dc742c0f5b4ffdee800ef65c}
+Returns camera object \hypertarget{class_camera_component_acd54d4b23d9005e9774f1c18e5a770f4}{\index{Camera\+Component@{Camera\+Component}!On\+Set\+Up@{On\+Set\+Up}}
+\index{On\+Set\+Up@{On\+Set\+Up}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{On\+Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+On\+Set\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_camera_component_acd54d4b23d9005e9774f1c18e5a770f4}
+
+
+The \hyperlink{class_game}{Game} \hyperlink{class_object}{Object} the \hyperlink{class_component}{Component} is attached to. 
+
+Called when attached to object, sets up debug functions 
+
+Implements \hyperlink{class_component_a27f86131a87b858143069631fade78fb}{Component}.
+
+\hypertarget{class_camera_component_aa0391037fd478ea1a602835ea64091ba}{\index{Camera\+Component@{Camera\+Component}!On\+Update@{On\+Update}}
+\index{On\+Update@{On\+Update}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{On\+Update}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+On\+Update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_camera_component_aa0391037fd478ea1a602835ea64091ba}
+
+
+Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. 
+
+Called on update tick, updates all camera values and handles mouse movement 
+
+Implements \hyperlink{class_component_ab71d7f4b6d8792287a9b0c9e045acbe0}{Component}.
+
+\hypertarget{class_camera_component_a7c539add4157eec66586dd6f9c8e6484}{\index{Camera\+Component@{Camera\+Component}!Set\+Parent@{Set\+Parent}}
+\index{Set\+Parent@{Set\+Parent}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Set\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+Set\+Parent (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\+Object} $\ast$}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_camera_component_a7c539add4157eec66586dd6f9c8e6484}
+Sets parent game object \hypertarget{class_camera_component_a0fea5ba248b0d18b9c412429092504b6}{\index{Camera\+Component@{Camera\+Component}!Set\+To\+Parented\+Offset@{Set\+To\+Parented\+Offset}}
+\index{Set\+To\+Parented\+Offset@{Set\+To\+Parented\+Offset}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Set\+To\+Parented\+Offset}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+Set\+To\+Parented\+Offset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_camera_component_a0fea5ba248b0d18b9c412429092504b6}
+Moves camera object to offseted position durring 3rd person mode \hypertarget{class_camera_component_aa0d12f5b387e651246a0679669501440}{\index{Camera\+Component@{Camera\+Component}!Set\+Translation\+To\+Parent@{Set\+Translation\+To\+Parent}}
+\index{Set\+Translation\+To\+Parent@{Set\+Translation\+To\+Parent}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{Set\+Translation\+To\+Parent}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\+Component\+::\+Set\+Translation\+To\+Parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_camera_component_aa0d12f5b387e651246a0679669501440}
+Sets camera object position to parent's position 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{\index{Camera\+Component@{Camera\+Component}!m\+\_\+direction\+X@{m\+\_\+direction\+X}}
+\index{m\+\_\+direction\+X@{m\+\_\+direction\+X}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{m\+\_\+direction\+X}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\+Component\+::m\+\_\+direction\+X \{ 0 \}}}\label{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}
+
+
+\hyperlink{class_camera}{Camera} object. 
+
+Direction Vector the \hyperlink{class_camera}{Camera} is facing in 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_camera_component_8h}{Camera\+Component.\+h}\end{DoxyCompactItemize}

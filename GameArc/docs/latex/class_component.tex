@@ -1,0 +1,44 @@
+\hypertarget{class_component}{\section{Component Class Reference}
+\label{class_component}\index{Component@{Component}}
+}
+Inheritance diagram for Component\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.006289cm]{class_component}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_component_a27f86131a87b858143069631fade78fb}{virtual void \hyperlink{class_component_a27f86131a87b858143069631fade78fb}{On\+Set\+Up} ()=0}\label{class_component_a27f86131a87b858143069631fade78fb}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{class_game}{Game} \hyperlink{class_object}{Object} the \hyperlink{class_component}{Component} is attached to. \end{DoxyCompactList}\item 
+\hypertarget{class_component_ab71d7f4b6d8792287a9b0c9e045acbe0}{virtual void \hyperlink{class_component_ab71d7f4b6d8792287a9b0c9e045acbe0}{On\+Update} (float dt)=0}\label{class_component_ab71d7f4b6d8792287a9b0c9e045acbe0}
+
+\begin{DoxyCompactList}\small\item\em Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
+\hypertarget{class_component_aa9f90c2587b0c1182d804f4e256d97df}{virtual void \hyperlink{class_component_aa9f90c2587b0c1182d804f4e256d97df}{On\+Render} (\hyperlink{class_i_engine_core}{I\+Engine\+Core} $\ast$m\+\_\+engine\+Interface\+Ptr)=0}\label{class_component_aa9f90c2587b0c1182d804f4e256d97df}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to update component variables. \end{DoxyCompactList}\item 
+\hypertarget{class_component_a1a880fe5e212cd7ef8241e220660417d}{virtual void \hyperlink{class_component_a1a880fe5e212cd7ef8241e220660417d}{On\+Message} (const std\+::string m)=0}\label{class_component_a1a880fe5e212cd7ef8241e220660417d}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to draw component variables. \end{DoxyCompactList}\item 
+\hypertarget{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}{virtual void \hyperlink{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}{Build\+From\+Json} (const \hyperlink{class_json_1_1_value}{Json\+::\+Value} \&component\+J\+S\+O\+N)=0}\label{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}
+
+\begin{DoxyCompactList}\small\item\em Called on event fires to alter component variables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_component_a2ebc869395d66425690dfeae99d1b791}{bool {\bfseries active} = true}\label{class_component_a2ebc869395d66425690dfeae99d1b791}
+
+\item 
+\hypertarget{class_component_a34ff24093894370eb2e25e0bc2833348}{\hyperlink{class_debug_helper}{Debug\+Helper} $\ast$ \hyperlink{class_component_a34ff24093894370eb2e25e0bc2833348}{debug}}\label{class_component_a34ff24093894370eb2e25e0bc2833348}
+
+\begin{DoxyCompactList}\small\item\em Whether component is active or not. \end{DoxyCompactList}\item 
+\hypertarget{class_component_a2b66804cabef14a2884c2d35f71a24ea}{\hyperlink{class_game_object}{Game\+Object} $\ast$ \hyperlink{class_component_a2b66804cabef14a2884c2d35f71a24ea}{parent}}\label{class_component_a2b66804cabef14a2884c2d35f71a24ea}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_debug}{Debug} class for displaying internal variables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_component_8h}{Component.\+h}\end{DoxyCompactItemize}

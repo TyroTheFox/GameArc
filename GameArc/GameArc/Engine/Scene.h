@@ -1,4 +1,12 @@
 #pragma once
+/**
+* \class Scene
+* \file Scene.h
+* \author Kieran Clare
+* \brief Handles encapsulation of different objects into managable, arangable groups
+*
+* Encapsulates and manages game objects within to allow for quick and easy switching between 'screens' of the game
+*/
 #include "Model.h"
 #include "GameObject.h"
 
@@ -26,20 +34,14 @@ using namespace std;
 class Scene
 {
 private:
-	ObjectManager * objectManager;
-	GameObject m_playerBackground;
-
-	std::map<std::string, GameObject*> m_gameObjects;
-	std::map<std::string, std::function<void(GameObject* object, const Json::Value& p_component)>> m_componentJsonBuilders;
+	ObjectManager * objectManager;///Factory object for game objects
+	std::map<std::string, GameObject*> m_gameObjects;///Stores game objects and allows for easy access
 public:
-	int ID;
-	DebugHelper* debug;
-	Scene(ObjectManager* oM);
-	Scene(DebugHelper* d, ObjectManager* oM);
-	bool loadLevelJSON(std::string levelFile);
-	std::map<std::string, GameObject*> getGameObjects();
-	void setGameObjects(std::map<std::string, GameObject*> go);
-	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
-
-	
+	int ID;///ID used to get only registered objects
+	DebugHelper* debug;///Debug variable for debug menu actions and displaying necessary information
+	Scene(ObjectManager* oM);///Constructor
+	Scene(DebugHelper* d, ObjectManager* oM);///Constructor
+	bool loadLevelJSON(std::string levelFile);///Load in and build level objects from JSON
+	std::map<std::string, GameObject*> getGameObjects();///Returns game objects map
+	void setGameObjects(std::map<std::string, GameObject*> go);///Sets game objects map to that provided
 };

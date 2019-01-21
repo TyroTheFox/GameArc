@@ -16,6 +16,12 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
+		if (it->first == "background") {
+			if (it->second->getComponent<ColourComponent>() != nullptr) {
+				m_playerBackground = it->second;
+			}
+		}
+
 		if (it->second->getComponent<PlayerComponent>() == nullptr) continue;
 
 		activePlayer = it->second->getComponent<PlayerComponent>();
@@ -48,7 +54,6 @@ Game::Game(string levelsFile, DebugHelper* debug)
 
 void Game::init()
 {
-	//debugHelper = new DebugHelper(m_engineInterfacePtr);
 	// update the camera
 	if (m_MainCamera == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
@@ -99,6 +104,12 @@ void Game::ChangeScene(string sceneName) {
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
+		if (it->first == "background") {
+			if (it->second->getComponent<ColourComponent>() != nullptr) {
+				m_playerBackground = it->second;
+			}
+		}
+
 		if (it->second->getComponent<PlayerComponent>() == nullptr) continue;
 
 		activePlayer = it->second->getComponent<PlayerComponent>();
@@ -122,10 +133,6 @@ void Game::update(float dt)
 {
 	debugHelper->update(dt);
 	inputHandler->setDisableInput(debugHelper->displayConsole);
-	//if (activePlayer != nullptr) {
-	//	activePlayer->OnUpdate(dt);
-	//	//m_engineInterfacePtr->setCamera(activePlayer->GetCamera());
-	//}
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
@@ -144,12 +151,13 @@ void Game::update(float dt)
 void Game::render()
 {
 	float redValue = 0, greenValue = 0, blueValue = 0;
-	if (m_playerBackground.getComponent<RedComponent>())
-		redValue = m_playerBackground.getComponent<RedComponent>()->m_colourValue;
-	if (m_playerBackground.getComponent<GreenComponent>())
-		greenValue = m_playerBackground.getComponent<GreenComponent>()->m_colourValue;
-	if (m_playerBackground.getComponent<BlueComponent>())
-		blueValue = m_playerBackground.getComponent<BlueComponent>()->m_colourValue;
+	if (m_playerBackground != nullptr) {
+		if (m_playerBackground->getComponent<ColourComponent>()) {
+			redValue = m_playerBackground->getComponent<ColourComponent>()->m_red;
+			greenValue = m_playerBackground->getComponent<ColourComponent>()->m_green;
+			blueValue = m_playerBackground->getComponent<ColourComponent>()->m_blue;
+		}
+	}
 
 	// e.g. pass object details to the engine to render the next frame
 	m_engineInterfacePtr->renderColouredBackground(redValue, greenValue, blueValue);

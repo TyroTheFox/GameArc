@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 std::vector<int> GLFW_EngineCore::m_keyBuffer;
-std::vector<unsigned int> GLFW_EngineCore::m_charBuffer;
 int GLFW_EngineCore::m_screenWidth;
 int GLFW_EngineCore::m_screenHeight;
 
@@ -210,77 +209,8 @@ void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat s
 void GLFW_EngineCore::setDefaultShaders()
 {
 	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
-
-	//// Load contents of vertex file
-	//std::ifstream inFile("assets/shaders/defaultShader.vert");
-	//if (!inFile) {
-	//	fprintf(stderr, "Error opening file: shader\n");
-	//	exit(1);
-	//}
-
-	//std::stringstream code;
-	//code << inFile.rdbuf();
-	//inFile.close();
-	//std::string codeStr(code.str());
-	//const GLchar* vertex_shader[] = { codeStr.c_str() };
-
-	//// Load contents of fragment file
-	//std::ifstream inFile2("assets/shaders/defaultShader.frag");
-	//if (!inFile2) {
-	//	fprintf(stderr, "Error opening file: shader\n");
-	//	exit(1);
-	//}
-
 	texturePhong = new Shader("assets/shaders/surfaceTexture.vert", "assets/shaders/surfaceTexture.frag");
-
-	// Compile and setup the shader
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
-
-	//std::stringstream code2;
-	//code2 << inFile2.rdbuf();
-	//inFile2.close();
-	//std::string codeStr2(code2.str());
-	//const GLchar* fragment_shader[] = { codeStr2.c_str() };
-	//
-	//// vertex shader
-	//int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	//glShaderSource(vertexShader, 1, vertex_shader, NULL);
-	//glCompileShader(vertexShader);	
-	//// check for shader compile errors
-	//int success;
-	//char infoLog[512];
-	//glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	//if (!success)
-	//{
-	//	glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-	//	std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	//}
-	//// fragment shader
-	//int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	//glShaderSource(fragmentShader, 1, fragment_shader, NULL);
-	//glCompileShader(fragmentShader);
-	//// check for shader compile errors
-	//glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	//if (!success)
-	//{
-	//	glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-	//	std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	//}
-	//// link shaders
-	//m_defaultShaderProgram = glCreateProgram();
-	//glAttachShader(m_defaultShaderProgram, vertexShader);
-	//glAttachShader(m_defaultShaderProgram, fragmentShader);
-	//glLinkProgram(m_defaultShaderProgram);
-	//// check for linking errors
-	//glGetProgramiv(m_defaultShaderProgram, GL_LINK_STATUS, &success);
-	//if (!success) {
-	//	glGetProgramInfoLog(m_defaultShaderProgram, 512, NULL, infoLog);
-	//	std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	//}
-	//glDeleteShader(vertexShader);
-	//glDeleteShader(fragmentShader);
-
-	//glUseProgram(m_defaultShaderProgram);
 }
 
 // a simple function to initialise a cube model in memory

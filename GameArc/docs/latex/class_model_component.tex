@@ -1,0 +1,89 @@
+\hypertarget{class_model_component}{\section{Model\+Component Class Reference}
+\label{class_model_component}\index{Model\+Component@{Model\+Component}}
+}
+Inheritance diagram for Model\+Component\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_model_component}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_model_component_a82182f738137f91b12cd90624ca7e458}{\hyperlink{class_model_component_a82182f738137f91b12cd90624ca7e458}{Model\+Component} ()}\label{class_model_component_a82182f738137f91b12cd90624ca7e458}
+
+\begin{DoxyCompactList}\small\item\em Contained model. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}{\hyperlink{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}{Model\+Component} (\hyperlink{class_model}{Model} $\ast$m)}\label{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}{On\+Set\+Up} () override
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_a5def59776319943854fb5da3dc515051}{void \hyperlink{class_model_component_a5def59776319943854fb5da3dc515051}{On\+Update} (float dt) override}\label{class_model_component_a5def59776319943854fb5da3dc515051}
+
+\begin{DoxyCompactList}\small\item\em Called after the \hyperlink{class_component}{Component} has been attached to the parent \hyperlink{class_game}{Game} \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
+void \hyperlink{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}{On\+Render} (\hyperlink{class_i_engine_core}{I\+Engine\+Core} $\ast$m\+\_\+engine\+Interface\+Ptr) override
+\begin{DoxyCompactList}\small\item\em Called on update tick. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_a48d6170e857f323839039ce54e9418e1}{void \hyperlink{class_model_component_a48d6170e857f323839039ce54e9418e1}{On\+Message} (const std\+::string m) override}\label{class_model_component_a48d6170e857f323839039ce54e9418e1}
+
+\begin{DoxyCompactList}\small\item\em Called every update tick to draw component variables. \end{DoxyCompactList}\item 
+void \hyperlink{class_model_component_ac77290f521c0bf24d370f88327b407d5}{Build\+From\+Json} (const \hyperlink{class_json_1_1_value}{Json\+::\+Value} \&component\+J\+S\+O\+N) override
+\begin{DoxyCompactList}\small\item\em Called on event call, doesn't do anything yet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}{\hyperlink{class_model}{Model} $\ast$ {\bfseries model}}\label{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_model_component_ac77290f521c0bf24d370f88327b407d5}{\index{Model\+Component@{Model\+Component}!Build\+From\+Json@{Build\+From\+Json}}
+\index{Build\+From\+Json@{Build\+From\+Json}!Model\+Component@{Model\+Component}}
+\subsubsection[{Build\+From\+Json}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Component\+::\+Build\+From\+Json (
+\begin{DoxyParamCaption}
+\item[{const {\bf Json\+::\+Value} \&}]{component\+J\+S\+O\+N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_model_component_ac77290f521c0bf24d370f88327b407d5}
+
+
+Called on event call, doesn't do anything yet. 
+
+Builds component from J\+S\+O\+N values 
+
+Implements \hyperlink{class_component_acd902c5b6b2f3e991966a3ec9c5196b0}{Component}.
+
+\hypertarget{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}{\index{Model\+Component@{Model\+Component}!On\+Render@{On\+Render}}
+\index{On\+Render@{On\+Render}!Model\+Component@{Model\+Component}}
+\subsubsection[{On\+Render}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Component\+::\+On\+Render (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Engine\+Core} $\ast$}]{m\+\_\+engine\+Interface\+Ptr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}
+
+
+Called on update tick. 
+
+Called on render call, draws model to screen 
+
+Implements \hyperlink{class_component_aa9f90c2587b0c1182d804f4e256d97df}{Component}.
+
+\hypertarget{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}{\index{Model\+Component@{Model\+Component}!On\+Set\+Up@{On\+Set\+Up}}
+\index{On\+Set\+Up@{On\+Set\+Up}!Model\+Component@{Model\+Component}}
+\subsubsection[{On\+Set\+Up}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Component\+::\+On\+Set\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}}\label{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}
+
+
+Constructor. 
+
+Called when added to object, sets up debug functions 
+
+Implements \hyperlink{class_component_a27f86131a87b858143069631fade78fb}{Component}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_model_component_8h}{Model\+Component.\+h}\end{DoxyCompactItemize}

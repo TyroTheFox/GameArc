@@ -73,7 +73,7 @@
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\ObjectManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

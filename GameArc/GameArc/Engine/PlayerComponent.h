@@ -1,4 +1,13 @@
 #pragma once
+/**
+* \class Player Component
+* \file PlayerComponent.h
+* \author Kieran Clare
+* \brief The component handling the player's in-game character
+*
+* The game's playable character. It handles most player controls, camera and the player's model though does need
+* components to work with.
+*/
 #include "GameObject.h"
 #include "Component.h"
 
@@ -8,23 +17,23 @@
 #include "CameraComponent.h"
 #include "ModelComponent.h"
 
-extern Event* keyEvent;
+extern Event* keyEvent;///External event handler class for key input
 
 class PlayerComponent : public Component
 {
 private:
-	TransformComponent * transform;
-	CameraComponent * camera;
-	ModelComponent * model;
+	TransformComponent * transform;///Transform component
+	CameraComponent * camera;///Camera component
+	ModelComponent * model;///Model component
 
-	//Movement Vectors
+	///Movement Vectors
 	glm::vec3 front, right, up;
-	glm::vec3 intendedDirection;
+	glm::vec3 intendedDirection;///Direction to move into next
 public:
-	float movementSpeed;
+	float movementSpeed;///Base movement speed
 
-	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){	}
-	void OnSetUp() override {
+	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){	} ///Constructor
+	void OnSetUp() override {///Called when added to object, initialises all needed components and adds to pare
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 		}
@@ -42,7 +51,7 @@ public:
 			this->debug->WriteToConsole("Player Movement Speed set to " + s.at(0)); 
 		}));
 	}
-
+	///Sets component parent to a new object
 	void setParent(GameObject* p) {
 		parent = p;
 		if (parent->getComponent<TransformComponent>() != nullptr) {
@@ -53,7 +62,7 @@ public:
 			model = parent->getComponent<ModelComponent>();
 		}
 	}
-
+	///Builds the player's control events needed for movement
 	void buildEvents() {
 		//If own transform not set
 		if (transform == nullptr) {
@@ -75,7 +84,7 @@ public:
 		EventHandler mouseListener(mouseUpdate, "PlayerMouseXY");
 		keyEvent->addHandler(mouseListener);
 	}
-
+	///Called every update tick, updates camera and player position
 	void OnUpdate(float dt) override {
 		camera->OnUpdate(dt);
 		if (!camera->firstPersonCamera) {
@@ -95,8 +104,8 @@ public:
 			intendedDirection *= 0;
 		}
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
-	void OnMessage(const std::string m) override {
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called every render call
+	void OnMessage(const std::string m) override {///Called every event fire, interprets given action messages
 		if (m == "moveRight") {
 			intendedDirection.x += 1;
 		}
@@ -114,7 +123,7 @@ public:
 			camera->firstPersonCamera = !camera->firstPersonCamera;
 		}
 	}
-
+	///Builds object from JSON, though isn't necessary right now
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
 		}
@@ -124,8 +133,6 @@ public:
 		}
 
 	}
-
-	void BuildToJson(Json::Value& componentJSON) override {}
 	Camera* GetCamera() {
 		return camera->GetCamera();
 	}

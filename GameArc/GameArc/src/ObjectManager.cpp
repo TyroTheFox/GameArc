@@ -17,8 +17,7 @@ ObjectManager::ObjectManager(DebugHelper* d)
 }
 
 int ObjectManager::getNewID() {
-	int temp = latestID;
-	latestID++;
+	int temp = ++ObjectManager::latestID;
 	return temp;
 }
 

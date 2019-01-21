@@ -1,6 +1,12 @@
-#ifndef SHADER_H
-#define SHADER_H
-
+#pragma once
+/**
+* \class Shader
+* \file Shader.h
+* \brief A shader wrapper that loads and binds both shaders into one object
+*
+* This is the Open GL version, which finds, loads and binds the shaders into one object for easy use
+* Orignal version: https://learnopengl.com/code_viewer_gh.php?code=includes/learnopengl/shader_s.h
+*/
 #include <glad/glad.h>
 
 #include <string>
@@ -11,10 +17,8 @@
 class Shader
 {
 public:
-	unsigned int ID;
-	// constructor generates the shader on the fly
-	// ------------------------------------------------------------------------
-	Shader(const char* vertexPath, const char* fragmentPath)
+	unsigned int ID;///Shader ID (for GPU)
+	Shader(const char* vertexPath, const char* fragmentPath)///Constructor, finds and builds shaders for later use
 	{
 		// 1. retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
@@ -68,33 +72,25 @@ public:
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 	}
-	// activate the shader
-	// ------------------------------------------------------------------------
-	void use()
+	void use()///Activates shader
 	{
 		glUseProgram(ID);
 	}
-	// utility uniform functions
-	// ------------------------------------------------------------------------
-	void setBool(const std::string &name, bool value) const
+	void setBool(const std::string &name, bool value) const///Sends uniform boolean to GPU
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
-	// ------------------------------------------------------------------------
-	void setInt(const std::string &name, int value) const
+	void setInt(const std::string &name, int value) const///Sends uniform int to GPU
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
-	// ------------------------------------------------------------------------
-	void setFloat(const std::string &name, float value) const
+	void setFloat(const std::string &name, float value) const///Sends uniform float to GPU
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
 private:
-	// utility function for checking shader compilation/linking errors.
-	// ------------------------------------------------------------------------
-	void checkCompileErrors(unsigned int shader, std::string type)
+	void checkCompileErrors(unsigned int shader, std::string type)///Checks each shader to ensure it has been constructed correctly
 	{
 		int success;
 		char infoLog[1024];
@@ -118,4 +114,3 @@ private:
 		}
 	}
 };
-#endif

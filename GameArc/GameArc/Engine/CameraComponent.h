@@ -1,4 +1,12 @@
 #pragma once
+/**
+* \class Camera Component
+* \file CameraComponent.h
+* \author Kieran Clare
+* \brief Handles the contained camera object
+*
+* Handles the contained camera object so that a camera can be placed on a game object
+*/
 #include <iostream>
 #include "Component.h"
 #include "Camera.h"
@@ -7,32 +15,31 @@
 class CameraComponent : public Component
 {
 private:
-	Camera * camera;
-	TransformComponent * transform;
+	Camera * camera;///Camera object
 public:
-	//Direction Vector the Camera is facing in
+	///Direction Vector the Camera is facing in
 	float m_directionX{ 0 };
 	float m_directionY{ 0 };
 	float m_directionZ{ 0 };
 
-	glm::vec3 front = glm::vec3(0.0f, 0.0f, 1.0f);;
-	glm::vec3 right;
-	glm::vec3 up;
-	glm::mat4 viewMatrix;
+	glm::vec3 front = glm::vec3(0.0f, 0.0f, 1.0f);///Front movement vector
+	glm::vec3 right;///Right movement vector
+	glm::vec3 up;///Up movement vector
+	glm::mat4 viewMatrix;///Movement matrix
 	
-	float xoffset, yoffset;
-	bool firstPersonCamera;
-	float offsetFactor;
+	float xoffset, yoffset;///Mouse movement offsets
+	bool firstPersonCamera;///First person camera switch (switch to 3rd person if false)
+	float offsetFactor;///Distance from central point when in 3rd person mode
 
-	glm::vec2 mouseXY, lastMouseXY;
-	float sensitivity = 0.01f;
+	glm::vec2 mouseXY, lastMouseXY;///Current and previous tick mouse positions
+	float sensitivity = 0.01f;///Mouse movement sensitivity
 
-	GameObject * parent;
-	CameraComponent() : camera(new Camera), offsetFactor(30.0f), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {}
-	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {
+	GameObject * parent;///Attached game object
+	CameraComponent() : camera(new Camera), offsetFactor(30.0f), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {}///Constructor
+	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {///Constructor
 		SetTranslationToParent();
 	}
-	void OnSetUp() override{
+	void OnSetUp() override{///Called when attached to object, sets up debug functions
 		debug->AddConsoleCommand("setfpc", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
 			this->firstPersonCamera = std::stoi(s.at(0)); this->debug->WriteToConsole("Set First Person Camera to " + s.at(0)); }));
 		debug->AddConsoleCommand("setcamoffset", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
@@ -42,28 +49,25 @@ public:
 		debug->AddConsoleCommand("setfov", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
 			this->GetCamera()->setFOV(std::stof(s.at(0))); this->debug->WriteToConsole("Set Camera FOV to " + s.at(0)); }));
 	}
-	Camera* GetCamera() {
+	Camera* GetCamera() {///Returns camera object
 		return camera;
 	}
-	void SetParent(GameObject* p) {
+	void SetParent(GameObject* p) {///Sets parent game object
 		parent = p;
 		SetTranslationToParent();
 	}
-	void SetTranslationToParent() {
+	void SetTranslationToParent() {///Sets camera object position to parent's position
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
 			camera->m_position = -pTransform->position();
 			camera->m_orientation = pTransform->orientation();
 		}
 	}
-	void SetToParentedOffset() {
-		/*glm::mat4 rotate = glm::mat4_cast(camera->orientation());
-		viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 20.0f)) * rotate * glm::translate(glm::mat4(1.0f), transformOffset);*/
-
+	void SetToParentedOffset() {///Moves camera object to offseted position durring 3rd person mode
 		camera->m_position -= front * offsetFactor;
 	}
 
-	void ComputeDirectionVector()
+	void ComputeDirectionVector()///Gets direction vectors from translation matrix
 	{
 		viewMatrix = camera->getViewMatrix();
 		right = glm::vec3(viewMatrix[0].x, viewMatrix[1].x, viewMatrix[2].x);
@@ -71,10 +75,8 @@ public:
 		front = glm::vec3(viewMatrix[0].z, viewMatrix[1].z, viewMatrix[2].z);
 	}
 
-	void OnUpdate(float dt) override {
+	void OnUpdate(float dt) override {///Called on update tick, updates all camera values and handles mouse movement
 		SetTranslationToParent();
-		//camera->rotate(mouseXY.x * 0.01f, glm::vec3(0.0f, 1.0f, 0.0f));
-		//camera->rotate(mouseXY.y * 0.01f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 		xoffset = mouseXY.x - lastMouseXY.x;
 		yoffset = mouseXY.y - lastMouseXY.y; // reversed since y-coordinates range from bottom to top
@@ -96,9 +98,9 @@ public:
 			camera->lowPitchBound = 1.8f;
 		}
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
-	void OnMessage(const std::string m) override {}
-	void BuildFromJson(const Json::Value& componentJSON) override {
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called every render call, not used
+	void OnMessage(const std::string m) override {}///Called on event fire, not used
+	void BuildFromJson(const Json::Value& componentJSON) override {///Builds component from JSON values
 		try {
 			if (componentJSON.isMember("position")) {
 				const Json::Value& position = componentJSON["position"];
@@ -135,32 +137,6 @@ public:
 		catch (...) {
 			std::cout << "Exception thrown in parsing BuildFromJson in CameraComponent." << std::endl;
 			throw;
-		}
-	}
-	void BuildToJson(Json::Value& componentJSON) override {
-		componentJSON["class"] = "CameraComponent";
-
-		if (camera->m_position != glm::vec3(0)) {
-			Json::Value outPosition(Json::arrayValue);
-			outPosition.append(Json::Value(camera->m_position.x));
-			outPosition.append(Json::Value(camera->m_position.y));
-			outPosition.append(Json::Value(camera->m_position.z));
-			componentJSON["position"] = outPosition;
-		}
-
-		if (camera->m_orientation != glm::quat(1, 0, 0, 0)) {
-			Json::Value outOrientation(Json::arrayValue);
-			outOrientation.append(Json::Value(camera->m_orientation.w));
-			outOrientation.append(Json::Value(camera->m_orientation.x));
-			outOrientation.append(Json::Value(camera->m_orientation.y));
-			outOrientation.append(Json::Value(camera->m_orientation.z));
-			componentJSON["orientation"] = outOrientation;
-		}
-
-		if (camera->m_fov != 45.0f) {
-			Json::Value outFOV(Json::arrayValue);
-			outFOV.append(Json::Value(camera->m_fov));
-			componentJSON["FOV"] = outFOV;
 		}
 	}
 };
