@@ -9,6 +9,7 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	debugHelper = debug;
+	oM = new ObjectManager(debugHelper);
 	loadFromJSON(levelsFile);
 
 	std::map<std::string, GameObject*>::iterator it;
@@ -73,7 +74,7 @@ bool Game::loadFromJSON(string levelsFile) {
 
 	for (unsigned int i = 0; i < levels.size(); i++) {
 		try {
-			Scene* temp = new Scene(debugHelper);
+			Scene* temp = new Scene(debugHelper, oM);
 			temp->loadLevelJSON(levels[i]["Address"].asString());
 			string name = levels[i]["Name"].asString();
 			sceneList[name] = temp;

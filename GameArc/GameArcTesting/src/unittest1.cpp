@@ -32,7 +32,7 @@ namespace GameArcTesting
 			inputHandler = new InputHandler();
 			keyEvent = new Event();
 			Assert::IsNotNull(inputHandler);
-			Assert::IsTrue(inputHandler->loadFromJSON("C:/Users/Tyro/Source/Repos/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
+			Assert::IsTrue(inputHandler->loadFromJSON("H:/Documents/GitHub/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
 			Assert::IsFalse(inputHandler->loadFromJSON("assets"));
 		}
 		
@@ -41,7 +41,7 @@ namespace GameArcTesting
 			inputHandler = new InputHandler();
 			keyEvent = new Event();
 			Assert::IsNotNull(inputHandler);
-			Assert::IsTrue(inputHandler->loadFromJSON("C:/Users/Tyro/Source/Repos/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
+			Assert::IsTrue(inputHandler->loadFromJSON("H:/Documents/GitHub/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
 
 			for (auto input : inputHandler->m_controlMapping) {
 				InputCommand* key = inputHandler->m_controlMapping[input.first];
@@ -85,7 +85,7 @@ namespace GameArcTesting
 			inputHandler = new InputHandler();
 			keyEvent = new Event();
 			Assert::IsNotNull(inputHandler);
-			Assert::IsTrue(inputHandler->loadFromJSON("C:/Users/Tyro/Source/Repos/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
+			Assert::IsTrue(inputHandler->loadFromJSON("H:/Documents/GitHub/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
 
 			vector<int> debugkeys = { (int)'`', 257, 259, 344 };
 

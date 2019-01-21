@@ -72,6 +72,9 @@
     <ClCompile Include="src\DebugHelper.cpp">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Engine\TextUIComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ObjectManager.h">
+      <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

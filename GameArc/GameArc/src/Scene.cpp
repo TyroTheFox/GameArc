@@ -2,35 +2,39 @@
 
 /*Credit to Dynamic JSON loader to Stefan Bauer*/
 
-Scene::Scene()
+Scene::Scene(ObjectManager* oM)
 {
-	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
-	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
-	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
-	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
-		attachComponent<PlayerComponent>(object, p_component); 
-	};
-	m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
-		attachComponent<EventCameraComponent>(object, p_component);
-		object->getComponent<EventCameraComponent>()->buildEvents();
-	};
-	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
+	objectManager = oM;
+	ID = objectManager->getNewID();
+	//m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
+	//m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
+	//m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
+	//m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
+	//	attachComponent<PlayerComponent>(object, p_component); 
+	//};
+	//m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
+	//	attachComponent<EventCameraComponent>(object, p_component);
+	//	object->getComponent<EventCameraComponent>()->buildEvents();
+	//};
+	//m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
 }
 
-Scene::Scene(DebugHelper* d)
+Scene::Scene(DebugHelper* d, ObjectManager* oM)
 {
 	debug = d;
-	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
-	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
-	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
-	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) {
-		attachComponent<PlayerComponent>(object, p_component);
-	};
-	m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) {
-		attachComponent<EventCameraComponent>(object, p_component);
-		object->getComponent<EventCameraComponent>()->buildEvents();
-	};
-	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
+	objectManager = oM;
+	ID = objectManager->getNewID();
+	//m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
+	//m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
+	//m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
+	//m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) {
+	//	attachComponent<PlayerComponent>(object, p_component);
+	//};
+	//m_componentJsonBuilders["EventCameraComponent"] = [this](GameObject* object, const Json::Value& p_component) {
+	//	attachComponent<EventCameraComponent>(object, p_component);
+	//	object->getComponent<EventCameraComponent>()->buildEvents();
+	//};
+	//m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
 
 	debug->AddConsoleCommand("delete", TextParser::InterpFunc([this](std::vector<std::string> s) {
 		if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
@@ -58,7 +62,12 @@ template<typename T> void Scene::attachComponent(GameObject* object, const Json:
 
 bool Scene::loadLevelJSON(std::string levelFile)
 {
-	std::ifstream inputstream(levelFile);
+	if (objectManager->loadLevelJSON(levelFile, ID)) {
+		m_gameObjects = objectManager->getGameObjects(ID);
+		return true;
+	}
+	return false;
+	/*std::ifstream inputstream(levelFile);
 	Json::Reader reader;
 	Json::Value obj;
 	reader.parse(inputstream, obj);
@@ -72,12 +81,6 @@ bool Scene::loadLevelJSON(std::string levelFile)
 	for (unsigned int i = 0; i < gameObjects.size(); i++) {
 		try {
 			std::string objectName = gameObjects[i]["name"].asString();
-
-			if (gameObjects[i].isMember("visible")) {
-				if (gameObjects[i]["visible"].asBool()) {
-					m_displayCubes.push_back(objectName);
-				}
-			}
 
 			m_gameObjects[objectName] = new GameObject();
 			m_gameObjects[objectName]->name = objectName;
@@ -95,7 +98,7 @@ bool Scene::loadLevelJSON(std::string levelFile)
 		}
 		catch (...) { std::cout << "Exception thrown in loadLevelFromJson(" << levelFile << "), in parsing GameObject[" << std::to_string(i) << "]." << std::endl; }
 	}
-	return true;
+	return true;*/
 }
 
 std::map<std::string, GameObject*> Scene::getGameObjects()

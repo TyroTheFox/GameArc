@@ -15,6 +15,7 @@
 #include "ColourComponent.h"
 #include "ModelComponent.h"
 #include "DebugHelper.h"
+#include "ObjectManager.h"
 #include "global.h"
 
 extern Event* keyEvent;
@@ -22,6 +23,7 @@ extern Event* keyEvent;
 class Game
 {
 public:
+	ObjectManager* oM;
 	DebugHelper * debugHelper;
 	IEngineCore* m_engineInterfacePtr;
 	Game();

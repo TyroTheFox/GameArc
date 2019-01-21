@@ -18,28 +18,19 @@
 #include "EventCameraComponent.h"
 #include "TextUIComponent.h"
 
-#include "ObjectManager.h"
 #include "DebugHelper.h"
 
-using namespace std;
-
-class Scene
-{
+class ObjectManager {
 private:
-	ObjectManager * objectManager;
-	GameObject m_playerBackground;
-
-	std::map<std::string, GameObject*> m_gameObjects;
 	std::map<std::string, std::function<void(GameObject* object, const Json::Value& p_component)>> m_componentJsonBuilders;
-public:
-	int ID;
+	std::map<std::string, GameObject*> m_gameObjects;
+	std::multimap<int, std::string> sceneIDRegister;
+	int latestID = 0;
 	DebugHelper* debug;
-	Scene(ObjectManager* oM);
-	Scene(DebugHelper* d, ObjectManager* oM);
-	bool loadLevelJSON(std::string levelFile);
-	std::map<std::string, GameObject*> getGameObjects();
-	void setGameObjects(std::map<std::string, GameObject*> go);
+public:
+	ObjectManager(DebugHelper* d);
+	int getNewID();
+	bool loadLevelJSON(std::string levelFile, int id);
 	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
-
-	
+	std::map<std::string, GameObject*> getGameObjects(int id);
 };
