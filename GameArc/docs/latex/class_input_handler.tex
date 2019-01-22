@@ -1,90 +1,43 @@
-\hypertarget{class_input_handler}{\section{Input\+Handler Class Reference}
-\label{class_input_handler}\index{Input\+Handler@{Input\+Handler}}
-}
+\hypertarget{class_input_handler}{}\section{Input\+Handler Class Reference}
+\label{class_input_handler}\index{InputHandler@{InputHandler}}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_input_handler_a698aa4af4f326a9881835fda251ca996}{Input\+Handler} ()
-\begin{DoxyCompactList}\small\item\em \hyperlink{class_debug}{Debug} controls that will work regardless of input flag. \end{DoxyCompactList}\item 
-\hypertarget{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}{\hyperlink{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}{Input\+Handler} (string input\+File)}\label{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}
-
+\mbox{\Hypertarget{class_input_handler_a698aa4af4f326a9881835fda251ca996}\label{class_input_handler_a698aa4af4f326a9881835fda251ca996}} 
+\mbox{\hyperlink{class_input_handler_a698aa4af4f326a9881835fda251ca996}{Input\+Handler}} ()
+\begin{DoxyCompactList}\small\item\em Constructor, sets up default controls. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}\label{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}} 
+\mbox{\hyperlink{class_input_handler_a5f4d9f7ba9a8a9c02f5fdef3e8fe79c8}{Input\+Handler}} (string input\+File)
 \begin{DoxyCompactList}\small\item\em Constructor, sets up controls according to file. \end{DoxyCompactList}\item 
-void \hyperlink{class_input_handler_ab3359d443715abc1968a354a91796fde}{set\+Up\+Debug\+Controls} ()
-\item 
-void \hyperlink{class_input_handler_a163702711e7b2fac8ee03a50499cde36}{set\+Disable\+Input} (bool d\+I)
-\item 
-bool \hyperlink{class_input_handler_aeb71183f7023decf10d19b949480a574}{load\+From\+J\+S\+O\+N} (string input\+File)
-\item 
-\hypertarget{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}{void \hyperlink{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}{handle\+Inputs} (const std\+::vector$<$ int $>$ \&key\+Buffer)}\label{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}
-
+\mbox{\Hypertarget{class_input_handler_ab3359d443715abc1968a354a91796fde}\label{class_input_handler_ab3359d443715abc1968a354a91796fde}} 
+void \mbox{\hyperlink{class_input_handler_ab3359d443715abc1968a354a91796fde}{set\+Up\+Debug\+Controls}} ()
+\begin{DoxyCompactList}\small\item\em Sets up debug controls. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_a163702711e7b2fac8ee03a50499cde36}\label{class_input_handler_a163702711e7b2fac8ee03a50499cde36}} 
+void \mbox{\hyperlink{class_input_handler_a163702711e7b2fac8ee03a50499cde36}{set\+Disable\+Input}} (bool dI)
+\begin{DoxyCompactList}\small\item\em Set input flag. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_aeb71183f7023decf10d19b949480a574}\label{class_input_handler_aeb71183f7023decf10d19b949480a574}} 
+bool \mbox{\hyperlink{class_input_handler_aeb71183f7023decf10d19b949480a574}{load\+From\+J\+S\+ON}} (string input\+File)
+\begin{DoxyCompactList}\small\item\em Loads each input key from file and sets up needed events. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}\label{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}} 
+void \mbox{\hyperlink{class_input_handler_ab3b5fe17099a9bffe0a1dcedf4a439ed}{handle\+Inputs}} (const std\+::vector$<$ int $>$ \&key\+Buffer)
 \begin{DoxyCompactList}\small\item\em Interprets keybuffer and fires events depending on keys pushed. \end{DoxyCompactList}\item 
-void \hyperlink{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}{handle\+Console\+Input} (char c)
-\item 
-void \hyperlink{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}{handle\+Mouse} (const glm\+::vec2 mouse\+X\+Y)
-\end{DoxyCompactItemize}
+\mbox{\Hypertarget{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}\label{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}} 
+void \mbox{\hyperlink{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}{handle\+Console\+Input}} (char c)
+\begin{DoxyCompactList}\small\item\em Takes in keyboard input and send through key event. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}\label{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}} 
+void \mbox{\hyperlink{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}{handle\+Mouse}} (const glm\+::vec2 mouse\+XY)
+\begin{DoxyCompactList}\small\item\em Handles mouse input and sends through event system. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_input_handler_abe853597d11b94e0668c8db6638a0548}{std\+::map$<$ int, \hyperlink{class_input_command}{Input\+Command} $\ast$ $>$ \hyperlink{class_input_handler_abe853597d11b94e0668c8db6638a0548}{m\+\_\+control\+Mapping}}\label{class_input_handler_abe853597d11b94e0668c8db6638a0548}
+\mbox{\Hypertarget{class_input_handler_abe853597d11b94e0668c8db6638a0548}\label{class_input_handler_abe853597d11b94e0668c8db6638a0548}} 
+std\+::map$<$ int, \mbox{\hyperlink{class_input_command}{Input\+Command}} $\ast$ $>$ \mbox{\hyperlink{class_input_handler_abe853597d11b94e0668c8db6638a0548}{m\+\_\+control\+Mapping}}
+\begin{DoxyCompactList}\small\item\em Normal controls. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}\label{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}} 
+std\+::map$<$ int, \mbox{\hyperlink{class_input_command}{Input\+Command}} $\ast$ $>$ \mbox{\hyperlink{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}{m\+\_\+debug\+Mapping}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_debug}{Debug}} controls that will work regardless of input flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\begin{DoxyCompactList}\small\item\em Disable main movement actions flag. \end{DoxyCompactList}\item 
-\hypertarget{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}{std\+::map$<$ int, \hyperlink{class_input_command}{Input\+Command} $\ast$ $>$ \hyperlink{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}{m\+\_\+debug\+Mapping}}\label{class_input_handler_ab472e9acd5163f068a3d009f8415fab1}
-
-\begin{DoxyCompactList}\small\item\em Normal controls. \end{DoxyCompactList}\end{DoxyCompactItemize}
-
-
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{class_input_handler_a698aa4af4f326a9881835fda251ca996}{\index{Input\+Handler@{Input\+Handler}!Input\+Handler@{Input\+Handler}}
-\index{Input\+Handler@{Input\+Handler}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{Input\+Handler}]{\setlength{\rightskip}{0pt plus 5cm}Input\+Handler\+::\+Input\+Handler (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_a698aa4af4f326a9881835fda251ca996}
-
-
-\hyperlink{class_debug}{Debug} controls that will work regardless of input flag. 
-
-Constructor, sets up default controls 
-
-\subsection{Member Function Documentation}
-\hypertarget{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}{\index{Input\+Handler@{Input\+Handler}!handle\+Console\+Input@{handle\+Console\+Input}}
-\index{handle\+Console\+Input@{handle\+Console\+Input}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{handle\+Console\+Input}]{\setlength{\rightskip}{0pt plus 5cm}void Input\+Handler\+::handle\+Console\+Input (
-\begin{DoxyParamCaption}
-\item[{char}]{c}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_a2ae198e972137bde4f2fe5b7c899a2e4}
-Takes in keyboard input and send through key event \hypertarget{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}{\index{Input\+Handler@{Input\+Handler}!handle\+Mouse@{handle\+Mouse}}
-\index{handle\+Mouse@{handle\+Mouse}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{handle\+Mouse}]{\setlength{\rightskip}{0pt plus 5cm}void Input\+Handler\+::handle\+Mouse (
-\begin{DoxyParamCaption}
-\item[{const glm\+::vec2}]{mouse\+X\+Y}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_a0ebc7e1f1c6f9f53e8b7a97df8fb7233}
-Handles mouse input and sends through event system \hypertarget{class_input_handler_aeb71183f7023decf10d19b949480a574}{\index{Input\+Handler@{Input\+Handler}!load\+From\+J\+S\+O\+N@{load\+From\+J\+S\+O\+N}}
-\index{load\+From\+J\+S\+O\+N@{load\+From\+J\+S\+O\+N}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{load\+From\+J\+S\+O\+N}]{\setlength{\rightskip}{0pt plus 5cm}bool Input\+Handler\+::load\+From\+J\+S\+O\+N (
-\begin{DoxyParamCaption}
-\item[{string}]{input\+File}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_aeb71183f7023decf10d19b949480a574}
-Loads each input key from file and sets up needed events \hypertarget{class_input_handler_a163702711e7b2fac8ee03a50499cde36}{\index{Input\+Handler@{Input\+Handler}!set\+Disable\+Input@{set\+Disable\+Input}}
-\index{set\+Disable\+Input@{set\+Disable\+Input}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{set\+Disable\+Input}]{\setlength{\rightskip}{0pt plus 5cm}void Input\+Handler\+::set\+Disable\+Input (
-\begin{DoxyParamCaption}
-\item[{bool}]{d\+I}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_a163702711e7b2fac8ee03a50499cde36}
-Set input flag \hypertarget{class_input_handler_ab3359d443715abc1968a354a91796fde}{\index{Input\+Handler@{Input\+Handler}!set\+Up\+Debug\+Controls@{set\+Up\+Debug\+Controls}}
-\index{set\+Up\+Debug\+Controls@{set\+Up\+Debug\+Controls}!Input\+Handler@{Input\+Handler}}
-\subsubsection[{set\+Up\+Debug\+Controls}]{\setlength{\rightskip}{0pt plus 5cm}void Input\+Handler\+::set\+Up\+Debug\+Controls (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_input_handler_ab3359d443715abc1968a354a91796fde}
-Sets up debug controls 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_input_handler_8h}{Input\+Handler.\+h}\end{DoxyCompactItemize}
+C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\mbox{\hyperlink{_input_handler_8h}{Input\+Handler.\+h}}\end{DoxyCompactItemize}

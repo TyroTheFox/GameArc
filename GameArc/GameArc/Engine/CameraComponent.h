@@ -21,25 +21,34 @@ public:
 	float m_directionX{ 0 };
 	float m_directionY{ 0 };
 	float m_directionZ{ 0 };
-
-	glm::vec3 front = glm::vec3(0.0f, 0.0f, 1.0f);///Front movement vector
-	glm::vec3 right;///Right movement vector
-	glm::vec3 up;///Up movement vector
-	glm::mat4 viewMatrix;///Movement matrix
-	
-	float xoffset, yoffset;///Mouse movement offsets
-	bool firstPersonCamera;///First person camera switch (switch to 3rd person if false)
-	float offsetFactor;///Distance from central point when in 3rd person mode
-
-	glm::vec2 mouseXY, lastMouseXY;///Current and previous tick mouse positions
-	float sensitivity = 0.01f;///Mouse movement sensitivity
-
-	GameObject * parent;///Attached game object
-	CameraComponent() : camera(new Camera), offsetFactor(30.0f), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {}///Constructor
-	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {///Constructor
+	///Front movement vector
+	glm::vec3 front = glm::vec3(0.0f, 0.0f, 1.0f);
+	///Right movement vector
+	glm::vec3 right;
+	///Up movement vector
+	glm::vec3 up;
+	///Movement matrix
+	glm::mat4 viewMatrix;
+	///Mouse movement offsets
+	float xoffset, yoffset;
+	///First person camera switch (switch to 3rd person if false)
+	bool firstPersonCamera;
+	///Distance from central point when in 3rd person mode
+	float offsetFactor;
+	///Current and previous tick mouse positions
+	glm::vec2 mouseXY, lastMouseXY;
+	///Mouse movement sensitivity
+	float sensitivity = 0.01f;
+	///Attached game object
+	GameObject * parent;
+	///Constructor
+	CameraComponent() : camera(new Camera), offsetFactor(30.0f), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {}
+	///Constructor
+	CameraComponent(GameObject* p) : parent(p), offsetFactor(30.0f), camera(new Camera), lastMouseXY(glm::vec2(300, 400)), firstPersonCamera(true) {
 		SetTranslationToParent();
 	}
-	void OnSetUp() override{///Called when attached to object, sets up debug functions
+	///Called when attached to object, sets up debug functions
+	void OnSetUp() override{
 		debug->AddConsoleCommand("setfpc", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
 			this->firstPersonCamera = std::stoi(s.at(0)); this->debug->WriteToConsole("Set First Person Camera to " + s.at(0)); }));
 		debug->AddConsoleCommand("setcamoffset", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
@@ -49,33 +58,37 @@ public:
 		debug->AddConsoleCommand("setfov", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
 			this->GetCamera()->setFOV(std::stof(s.at(0))); this->debug->WriteToConsole("Set Camera FOV to " + s.at(0)); }));
 	}
-	Camera* GetCamera() {///Returns camera object
+	///Returns camera object
+	Camera* GetCamera() {
 		return camera;
 	}
-	void SetParent(GameObject* p) {///Sets parent game object
+	///Sets parent game object
+	void SetParent(GameObject* p) {
 		parent = p;
 		SetTranslationToParent();
 	}
-	void SetTranslationToParent() {///Sets camera object position to parent's position
+	///Sets camera object position to parent's position
+	void SetTranslationToParent() {
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
 			camera->m_position = -pTransform->position();
 			camera->m_orientation = pTransform->orientation();
 		}
 	}
-	void SetToParentedOffset() {///Moves camera object to offseted position durring 3rd person mode
+	///Moves camera object to offseted position durring 3rd person mode
+	void SetToParentedOffset() {
 		camera->m_position -= front * offsetFactor;
 	}
-
-	void ComputeDirectionVector()///Gets direction vectors from translation matrix
+	///Gets direction vectors from translation matrix
+	void ComputeDirectionVector()
 	{
 		viewMatrix = camera->getViewMatrix();
 		right = glm::vec3(viewMatrix[0].x, viewMatrix[1].x, viewMatrix[2].x);
 		up = glm::vec3(viewMatrix[0].y, viewMatrix[1].y, viewMatrix[2].y);
 		front = glm::vec3(viewMatrix[0].z, viewMatrix[1].z, viewMatrix[2].z);
 	}
-
-	void OnUpdate(float dt) override {///Called on update tick, updates all camera values and handles mouse movement
+	///Called on update tick, updates all camera values and handles mouse movement
+	void OnUpdate(float dt) override {
 		SetTranslationToParent();
 
 		xoffset = mouseXY.x - lastMouseXY.x;
@@ -98,9 +111,12 @@ public:
 			camera->lowPitchBound = 1.8f;
 		}
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called every render call, not used
-	void OnMessage(const std::string m) override {}///Called on event fire, not used
-	void BuildFromJson(const Json::Value& componentJSON) override {///Builds component from JSON values
+	///Called every render call, not used
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
+	///Called on event fire, not used
+	void OnMessage(const std::string m) override {}
+	///Builds component from JSON values
+	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
 			if (componentJSON.isMember("position")) {
 				const Json::Value& position = componentJSON["position"];

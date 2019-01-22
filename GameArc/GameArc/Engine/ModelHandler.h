@@ -24,10 +24,15 @@ class Model;
 class ModelHandler
 {
 private:
-	std::map<std::string, std::unique_ptr<Model>> modelList;///searchable list of all models currently loaded
+	///searchable list of all models currently loaded
+	std::map<std::string, std::unique_ptr<Model>> modelList;
 public:
-	ModelHandler();///Constructor
-	void registerModel(std::string fileName, Model* m);///Registers new models to the list
-	bool checkForModel(std::string fileName);///Checks whether model exists in list
-	Model& getModel(std::string fileName);///Returns a given model
+	///Constructor
+	ModelHandler();
+	///Registers new models to the list
+	void registerModel(std::string fileName, Model* m);
+	///Checks whether model exists in list
+	bool checkForModel(std::string fileName);
+	///Returns a given model
+	Model& getModel(std::string fileName);
 };

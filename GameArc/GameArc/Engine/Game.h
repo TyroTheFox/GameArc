@@ -25,31 +25,43 @@
 #include "DebugHelper.h"
 #include "ObjectManager.h"
 #include "global.h"
-
-extern Event* keyEvent;///Forward declared key event object
+///Forward declared key event object
+extern Event* keyEvent;
 
 class Game
 {
 public:
-	ObjectManager* oM;///Object manager
-	DebugHelper * debugHelper;///Debug helper object used for debug console opperations
-	IEngineCore* m_engineInterfacePtr;///Engine core pointer used for updating and rendering objects
-	Game();///Constructor
-	Game(string levelsFile, DebugHelper* debug);///Constructor
-	bool loadFromJSON(string levelsFile);///Load scene data from JSON file
-	void ChangeScene(string sceneName); ///Change currently displayed scene to a new one
-	void init();///Initialise variables once Game Engine Core has been initialised
-	void update(float dt);///Update all scenes
-	void render();///Render all scene contents
-
+	///Object manager
+	ObjectManager* oM;
+	///Debug helper object used for debug console opperations
+	DebugHelper * debugHelper;
+	///Engine core pointer used for updating and rendering objects
+	IEngineCore* m_engineInterfacePtr;
+	///Constructor
+	Game();
+	///Constructor
+	Game(string levelsFile, DebugHelper* debug);
+	///Load scene data from JSON file
+	bool loadFromJSON(string levelsFile);
+	///Change currently displayed scene to a new one
+	void ChangeScene(string sceneName); 
+	///Initialise variables once Game Engine Core has been initialised
+	void init();
+	///Update all scenes
+	void update(float dt);
+	///Render all scene contents
+	void render();
 private:
-	GameObject* m_playerBackground;///Background colour
-
-	Camera m_camera;///Default camera if no camera is found among game objects
-	Camera* m_MainCamera;///Main current camera among objects in a scene
-
-	Scene* m_currentScene;///Currently rendered scene
-	std::map<string, Scene*> sceneList;///List of active scenes
-
-	PlayerComponent* activePlayer;///Currently active player object
+	///Background colour
+	GameObject* m_playerBackground;
+	///Default camera if no camera is found among game objects
+	Camera m_camera;
+	///Main current camera among objects in a scene
+	Camera* m_MainCamera;
+	///Currently rendered scene
+	Scene* m_currentScene;
+	///List of active scenes
+	std::map<string, Scene*> sceneList;
+	///Currently active player object
+	PlayerComponent* activePlayer;
 };

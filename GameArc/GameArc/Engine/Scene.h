@@ -34,14 +34,23 @@ using namespace std;
 class Scene
 {
 private:
-	ObjectManager * objectManager;///Factory object for game objects
-	std::map<std::string, GameObject*> m_gameObjects;///Stores game objects and allows for easy access
+	///Factory object for game objects
+	ObjectManager * objectManager;
+	///Stores game objects and allows for easy access
+	std::map<std::string, GameObject*> m_gameObjects;
 public:
-	int ID;///ID used to get only registered objects
-	DebugHelper* debug;///Debug variable for debug menu actions and displaying necessary information
-	Scene(ObjectManager* oM);///Constructor
-	Scene(DebugHelper* d, ObjectManager* oM);///Constructor
-	bool loadLevelJSON(std::string levelFile);///Load in and build level objects from JSON
-	std::map<std::string, GameObject*> getGameObjects();///Returns game objects map
-	void setGameObjects(std::map<std::string, GameObject*> go);///Sets game objects map to that provided
+	///ID used to get only registered objects
+	int ID;
+	///Debug variable for debug menu actions and displaying necessary information
+	DebugHelper* debug;
+	///Constructor
+	Scene(ObjectManager* oM);
+	///Constructor
+	Scene(DebugHelper* d, ObjectManager* oM);
+	///Load in and build level objects from JSON
+	bool loadLevelJSON(std::string levelFile);
+	///Returns game objects map
+	std::map<std::string, GameObject*> getGameObjects();
+	///Sets game objects map to that provided
+	void setGameObjects(std::map<std::string, GameObject*> go);
 };

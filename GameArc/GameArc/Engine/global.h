@@ -12,8 +12,9 @@
 #include "EventHandler.h"
 
 class ModelHandler;///Forward Declare
-extern __declspec(selectany) ModelHandler* modelHandler;///External Model Handler, compiler is directed to pick only one of any given instance of object
-
-extern __declspec(selectany) InputHandler* inputHandler;///External Input Handler, compiler is directed to pick only one of any given instance of object
-
-extern __declspec(selectany) Event* keyEvent;///External Key Event, compiler is directed to pick only one of any given instance of object
+///External Model Handler, compiler is directed to pick only one of any given instance of object
+extern __declspec(selectany) ModelHandler* modelHandler;
+///External Input Handler, compiler is directed to pick only one of any given instance of object
+extern __declspec(selectany) InputHandler* inputHandler;
+///External Key Event, compiler is directed to pick only one of any given instance of object
+extern __declspec(selectany) Event* keyEvent;

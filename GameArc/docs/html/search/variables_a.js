@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['offsetfactor',['offsetFactor',['../class_camera_component.html#a8d1632f720f6478ceb2c146aee4a35b1',1,'CameraComponent']]],
-  ['onkeyup',['onKeyUp',['../class_input_command.html#a099c658ec29f0ec0cd3c30535c76b4a9',1,'InputCommand']]]
+  ['name',['name',['../class_event_handler.html#aa5fd950e79ff5faedf4f728c321f6a8f',1,'EventHandler::name()'],['../class_game_object.html#af542b33c8de269343e22c5629e6b66c0',1,'GameObject::name()']]]
 ];

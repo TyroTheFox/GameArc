@@ -16,24 +16,30 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "ModelComponent.h"
-
-extern Event* keyEvent;///External event handler class for key input
+///External event handler class for key input
+extern Event* keyEvent;
 
 class PlayerComponent : public Component
 {
 private:
-	TransformComponent * transform;///Transform component
-	CameraComponent * camera;///Camera component
-	ModelComponent * model;///Model component
+	///Transform component
+	TransformComponent * transform;
+	///Camera component
+	CameraComponent * camera;
+	///Model component
+	ModelComponent * model;
 
 	///Movement Vectors
 	glm::vec3 front, right, up;
-	glm::vec3 intendedDirection;///Direction to move into next
+	///Direction to move into next
+	glm::vec3 intendedDirection;
 public:
-	float movementSpeed;///Base movement speed
-
-	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){	} ///Constructor
-	void OnSetUp() override {///Called when added to object, initialises all needed components and adds to pare
+	///Base movement speed
+	float movementSpeed;
+	///Constructor
+	PlayerComponent() : camera(new CameraComponent), movementSpeed(0.5f){	} 
+	///Called when added to object, initialises all needed components and adds to parent
+	void OnSetUp() override {
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			transform = parent->getComponent<TransformComponent>();
 		}
@@ -104,8 +110,10 @@ public:
 			intendedDirection *= 0;
 		}
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called every render call
-	void OnMessage(const std::string m) override {///Called every event fire, interprets given action messages
+	///Called every render call
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
+	///Called every event fire, interprets given action messages
+	void OnMessage(const std::string m) override {
 		if (m == "moveRight") {
 			intendedDirection.x += 1;
 		}
@@ -133,6 +141,7 @@ public:
 		}
 
 	}
+	///Returns Camera object
 	Camera* GetCamera() {
 		return camera->GetCamera();
 	}

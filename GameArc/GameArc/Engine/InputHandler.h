@@ -18,8 +18,8 @@
 #include <sstream>
 #include <iostream>
 #include "json.h"
-
-extern Event* keyEvent;///External Event handler object
+///External Event handler object
+extern Event* keyEvent;
 
 /**
 * Input Command
@@ -29,11 +29,16 @@ extern Event* keyEvent;///External Event handler object
 class InputCommand
 {
 public:
-	virtual ~InputCommand() {}///Constructor
-	bool onKeyUp = false;///Fires only when key is lifted, when true
-	bool keyPressed = false;///Key pressed flag
-	std::string eventType;///Event class name
-	virtual void execute() = 0;///Executed action
+	///Constructor
+	virtual ~InputCommand() {}
+	///Fires only when key is lifted, when true
+	bool onKeyUp = false;
+	///Key pressed flag
+	bool keyPressed = false;
+	///Event class name
+	std::string eventType;
+	///Executed action
+	virtual void execute() = 0;
 };
 
 /**
@@ -44,11 +49,16 @@ public:
 class KeyInputEvent : public InputCommand
 {
 public:
-	std::string eventName;///Name of Event to call
-	std::string message;///Message for event
-	KeyInputEvent(std::string eN, std::string m) : eventName(eN), message(m) { eventType = "KeyInputEvent"; }///Constructor
-	KeyInputEvent(std::string eN, std::string m, bool onUp) : eventName(eN), message(m) { onKeyUp = onUp; eventType = "KeyInputEvent"; }///Constructor
-	void execute() override {///Command to execute on key push
+	///Name of Event to call
+	std::string eventName;
+	///Message for event
+	std::string message;
+	///Constructor
+	KeyInputEvent(std::string eN, std::string m) : eventName(eN), message(m) { eventType = "KeyInputEvent"; }
+	///Constructor
+	KeyInputEvent(std::string eN, std::string m, bool onUp) : eventName(eN), message(m) { onKeyUp = onUp; eventType = "KeyInputEvent"; }
+	///Command to execute on key push
+	void execute() override {
 		keyEvent->notifyHandlerWithMessage(eventName, message);
 	}
 };
@@ -61,11 +71,16 @@ public:
 class KeyInputIntEvent : public InputCommand
 {
 public:
-	std::string eventName;///Name of Event to call
-	int message;///Message for event
-	KeyInputIntEvent(std::string eN, int m) : eventName(eN) { message = m; eventType = "KeyInputIntEvent"; }///Constructor
-	KeyInputIntEvent(std::string eN, int m, bool onUp) : eventName(eN), message(m) { message = m; onKeyUp = onUp; eventType = "KeyInputIntEvent"; }///Constructor
-	void execute() override {///Command to execute on key push
+	///Name of Event to call
+	std::string eventName;
+	///Message for event
+	int message;
+	///Constructor
+	KeyInputIntEvent(std::string eN, int m) : eventName(eN) { message = m; eventType = "KeyInputIntEvent"; }
+	///Constructor
+	KeyInputIntEvent(std::string eN, int m, bool onUp) : eventName(eN), message(m) { message = m; onKeyUp = onUp; eventType = "KeyInputIntEvent"; }
+	///Command to execute on key push
+	void execute() override {
 		keyEvent->notifyHandlerWithint(eventName, message);
 	}
 };
@@ -78,10 +93,14 @@ public:
 class KeyInputFuncEvent : public InputCommand
 {
 public:
-	std::string eventName;///Name of Event to call
-	KeyInputFuncEvent(std::string eN) : eventName(eN){ eventType = "KeyInputFuncEvent"; }///Constructor
-	KeyInputFuncEvent(std::string eN, bool onUp) : eventName(eN) { onKeyUp = onUp; eventType = "KeyInputFuncEvent"; }///Constructor
-	void execute() override {///Command to execute on key push
+	///Name of Event to call
+	std::string eventName;
+	///Constructor
+	KeyInputFuncEvent(std::string eN) : eventName(eN){ eventType = "KeyInputFuncEvent"; }
+	///Constructor
+	KeyInputFuncEvent(std::string eN, bool onUp) : eventName(eN) { onKeyUp = onUp; eventType = "KeyInputFuncEvent"; }
+	///Command to execute on key push
+	void execute() override {
 		keyEvent->notifyHandler(eventName);
 	}
 };
@@ -89,15 +108,19 @@ public:
 class InputHandler
 {
 private:
-	std::string mouseEventName = "PlayerMouseXY";///Default Event Name for mouse input
-
-	glm::vec2 oldMouseXY = glm::vec2(0);///Previous ticks mouse position
-
-	bool disableInput = false;///Disable main movement actions flag
+	///Default Event Name for mouse input
+	std::string mouseEventName = "PlayerMouseXY";
+	///Previous ticks mouse position
+	glm::vec2 oldMouseXY = glm::vec2(0);
+	///Disable main movement actions flag
+	bool disableInput = false;
 public:
-	std::map<int, InputCommand*> m_controlMapping;///Normal controls
-	std::map<int, InputCommand*> m_debugMapping;///Debug controls that will work regardless of input flag
-	InputHandler(){///Constructor, sets up default controls
+	///Normal controls
+	std::map<int, InputCommand*> m_controlMapping;
+	///Debug controls that will work regardless of input flag
+	std::map<int, InputCommand*> m_debugMapping;
+	///Constructor, sets up default controls
+	InputHandler(){
 		m_controlMapping[(int)'W'] = new KeyInputEvent("PlayerMovement", "moveForwards");
 		m_controlMapping[(int)'S'] = new KeyInputEvent("PlayerMovement", "moveBackwards");
 		m_controlMapping[(int)'A'] = new KeyInputEvent("PlayerMovement", "moveLeft");
@@ -108,13 +131,14 @@ public:
 		
 		setUpDebugControls();
 	}
-	InputHandler(string inputFile)///Constructor, sets up controls according to file
+	///Constructor, sets up controls according to file
+	InputHandler(string inputFile)
 	{
 		loadFromJSON(inputFile);
 		setUpDebugControls();
 	}
-
-	void setUpDebugControls() {///Sets up debug controls
+	///Sets up debug controls
+	void setUpDebugControls() {
 		KeyInputFuncEvent* keyEvent = new KeyInputFuncEvent("ToggleDebugConsole");
 		keyEvent->onKeyUp = true;
 		m_debugMapping[(int)'`'] = keyEvent;
@@ -130,12 +154,12 @@ public:
 		KeyInputIntEvent* keyIntEvent = new KeyInputIntEvent("DebugShiftHit", 1);
 		m_debugMapping[344] = keyIntEvent;
 	}
-
-	void setDisableInput(bool dI) {///Set input flag
+	///Set input flag
+	void setDisableInput(bool dI) {
 		disableInput = dI;
 	}
-
-	bool loadFromJSON(string inputFile) {///Loads each input key from file and sets up needed events
+	///Loads each input key from file and sets up needed events
+	bool loadFromJSON(string inputFile) {
 		std::ifstream inputstream(inputFile);
 		Json::Reader reader;
 		Json::Value obj;
@@ -171,8 +195,8 @@ public:
 		}
 		return true;
 	}
-
-	void handleInputs(const std::vector<int>& keyBuffer)///Interprets keybuffer and fires events depending on keys pushed
+	///Interprets keybuffer and fires events depending on keys pushed
+	void handleInputs(const std::vector<int>& keyBuffer)
 	{
 		if (!disableInput) {
 			for (const auto& mapEntry : m_controlMapping)
@@ -213,16 +237,16 @@ public:
 			}
 		}
 	}
-
-	void handleConsoleInput(char c) {///Takes in keyboard input and send through key event
+	///Takes in keyboard input and send through key event
+	void handleConsoleInput(char c) {
 		if (disableInput) {
 			if (c != '`') {
 				keyEvent->notifyHandlerWithint("DebugConsoleInput", c);
 			}
 		}
 	}
-
-	void handleMouse(const glm::vec2 mouseXY) {///Handles mouse input and sends through event system
+	///Handles mouse input and sends through event system
+	void handleMouse(const glm::vec2 mouseXY) {
 		if (mouseXY != oldMouseXY) {
 			//Send mouse event
 			keyEvent->notifyHandlerWithVec2(mouseEventName, mouseXY);

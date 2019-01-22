@@ -5,5 +5,6 @@ var searchData=
   ['changescene',['ChangeScene',['../class_game.html#a2188abf2b6fe1782fd18609065f06948',1,'Game']]],
   ['checkformodel',['checkForModel',['../class_model_handler.html#a935ceff894c06148839d8f6ae1b59272',1,'ModelHandler']]],
   ['clear',['clear',['../class_json_1_1_value.html#a501a4d67e6c875255c2ecc03ccd2019b',1,'Json::Value']]],
+  ['colourcomponent',['ColourComponent',['../class_colour_component.html#aea6cf99fa40f6ed6d670e89fab944b1c',1,'ColourComponent']]],
   ['computedirectionvector',['ComputeDirectionVector',['../class_camera_component.html#a09c8c13788174831d14f6b600da0aa73',1,'CameraComponent']]]
 ];

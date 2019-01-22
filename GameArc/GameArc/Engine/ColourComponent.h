@@ -8,13 +8,16 @@
 * Used to store and allow for changes in RBG values
 */
 #include "Component.h"
-#define COLOUR_ADJUSTMENT_VALUE 0.001f///Default colour adjustment rate
+///Default colour adjustment rate
+#define COLOUR_ADJUSTMENT_VALUE 0.001f
 
 class ColourComponent : public Component
 {
 public:
-	ColourComponent() : m_red(0), m_blue(0), m_green(0) {};///Constructor
-	void OnSetUp() override {///Called when added to object, sets up debug function
+	///Constructor
+	ColourComponent() : m_red(0), m_blue(0), m_green(0) {};
+	///Called when added to object, sets up debug function
+	void OnSetUp() override {
 		debug->AddConsoleCommand("setColour", TextParser::InterpFunc([this](std::vector<std::string> s) {
 			if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
 			std::string returnMessage = "Colour " + s.at(0);
@@ -27,12 +30,15 @@ public:
 			}
 		}));
 	}
-	void OnUpdate(float dt) override///Called on update tick
+	///Called on update tick
+	void OnUpdate(float dt) override
 	{
 
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called on render tick
-	void OnMessage(const std::string m) override///Called on event call
+	///Called on render tick
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
+	///Called on event call
+	void OnMessage(const std::string m) override
 	{
 		if (m == "increaseRed")
 		{
@@ -70,6 +76,7 @@ public:
 			m_green -= COLOUR_ADJUSTMENT_VALUE;
 		}
 	}
+	///Builds component from JSON values
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
 			if (componentJSON.isMember("rgba")) {
@@ -90,10 +97,13 @@ public:
 			std::cout << "Exception thrown in parsing BuildFromJson in TransformComponent." << std::endl;
 			throw;
 		}
-	};///Builds component
-
-	float m_red;///amount of red colour
-	float m_blue;///amount of blue colour
-	float m_green;///amount of green colour
+	};
+	///amount of red colour
+	float m_red;
+	///amount of blue colour
+	float m_blue;
+	///amount of green colour
+	float m_green;
+	///amount of alpha
 	float m_alpha;
 };

@@ -14,21 +14,29 @@
 
 #include "TransformComponent.h"
 #include "CameraComponent.h"
-
-extern Event* keyEvent;///External event object
+///External event object
+extern Event* keyEvent;
 
 class EventCameraComponent : public Component
 {
 private:
-	TransformComponent * transform;///Transform component
-	CameraComponent * camera;///Camera component
-	string cameraName;///Camera name
-	string switchToScene;///Name of scene to switch to
-	EventHandler movementListener;///Event handler for sending change scene message
+	///Transform component
+	TransformComponent * transform;
+	///Camera component
+	CameraComponent * camera;
+	///Camera name
+	string cameraName;
+	///Name of scene to switch to
+	string switchToScene;
+	///Event handler for sending change scene message
+	EventHandler movementListener;
 public:
-	EventCameraComponent() : camera(new CameraComponent), cameraName("default"){}///Constructor
-	EventCameraComponent(GameObject* p) : camera(new CameraComponent(p)), cameraName("default") {	}///Constructor
-	void OnSetUp() override {///Called when added to object, sets up component events
+	///Constructor
+	EventCameraComponent() : camera(new CameraComponent), cameraName("default"){}
+	///Constructor
+	EventCameraComponent(GameObject* p) : camera(new CameraComponent(p)), cameraName("default") {	}
+	///Called when added to object, sets up component events
+	void OnSetUp() override {
 		buildEvents();
 		debug->AddConsoleCommand("setecrot", TextParser::InterpFunc([this](std::vector<std::string> s) {
 			if (this->parent->name == s.at(0)) {
@@ -59,29 +67,32 @@ public:
 			}
 		}));
 	}
-	void setParent(GameObject* p) {///Sets camera parent
+	///Sets camera parent
+	void setParent(GameObject* p) {
 		parent = p;
 		camera->SetParent(parent);
 	}
-
-	void buildEvents() {///Builds camera events for changing scene
+	///Builds camera events for changing scene
+	void buildEvents() {
 		EventHandler::Func movementMessage = [this]() { this->OnChangeScene(this->switchToScene); };
 		movementListener = EventHandler(movementMessage, "ChangeScene");
 		keyEvent->addHandler(movementListener);
 	}
-
-	void OnUpdate(float dt) override {///Called on update call, doesn't do anything
+	///Called on update call, doesn't do anything
+	void OnUpdate(float dt) override {
 		//camera->OnUpdate(dt);
 	}
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called on render call, doesn't do anything
-	void OnChangeScene(const std::string m) {///Notifies event object with the next scene the Game class should switch to
+	///Called on render call, doesn't do anything
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
+	///Notifies event object with the next scene the Game class should switch to
+	void OnChangeScene(const std::string m) {
 		keyEvent->notifyHandlerWithMessage("NextScene", m);
 		keyEvent->removeHandler("ChangeScene");
 	}
-
-	void OnMessage(const std::string m) override {}///Called on event call, does nothing
-
-	void BuildFromJson(const Json::Value& componentJSON) override {///Builds component from JSON values
+	///Called on event call, does nothing
+	void OnMessage(const std::string m) override {}
+	///Builds component from JSON values
+	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
 			if (componentJSON.isMember("position")) {
 				const Json::Value& position = componentJSON["position"];
@@ -143,6 +154,7 @@ public:
 		}
 
 	}
+	///Return Camera object
 	Camera* GetCamera() {
 		return camera->GetCamera();
 	}

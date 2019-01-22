@@ -1,9 +1,8 @@
-\hypertarget{class_json_1_1_reader}{\section{Json\+:\+:Reader Class Reference}
-\label{class_json_1_1_reader}\index{Json\+::\+Reader@{Json\+::\+Reader}}
-}
+\hypertarget{class_json_1_1_reader}{}\section{Json\+::Reader Class Reference}
+\label{class_json_1_1_reader}\index{Json::Reader@{Json::Reader}}
 
 
-Unserialize a \href{http://www.json.org}{\tt J\+S\+O\+N} document into a \hyperlink{class_json_1_1_value}{Value}.  
+Unserialize a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document into a \mbox{\hyperlink{class_json_1_1_value}{Value}}.  
 
 
 
@@ -13,59 +12,58 @@ Unserialize a \href{http://www.json.org}{\tt J\+S\+O\+N} document into a \hyperl
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error}
-\begin{DoxyCompactList}\small\item\em An error tagged with where in the J\+S\+O\+N text it was encountered. \end{DoxyCompactList}\end{DoxyCompactItemize}
+struct \mbox{\hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error}}
+\begin{DoxyCompactList}\small\item\em An error tagged with where in the J\+S\+ON text it was encountered. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_json_1_1_reader_a3eec9118f3e9a672ba8348c3a79d0f45}{typedef char {\bfseries Char}}\label{class_json_1_1_reader_a3eec9118f3e9a672ba8348c3a79d0f45}
-
+\mbox{\Hypertarget{class_json_1_1_reader_a3eec9118f3e9a672ba8348c3a79d0f45}\label{class_json_1_1_reader_a3eec9118f3e9a672ba8348c3a79d0f45}} 
+typedef char {\bfseries Char}
 \item 
-\hypertarget{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}{typedef const Char $\ast$ {\bfseries Location}}\label{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}
-
+\mbox{\Hypertarget{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}\label{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}} 
+typedef const Char $\ast$ {\bfseries Location}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}{\hyperlink{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}{Reader} ()}\label{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}
-
-\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_json_1_1_reader}{Reader} allowing all features for parsing. \end{DoxyCompactList}\item 
-\hypertarget{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}{\hyperlink{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}{Reader} (const \hyperlink{class_json_1_1_features}{Features} \&features)}\label{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}
-
-\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{class_json_1_1_reader}{Reader} allowing the specified feature set for parsing. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}{parse} (const std\+::string \&document, \hyperlink{class_json_1_1_value}{Value} \&root, bool collect\+Comments=true)
-\begin{DoxyCompactList}\small\item\em Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+O\+N} document. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}{parse} (const char $\ast$begin\+Doc, const char $\ast$end\+Doc, \hyperlink{class_json_1_1_value}{Value} \&root, bool collect\+Comments=true)
-\begin{DoxyCompactList}\small\item\em Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+O\+N} document. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}{parse} (std\+::istream \&is, \hyperlink{class_json_1_1_value}{Value} \&root, bool collect\+Comments=true)
+\mbox{\Hypertarget{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}\label{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}} 
+\mbox{\hyperlink{class_json_1_1_reader_a0b3c4e24c8393354bab57a6ba3ffc27f}{Reader}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{class_json_1_1_reader}{Reader}} allowing all features for parsing. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}\label{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}} 
+\mbox{\hyperlink{class_json_1_1_reader_a45f17831118337309180313e93ac33f8}{Reader}} (const \mbox{\hyperlink{class_json_1_1_features}{Features}} \&features)
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{class_json_1_1_reader}{Reader}} allowing the specified feature set for parsing. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}{parse}} (const std\+::string \&document, \mbox{\hyperlink{class_json_1_1_value}{Value}} \&root, bool collect\+Comments=true)
+\begin{DoxyCompactList}\small\item\em Read a \mbox{\hyperlink{class_json_1_1_value}{Value}} from a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}{parse}} (const char $\ast$begin\+Doc, const char $\ast$end\+Doc, \mbox{\hyperlink{class_json_1_1_value}{Value}} \&root, bool collect\+Comments=true)
+\begin{DoxyCompactList}\small\item\em Read a \mbox{\hyperlink{class_json_1_1_value}{Value}} from a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}{parse}} (std\+::istream \&is, \mbox{\hyperlink{class_json_1_1_value}{Value}} \&root, bool collect\+Comments=true)
 \begin{DoxyCompactList}\small\item\em Parse from input stream. \end{DoxyCompactList}\item 
-std\+::string \hyperlink{class_json_1_1_reader_afa4a59e962d23c4d1c38b433fc95eefa}{get\+Formated\+Error\+Messages} () const 
+std\+::string \mbox{\hyperlink{class_json_1_1_reader_a269793929575f925b629460c9c744da1}{get\+Formated\+Error\+Messages}} () const
 \begin{DoxyCompactList}\small\item\em Returns a user friendly string that list errors in the parsed document. \end{DoxyCompactList}\item 
-std\+::string \hyperlink{class_json_1_1_reader_a95ab50aa789132e9dee0fc1475c85acf}{get\+Formatted\+Error\+Messages} () const 
+std\+::string \mbox{\hyperlink{class_json_1_1_reader_a5e624688f0794da1e737d2a15aa5cb84}{get\+Formatted\+Error\+Messages}} () const
 \begin{DoxyCompactList}\small\item\em Returns a user friendly string that list errors in the parsed document. \end{DoxyCompactList}\item 
-std\+::vector$<$ \hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error} $>$ \hyperlink{class_json_1_1_reader_af214f264eb2425a6f13691ca2d1d913f}{get\+Structured\+Errors} () const 
+std\+::vector$<$ \mbox{\hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error}} $>$ \mbox{\hyperlink{class_json_1_1_reader_afa5aa28e5345b4a90c411a206b1d63b1}{get\+Structured\+Errors}} () const
 \begin{DoxyCompactList}\small\item\em Returns a vector of structured erros encounted while parsing. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}{push\+Error} (const \hyperlink{class_json_1_1_value}{Value} \&value, const std\+::string \&message)
+bool \mbox{\hyperlink{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}{push\+Error}} (const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&value, const std\+::string \&message)
 \begin{DoxyCompactList}\small\item\em Add a semantic error message. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}{push\+Error} (const \hyperlink{class_json_1_1_value}{Value} \&value, const std\+::string \&message, const \hyperlink{class_json_1_1_value}{Value} \&extra)
+bool \mbox{\hyperlink{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}{push\+Error}} (const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&value, const std\+::string \&message, const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&extra)
 \begin{DoxyCompactList}\small\item\em Add a semantic error message with extra context. \end{DoxyCompactList}\item 
-bool \hyperlink{class_json_1_1_reader_a06b52dcc656549506b1ae6f05167ecf4}{good} () const 
+bool \mbox{\hyperlink{class_json_1_1_reader_a86cbb42b3e6d4a4d6416473b1a8f6ae7}{good}} () const
 \begin{DoxyCompactList}\small\item\em Return whether there are any errors. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Unserialize a \href{http://www.json.org}{\tt J\+S\+O\+N} document into a \hyperlink{class_json_1_1_value}{Value}. 
+Unserialize a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document into a \mbox{\hyperlink{class_json_1_1_value}{Value}}. 
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_json_1_1_reader_afa4a59e962d23c4d1c38b433fc95eefa}{\index{Json\+::\+Reader@{Json\+::\+Reader}!get\+Formated\+Error\+Messages@{get\+Formated\+Error\+Messages}}
-\index{get\+Formated\+Error\+Messages@{get\+Formated\+Error\+Messages}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{get\+Formated\+Error\+Messages}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string Json\+::\+Reader\+::get\+Formated\+Error\+Messages (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}\label{class_json_1_1_reader_afa4a59e962d23c4d1c38b433fc95eefa}
+\mbox{\Hypertarget{class_json_1_1_reader_a269793929575f925b629460c9c744da1}\label{class_json_1_1_reader_a269793929575f925b629460c9c744da1}} 
+\index{Json::Reader@{Json::Reader}!getFormatedErrorMessages@{getFormatedErrorMessages}}
+\index{getFormatedErrorMessages@{getFormatedErrorMessages}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{getFormatedErrorMessages()}{getFormatedErrorMessages()}}
+{\footnotesize\ttfamily std\+::string Json\+::\+Reader\+::get\+Formated\+Error\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
 
 
 Returns a user friendly string that list errors in the parsed document. 
@@ -74,14 +72,13 @@ Returns a user friendly string that list errors in the parsed document.
 Formatted error message with the list of errors with their location in the parsed document. An empty string is returned if no error occurred during parsing. 
 \end{DoxyReturn}
 \begin{DoxyRefDesc}{Deprecated}
-\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]Use \hyperlink{class_json_1_1_reader_a95ab50aa789132e9dee0fc1475c85acf}{get\+Formatted\+Error\+Messages()} instead (typo fix). \end{DoxyRefDesc}
-\hypertarget{class_json_1_1_reader_a95ab50aa789132e9dee0fc1475c85acf}{\index{Json\+::\+Reader@{Json\+::\+Reader}!get\+Formatted\+Error\+Messages@{get\+Formatted\+Error\+Messages}}
-\index{get\+Formatted\+Error\+Messages@{get\+Formatted\+Error\+Messages}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{get\+Formatted\+Error\+Messages}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string Json\+::\+Reader\+::get\+Formatted\+Error\+Messages (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}\label{class_json_1_1_reader_a95ab50aa789132e9dee0fc1475c85acf}
+\item[\mbox{\hyperlink{deprecated__deprecated000001}{Deprecated}}]Use \mbox{\hyperlink{class_json_1_1_reader_a5e624688f0794da1e737d2a15aa5cb84}{get\+Formatted\+Error\+Messages()}} instead (typo fix). \end{DoxyRefDesc}
+\mbox{\Hypertarget{class_json_1_1_reader_a5e624688f0794da1e737d2a15aa5cb84}\label{class_json_1_1_reader_a5e624688f0794da1e737d2a15aa5cb84}} 
+\index{Json::Reader@{Json::Reader}!getFormattedErrorMessages@{getFormattedErrorMessages}}
+\index{getFormattedErrorMessages@{getFormattedErrorMessages}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{getFormattedErrorMessages()}{getFormattedErrorMessages()}}
+{\footnotesize\ttfamily std\+::string Json\+::\+Reader\+::get\+Formatted\+Error\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
 
 
 Returns a user friendly string that list errors in the parsed document. 
@@ -89,27 +86,25 @@ Returns a user friendly string that list errors in the parsed document.
 \begin{DoxyReturn}{Returns}
 Formatted error message with the list of errors with their location in the parsed document. An empty string is returned if no error occurred during parsing. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_af214f264eb2425a6f13691ca2d1d913f}{\index{Json\+::\+Reader@{Json\+::\+Reader}!get\+Structured\+Errors@{get\+Structured\+Errors}}
-\index{get\+Structured\+Errors@{get\+Structured\+Errors}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{get\+Structured\+Errors}]{\setlength{\rightskip}{0pt plus 5cm}std\+::vector$<${\bf Structured\+Error}$>$ Json\+::\+Reader\+::get\+Structured\+Errors (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}\label{class_json_1_1_reader_af214f264eb2425a6f13691ca2d1d913f}
+\mbox{\Hypertarget{class_json_1_1_reader_afa5aa28e5345b4a90c411a206b1d63b1}\label{class_json_1_1_reader_afa5aa28e5345b4a90c411a206b1d63b1}} 
+\index{Json::Reader@{Json::Reader}!getStructuredErrors@{getStructuredErrors}}
+\index{getStructuredErrors@{getStructuredErrors}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{getStructuredErrors()}{getStructuredErrors()}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error}}$>$ Json\+::\+Reader\+::get\+Structured\+Errors (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
 
 
 Returns a vector of structured erros encounted while parsing. 
 
 \begin{DoxyReturn}{Returns}
-A (possibly empty) vector of \hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error} objects. Currently only one error can be returned, but the caller should tolerate multiple errors. This can occur if the parser recovers from a non-\/fatal parse error and then encounters additional errors. 
+A (possibly empty) vector of \mbox{\hyperlink{struct_json_1_1_reader_1_1_structured_error}{Structured\+Error}} objects. Currently only one error can be returned, but the caller should tolerate multiple errors. This can occur if the parser recovers from a non-\/fatal parse error and then encounters additional errors. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_a06b52dcc656549506b1ae6f05167ecf4}{\index{Json\+::\+Reader@{Json\+::\+Reader}!good@{good}}
-\index{good@{good}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{good}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::good (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-) const}}\label{class_json_1_1_reader_a06b52dcc656549506b1ae6f05167ecf4}
+\mbox{\Hypertarget{class_json_1_1_reader_a86cbb42b3e6d4a4d6416473b1a8f6ae7}\label{class_json_1_1_reader_a86cbb42b3e6d4a4d6416473b1a8f6ae7}} 
+\index{Json::Reader@{Json::Reader}!good@{good}}
+\index{good@{good}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{good()}{good()}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::good (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
 
 
 Return whether there are any errors. 
@@ -117,18 +112,15 @@ Return whether there are any errors.
 \begin{DoxyReturn}{Returns}
 {\ttfamily true} if there are no errors to report {\ttfamily false} if errors have occurred. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}{\index{Json\+::\+Reader@{Json\+::\+Reader}!parse@{parse}}
-\index{parse@{parse}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::parse (
-\begin{DoxyParamCaption}
-\item[{const std\+::string \&}]{document, }
-\item[{{\bf Value} \&}]{root, }
-\item[{bool}]{collect\+Comments = {\ttfamily true}}
-\end{DoxyParamCaption}
-)}}\label{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}
+\mbox{\Hypertarget{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}\label{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}} 
+\index{Json::Reader@{Json::Reader}!parse@{parse}}
+\index{parse@{parse}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{parse()}{parse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::parse (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{document,  }\item[{\mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{root,  }\item[{bool}]{collect\+Comments = {\ttfamily true} }\end{DoxyParamCaption})}
 
 
-Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+O\+N} document. 
+
+Read a \mbox{\hyperlink{class_json_1_1_value}{Value}} from a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -136,25 +128,21 @@ Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}
 \hline
 {\em root} & \mbox{[}out\mbox{]} Contains the root value of the document if it was successfully parsed. \\
 \hline
-{\em collect\+Comments} & {\ttfamily true} to collect comment and allow writing them back during serialization, {\ttfamily false} to discard comments. This parameter is ignored if \hyperlink{class_json_1_1_features_a33afd389719624b6bdb23950b3c346c9}{Features\+::allow\+Comments\+\_\+} is {\ttfamily false}. \\
+{\em collect\+Comments} & {\ttfamily true} to collect comment and allow writing them back during serialization, {\ttfamily false} to discard comments. This parameter is ignored if \mbox{\hyperlink{class_json_1_1_features_a33afd389719624b6bdb23950b3c346c9}{Features\+::allow\+Comments\+\_\+}} is {\ttfamily false}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 {\ttfamily true} if the document was successfully parsed, {\ttfamily false} if an error occurred. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}{\index{Json\+::\+Reader@{Json\+::\+Reader}!parse@{parse}}
-\index{parse@{parse}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::parse (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{begin\+Doc, }
-\item[{const char $\ast$}]{end\+Doc, }
-\item[{{\bf Value} \&}]{root, }
-\item[{bool}]{collect\+Comments = {\ttfamily true}}
-\end{DoxyParamCaption}
-)}}\label{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}
+\mbox{\Hypertarget{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}\label{class_json_1_1_reader_ac71ef2b64c7c27b062052e692af3fb32}} 
+\index{Json::Reader@{Json::Reader}!parse@{parse}}
+\index{parse@{parse}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{parse()}{parse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::parse (\begin{DoxyParamCaption}\item[{const char $\ast$}]{begin\+Doc,  }\item[{const char $\ast$}]{end\+Doc,  }\item[{\mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{root,  }\item[{bool}]{collect\+Comments = {\ttfamily true} }\end{DoxyParamCaption})}
 
 
-Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+O\+N} document. 
+
+Read a \mbox{\hyperlink{class_json_1_1_value}{Value}} from a \href{http://www.json.org}{\texttt{ J\+S\+ON}} document. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -164,77 +152,69 @@ Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}
 \hline
 {\em root} & \mbox{[}out\mbox{]} Contains the root value of the document if it was successfully parsed. \\
 \hline
-{\em collect\+Comments} & {\ttfamily true} to collect comment and allow writing them back during serialization, {\ttfamily false} to discard comments. This parameter is ignored if \hyperlink{class_json_1_1_features_a33afd389719624b6bdb23950b3c346c9}{Features\+::allow\+Comments\+\_\+} is {\ttfamily false}. \\
+{\em collect\+Comments} & {\ttfamily true} to collect comment and allow writing them back during serialization, {\ttfamily false} to discard comments. This parameter is ignored if \mbox{\hyperlink{class_json_1_1_features_a33afd389719624b6bdb23950b3c346c9}{Features\+::allow\+Comments\+\_\+}} is {\ttfamily false}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 {\ttfamily true} if the document was successfully parsed, {\ttfamily false} if an error occurred. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}{\index{Json\+::\+Reader@{Json\+::\+Reader}!parse@{parse}}
-\index{parse@{parse}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::parse (
-\begin{DoxyParamCaption}
-\item[{std\+::istream \&}]{is, }
-\item[{{\bf Value} \&}]{root, }
-\item[{bool}]{collect\+Comments = {\ttfamily true}}
-\end{DoxyParamCaption}
-)}}\label{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}
+\mbox{\Hypertarget{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}\label{class_json_1_1_reader_a8d0347e6b47343e4bc68be7ecdb9c4e9}} 
+\index{Json::Reader@{Json::Reader}!parse@{parse}}
+\index{parse@{parse}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{parse()}{parse()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::parse (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{is,  }\item[{\mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{root,  }\item[{bool}]{collect\+Comments = {\ttfamily true} }\end{DoxyParamCaption})}
+
 
 
 Parse from input stream. 
 
 \begin{DoxySeeAlso}{See also}
-\hyperlink{namespace_json_a1b4aef303177bbd4d18acc87858e0ec2}{Json\+::operator$>$$>$(std\+::istream\&, Json\+::\+Value\&)}. 
+\mbox{\hyperlink{namespace_json_a1b4aef303177bbd4d18acc87858e0ec2}{Json\+::operator$>$$>$(std\+::istream\&, Json\+::\+Value\&)}}. 
 \end{DoxySeeAlso}
-\hypertarget{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}{\index{Json\+::\+Reader@{Json\+::\+Reader}!push\+Error@{push\+Error}}
-\index{push\+Error@{push\+Error}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{push\+Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::push\+Error (
-\begin{DoxyParamCaption}
-\item[{const {\bf Value} \&}]{value, }
-\item[{const std\+::string \&}]{message}
-\end{DoxyParamCaption}
-)}}\label{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}
+\mbox{\Hypertarget{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}\label{class_json_1_1_reader_ade6c28e0ef00d8f2e0aa2283f91c3e37}} 
+\index{Json::Reader@{Json::Reader}!pushError@{pushError}}
+\index{pushError@{pushError}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{pushError()}{pushError()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::push\+Error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{value,  }\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})}
+
 
 
 Add a semantic error message. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em value} & J\+S\+O\+N \hyperlink{class_json_1_1_value}{Value} location associated with the error \\
+{\em value} & J\+S\+ON \mbox{\hyperlink{class_json_1_1_value}{Value}} location associated with the error \\
 \hline
 {\em message} & The error message. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-{\ttfamily true} if the error was successfully added, {\ttfamily false} if the \hyperlink{class_json_1_1_value}{Value} offset exceeds the document size. 
+{\ttfamily true} if the error was successfully added, {\ttfamily false} if the \mbox{\hyperlink{class_json_1_1_value}{Value}} offset exceeds the document size. 
 \end{DoxyReturn}
-\hypertarget{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}{\index{Json\+::\+Reader@{Json\+::\+Reader}!push\+Error@{push\+Error}}
-\index{push\+Error@{push\+Error}!Json\+::\+Reader@{Json\+::\+Reader}}
-\subsubsection[{push\+Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Json\+::\+Reader\+::push\+Error (
-\begin{DoxyParamCaption}
-\item[{const {\bf Value} \&}]{value, }
-\item[{const std\+::string \&}]{message, }
-\item[{const {\bf Value} \&}]{extra}
-\end{DoxyParamCaption}
-)}}\label{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}
+\mbox{\Hypertarget{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}\label{class_json_1_1_reader_a9b474233c3a7c688e340e70665d45223}} 
+\index{Json::Reader@{Json::Reader}!pushError@{pushError}}
+\index{pushError@{pushError}!Json::Reader@{Json::Reader}}
+\subsubsection{\texorpdfstring{pushError()}{pushError()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Reader\+::push\+Error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{value,  }\item[{const std\+::string \&}]{message,  }\item[{const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{extra }\end{DoxyParamCaption})}
+
 
 
 Add a semantic error message with extra context. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em value} & J\+S\+O\+N \hyperlink{class_json_1_1_value}{Value} location associated with the error \\
+{\em value} & J\+S\+ON \mbox{\hyperlink{class_json_1_1_value}{Value}} location associated with the error \\
 \hline
 {\em message} & The error message. \\
 \hline
-{\em extra} & Additional J\+S\+O\+N \hyperlink{class_json_1_1_value}{Value} location to contextualize the error \\
+{\em extra} & Additional J\+S\+ON \mbox{\hyperlink{class_json_1_1_value}{Value}} location to contextualize the error \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-{\ttfamily true} if the error was successfully added, {\ttfamily false} if either \hyperlink{class_json_1_1_value}{Value} offset exceeds the document size. 
+{\ttfamily true} if the error was successfully added, {\ttfamily false} if either \mbox{\hyperlink{class_json_1_1_value}{Value}} offset exceeds the document size. 
 \end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/json.\+h\end{DoxyCompactItemize}
+C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/json.\+h\end{DoxyCompactItemize}

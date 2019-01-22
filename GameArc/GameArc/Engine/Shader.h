@@ -18,7 +18,8 @@ class Shader
 {
 public:
 	unsigned int ID;///Shader ID (for GPU)
-	Shader(const char* vertexPath, const char* fragmentPath)///Constructor, finds and builds shaders for later use
+	///Constructor, finds and builds shaders for later use
+	Shader(const char* vertexPath, const char* fragmentPath)
 	{
 		// 1. retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
@@ -72,25 +73,30 @@ public:
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 	}
-	void use()///Activates shader
+	///Activates shader
+	void use()
 	{
 		glUseProgram(ID);
 	}
-	void setBool(const std::string &name, bool value) const///Sends uniform boolean to GPU
+	///Sends uniform boolean to GPU
+	void setBool(const std::string &name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
-	void setInt(const std::string &name, int value) const///Sends uniform int to GPU
+	///Sends uniform int to GPU
+	void setInt(const std::string &name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
-	void setFloat(const std::string &name, float value) const///Sends uniform float to GPU
+	///Sends uniform float to GPU
+	void setFloat(const std::string &name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
 private:
-	void checkCompileErrors(unsigned int shader, std::string type)///Checks each shader to ensure it has been constructed correctly
+	///Checks each shader to ensure it has been constructed correctly
+	void checkCompileErrors(unsigned int shader, std::string type)
 	{
 		int success;
 		char infoLog[1024];

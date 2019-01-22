@@ -16,10 +16,14 @@
 */
 class EventHandler {
 public:
-	using Func = std::function<void()>;///A standard void pointer function object
-	using FuncInt = std::function<void(int x)>;///Void pointer function object that accepts an int object
-	using FuncVec2 = std::function<void(glm::vec2 vec)>;///Void pointer function object that accepts a vector
-	using FuncMessage = std::function<void(std::string message)>;///Void pointer function object that accepts a string object 
+	///A standard void pointer function object
+	using Func = std::function<void()>;
+	///Void pointer function object that accepts an int object
+	using FuncInt = std::function<void(int x)>;
+	///Void pointer function object that accepts a vector
+	using FuncVec2 = std::function<void(glm::vec2 vec)>;
+	///Void pointer function object that accepts a string object 
+	using FuncMessage = std::function<void(std::string message)>;
 private:
 	///Functors
 	Func _func; //1
@@ -27,52 +31,55 @@ private:
 	FuncVec2 _funcVec2; //3
 	FuncMessage _funcMessage; //4
 public:
-	std::string name;///Event Handler name
-	int id;///Unique Functor ID
-	int counter;///Counter for number of stored functors so far for ID purposes
-
-	const int funcType;///Type of Functor ID
-
-	EventHandler() : id{ 0 }, funcType(1) {///Constructor
+	///Event Handler name
+	std::string name;
+	///Unique Functor ID
+	int id;
+	///Counter for number of stored functors so far for ID purposes
+	int counter;
+	///Type of Functor ID
+	const int funcType;
+	///Constructor
+	EventHandler() : id{ 0 }, funcType(1) {
 	}
-
-	EventHandler(const Func &func, const std::string& n) : _func{ func }, name(n), funcType(1){///Void Functor Constructor
+	///Void Functor Constructor
+	EventHandler(const Func &func, const std::string& n) : _func{ func }, name(n), funcType(1){
 		this->id = ++EventHandler::counter;
 	}
-
-	EventHandler(const FuncInt &func, const std::string& n) : _funcInt{ func }, name(n), funcType(2){///Int Functor Constructor
+	///Int Functor Constructor
+	EventHandler(const FuncInt &func, const std::string& n) : _funcInt{ func }, name(n), funcType(2){
 		this->id = ++EventHandler::counter;
 	}
-
-	EventHandler(const FuncMessage &func, const std::string& n) : _funcMessage{ func }, name(n), funcType(4){///String Functor Constructor
+	///String Functor Constructor
+	EventHandler(const FuncMessage &func, const std::string& n) : _funcMessage{ func }, name(n), funcType(4){
 		this->id = ++EventHandler::counter;
 	}
-
-	EventHandler(const FuncVec2 &func, const std::string& n) : _funcVec2{ func }, name(n), funcType(3){///Vector Functor Constructor
+	///Vector Functor Constructor
+	EventHandler(const FuncVec2 &func, const std::string& n) : _funcVec2{ func }, name(n), funcType(3){
 		this->id = ++EventHandler::counter;
 	}
-
-	void operator()() {///Fires Void Functor
+	///Fires Void Functor
+	void operator()() {
 		if(this->_func != nullptr)
 		this->_func();
 	}
-
-	void operator()(int i) {///Fires Int Functor
+	///Fires Int Functor
+	void operator()(int i) {
 		if (this->_funcInt != nullptr)
 		this->_funcInt(i);
 	}
-
-	void operator()(std::string s) {///Fires String Functor
+	///Fires String Functor
+	void operator()(std::string s) {
 		if (this->_funcMessage != nullptr)
 		this->_funcMessage(s);
 	}
-
-	void operator()(glm::vec2 vec) {///Fires Vector Functor
+	///Fires Vector Functor
+	void operator()(glm::vec2 vec) {
 		if (this->_funcVec2 != nullptr)
 		this->_funcVec2(vec);
 	}
-
-	void operator=(const EventHandler &func) {///Assignment Operator
+	///Assignment Operator
+	void operator=(const EventHandler &func) {
 		if (this->_func == nullptr) {
 			this->_func = func;
 			this->id = ++EventHandler::counter;
@@ -82,11 +89,12 @@ public:
 			std::cerr << "Nope!" << std::endl;
 		}
 	}
-
-	bool operator==(const EventHandler &del) {///Equals Operator
+	///Equals Operator
+	bool operator==(const EventHandler &del) {
 		return this->id == del.id;
 	}
-	bool operator!=(nullptr_t) {///Does Not Equal Opperator
+	///Does Not Equal Opperator
+	bool operator!=(nullptr_t) {
 		return this->_func != nullptr || this->_funcInt != nullptr || this->_funcMessage != nullptr || this->_funcVec2 != nullptr;
 	}
 };

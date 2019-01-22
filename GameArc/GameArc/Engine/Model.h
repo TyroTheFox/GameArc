@@ -21,24 +21,35 @@ extern ModelHandler* modelHandler;///External Model Handler object
 class Model
 {
 public:
-	bool textureLoaded = false;///Flag to show a texture was loaded
-	bool loadedFromHandler = false;///Flag to show the model was loaded from the Model Handler
-	Model();///Constructor
-	Model(string filepath);///Constructor
-
-	void render(const unsigned int shaderProgram);///Draws each mesh to the screen
-
-	static unsigned int TextureFromFile(const char* filepath, const string& directory, bool gamma = false);///Finds texture information from the model file
-	void loadModel(string path);///Loads in model information from file
-	std::vector<Mesh> getMeshes();///Returns all meshes for the file
-	inline int GetTextureSize() { return v_textures.size(); }///Returns number of textures loaded
+	///Flag to show a texture was loaded
+	bool textureLoaded = false;
+	///Flag to show the model was loaded from the Model Handler
+	bool loadedFromHandler = false;
+	///Constructor
+	Model();
+	///Constructor
+	Model(string filepath);
+	///Draws each mesh to the screen
+	void render(const unsigned int shaderProgram);
+	///Finds texture information from the model file
+	static unsigned int TextureFromFile(const char* filepath, const string& directory, bool gamma = false);
+	///Loads in model information from file
+	void loadModel(string path);
+	///Returns all meshes for the file
+	std::vector<Mesh> getMeshes();
+	///Returns number of textures loaded
+	inline int GetTextureSize() { return v_textures.size(); }
 private:
-
-	std::vector<Mesh> v_meshes;///Stored mesh information
-	string directory;///Relative file directory of model file
-	vector<Texture> v_textures;///Stored texture information
-
-	void processNode(aiNode* node, const aiScene* scene);///Turns loded model scenes into meshes
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene);///Turns loaded meshes into stored meshes and textures
-	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName); ///Finds and loads material textures
+	///Stored mesh information
+	std::vector<Mesh> v_meshes;
+	///Relative file directory of model file
+	string directory;
+	///Stored texture information
+	vector<Texture> v_textures;
+	///Turns loded model scenes into meshes
+	void processNode(aiNode* node, const aiScene* scene);
+	///Turns loaded meshes into stored meshes and textures
+	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
+	///Finds and loads material textures
+	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName); 
 };

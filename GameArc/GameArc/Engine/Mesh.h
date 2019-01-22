@@ -43,21 +43,21 @@ struct Texture {
 class Mesh 
 {
 public:
-	vector<Vertex> vertices;///Stored verticies
-	vector<unsigned int> indices;///Order object's verticies are drawn in
-	vector<Texture> textures;///Mesh's texture information
-	unsigned int VAO;///Vertex Array Object
-
-	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);///Constructor
-
-	// render the mesh with a given shader program
-	void render(const unsigned int shaderProgram);///Draws mesh to screen
-
+	///Stored verticies
+	vector<Vertex> vertices;
+	///Order object's verticies are drawn in
+	vector<unsigned int> indices;
+	///Mesh's texture information
+	vector<Texture> textures;
+	///Vertex Array Object
+	unsigned int VAO;
+	///Constructor
+	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+	///Draws mesh to screen
+	void render(const unsigned int shaderProgram);
 private:
 	///Buffer objects
 	unsigned int VBO, EBO;
-
 	///Initialises all the buffer arrays
 	void setupMesh();
-	
 };

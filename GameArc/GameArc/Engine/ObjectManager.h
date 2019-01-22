@@ -30,15 +30,25 @@
 
 class ObjectManager {
 private:
-	std::map<std::string, std::function<void(GameObject* object, const Json::Value& p_component)>> m_componentJsonBuilders;///List of lambda functions that will construct a given component
-	std::map<std::string, GameObject*> m_gameObjects;///Stored game objects this Game instance
-	std::multimap<int, std::string> sceneIDRegister;///Register of which game objects belong to which scene
-	int latestID = 0;///Latest Scene ID made
-	DebugHelper* debug;///Debug handler object
+	///List of lambda functions that will construct a given component
+	std::map<std::string, std::function<void(GameObject* object, const Json::Value& p_component)>> m_componentJsonBuilders;
+	///Stored game objects this Game instance
+	std::map<std::string, GameObject*> m_gameObjects;
+	///Register of which game objects belong to which scene
+	std::multimap<int, std::string> sceneIDRegister;
+	///Latest Scene ID made
+	int latestID = 0;
+	///Debug handler object
+	DebugHelper* debug;
 public:
-	ObjectManager(DebugHelper* d);///Constructor
-	int getNewID();///Get new Scene ID
-	bool loadLevelJSON(std::string levelFile, int id);///Load Level from file
-	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);///Attach component of given type to given game object
-	std::map<std::string, GameObject*> getGameObjects(int id);///Return list of created game objects registered to given ID
+	///Constructor
+	ObjectManager(DebugHelper* d);
+	///Get new Scene ID
+	int getNewID();
+	///Load Level from file
+	bool loadLevelJSON(std::string levelFile, int id);
+	///Attach component of given type to given game object
+	template<typename T> void attachComponent(GameObject* object, const Json::Value& p_component);
+	///Return list of created game objects registered to given ID
+	std::map<std::string, GameObject*> getGameObjects(int id);
 };

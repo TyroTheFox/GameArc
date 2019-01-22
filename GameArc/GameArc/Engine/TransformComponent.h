@@ -17,20 +17,30 @@
 class TransformComponent : public Component
 {
 public:
-	glm::vec3 m_position;///Current position in 3D space
-	glm::quat m_orientation;///Current orientation in 3D space
-	glm::vec3 m_scale;///Current size
-	
-	float increaseStep = 0.1f;///Default rate of movement for all transformations
-
-	TransformComponent() : m_position(0), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}///Constructor
-	TransformComponent(const glm::vec3& pos) : m_position(pos), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}///Constructor
-	TransformComponent(const glm::vec3& pos, const glm::quat& orient) : m_position(pos), m_orientation(orient), m_scale(1.0f) {}///Constructor
-	TransformComponent(const glm::vec3& pos, const glm::quat& orient, const glm::vec3& scale) : m_position(pos), m_orientation(orient), m_scale(scale) {}///Constructor
-	void OnSetUp() override {	}///Called when component is attached to object
-	void OnUpdate(float dt) override{}///Called on update tick
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {}///Called on render instance
-	void OnMessage(const std::string m) override///Called on event fire, handles transformation calls
+	///Current position in 3D space
+	glm::vec3 m_position;
+	///Current orientation in 3D space
+	glm::quat m_orientation;
+	///Current size
+	glm::vec3 m_scale;
+	///Default rate of movement for all transformations
+	float increaseStep = 0.1f;
+	///Constructor
+	TransformComponent() : m_position(0), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}
+	///Constructor
+	TransformComponent(const glm::vec3& pos) : m_position(pos), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}
+	///Constructor
+	TransformComponent(const glm::vec3& pos, const glm::quat& orient) : m_position(pos), m_orientation(orient), m_scale(1.0f) {}
+	///Constructor
+	TransformComponent(const glm::vec3& pos, const glm::quat& orient, const glm::vec3& scale) : m_position(pos), m_orientation(orient), m_scale(scale) {}
+	///Called when component is attached to object
+	void OnSetUp() override {	}
+	///Called on update tick
+	void OnUpdate(float dt) override{}
+	///Called on render instance
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
+	///Called on event fire, handles transformation calls
+	void OnMessage(const std::string m) override
 	{
 		if (m == "increaseRotateX") {
 			rotate(increaseStep, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -134,10 +144,12 @@ public:
 			throw;
 		}
 	}
-
-	const glm::vec3& position() const { return m_position; }///Get position
-	const glm::quat& orientation() const { return m_orientation; }///Get orientation
-	const glm::vec3& scale() const { return m_scale; }///Get scale
+	///Get position
+	const glm::vec3& position() const { return m_position; }
+	///Get orientation
+	const glm::quat& orientation() const { return m_orientation; }
+	///Get scale
+	const glm::vec3& scale() const { return m_scale; }
 	///Get Model Matrix for engine use
 	glm::mat4 getModelMatrix()
 	{
@@ -146,17 +158,22 @@ public:
 		glm::mat4 rotMatrix = glm::mat4_cast(m_orientation);
 		return transMatrix * rotMatrix * scaleMatrix;
 	}
-
-	void translate(const glm::vec3 &v) { m_position += v; }///Transform by vector
-	void translate(float x, float y, float z) { m_position += glm::vec3(x, y, z); }///Transform by variables
-
-	void rotate(float angle, const glm::vec3 &axis) { m_orientation *= glm::angleAxis(angle, axis * m_orientation); }///Rotate by vector
-	void rotate(float angle, float x, float y, float z) { m_orientation *= glm::angleAxis(angle, glm::vec3(x, y, z) * m_orientation); }///Rotate by variables
-
-	void scaleUp(const glm::vec3 &v) { m_scale += v; }///Scale by vector
-	void scaleUp(float x, float y, float z) { m_scale += glm::vec3(x, y, z); }///Scale by variables
-
-	void yaw(float angle) { rotate(angle, 0.0f, 1.0f, 0.0f); }///Change yaw by world y
-	void pitch(float angle) { rotate(angle, 1.0f, 0.0f, 0.0f); }///Change yaw by world x
-	void roll(float angle) { rotate(angle, 0.0f, 0.0f, 1.0f); }///Change roll by world z
+	///Transform by vector
+	void translate(const glm::vec3 &v) { m_position += v; }
+	///Transform by variables
+	void translate(float x, float y, float z) { m_position += glm::vec3(x, y, z); }
+	///Rotate by vector
+	void rotate(float angle, const glm::vec3 &axis) { m_orientation *= glm::angleAxis(angle, axis * m_orientation); }
+	///Rotate by variables
+	void rotate(float angle, float x, float y, float z) { m_orientation *= glm::angleAxis(angle, glm::vec3(x, y, z) * m_orientation); }
+	///Scale by vector
+	void scaleUp(const glm::vec3 &v) { m_scale += v; }
+	///Scale by variables
+	void scaleUp(float x, float y, float z) { m_scale += glm::vec3(x, y, z); }
+	///Change yaw by world y
+	void yaw(float angle) { rotate(angle, 0.0f, 1.0f, 0.0f); }
+	///Change yaw by world x
+	void pitch(float angle) { rotate(angle, 1.0f, 0.0f, 0.0f); }
+	///Change roll by world z
+	void roll(float angle) { rotate(angle, 0.0f, 0.0f, 1.0f); }
 };

@@ -14,13 +14,19 @@
 class TextUIComponent : public Component
 {
 private:
-	TextWriter* textWriter;///2D text writing object
-	glm::vec2 position;///Position on screen
-	std::string text;///Text to display
-	float scale;///Font size
+	///2D text writing object
+	TextWriter* textWriter;
+	///Position on screen
+	glm::vec2 position;
+	///Text to display
+	std::string text;
+	///Font size
+	float scale;
 public:
-	TextUIComponent() : scale(1.0f), text("") { textWriter = new TextWriter(); }///Constructor
-	void OnSetUp() override {	///Called when attached to object, sets up Debug functions
+	///Constructor
+	TextUIComponent() : scale(1.0f), text("") { textWriter = new TextWriter(); }
+	///Called when attached to object, sets up Debug functions
+	void OnSetUp() override {	
 		debug->AddConsoleCommand("changetext", TextParser::InterpFunc([this](std::vector<std::string> s) {
 			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
 			if (this->parent->name == s.at(0)) {
@@ -34,22 +40,33 @@ public:
 			}
 		}));
 	}
-	void SetText(std::string t) { text = t;	}///Sets drawn text
-	std::string GetText() { return text; }///Returns drawn text
-	void SetPosition(float x, float y) { position = glm::vec2(x, y); }///Set by variables
-	void SetPosition(glm::vec2 xy) { position = xy; }///Set by vector
-	glm::vec2 GetPosition() { return position; }///Return vector
-	void SetScale(float s) { scale = s;	}///Set text size
-	float GetScale() { return scale; }///Get text size
-	void OnUpdate(float dt) override {}///Called on update tick, doesn't do anything
-	void OnRender(IEngineCore* m_engineInterfacePtr) override {///Called on render call, draws text to screen
+	///Sets drawn text
+	void SetText(std::string t) { text = t;	}
+	///Returns drawn text
+	std::string GetText() { return text; }
+	///Set by variables
+	void SetPosition(float x, float y) { position = glm::vec2(x, y); }
+	///Set by vector
+	void SetPosition(glm::vec2 xy) { position = xy; }
+	///Return vector
+	glm::vec2 GetPosition() { return position; }
+	///Set text size
+	void SetScale(float s) { scale = s;	}
+	///Get text size
+	float GetScale() { return scale; }
+	///Called on update tick, doesn't do anything
+	void OnUpdate(float dt) override {}
+	///Called on render call, draws text to screen
+	void OnRender(IEngineCore* m_engineInterfacePtr) override {
 		if (textWriter->m_engineInterfacePtr == nullptr) {
 			textWriter->SetEnginePtr(m_engineInterfacePtr);
 		}
 		textWriter->DrawNormalText(text, position.x, position.y, scale); 
 	}
-	void OnMessage(const std::string m) override {}///Does largely nothing currently
-	void BuildFromJson(const Json::Value& componentJSON) override {	///Builds component from JSON values
+	///Does largely nothing currently
+	void OnMessage(const std::string m) override {}
+	///Builds component from JSON values
+	void BuildFromJson(const Json::Value& componentJSON) override {	
 		try {
 			if (componentJSON.isMember("position")) {
 				const Json::Value& p = componentJSON["position"];
