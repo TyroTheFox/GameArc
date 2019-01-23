@@ -47,6 +47,8 @@ private:
 public:
 	///Constructor
 	ObjectManager(DebugHelper* d, ModelHandler* mH);
+	///Deconstructor
+	~ObjectManager();
 	///Get new Scene ID
 	int getNewID();
 	///Load Level from file

@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "TextWriter.h"
+#include "InputHandler.h"
 // GL includes
 #include "Shader.h"
 // FreeType
@@ -27,13 +28,14 @@
 ///Forward Declared
 class Game;
 struct Character;
-extern InputHandler* inputHandler;
 
 class GLFW_EngineCore : public IEngineCore
 {
 public:
 	///Delta Time for updating objects
 	float delta = 0;
+	///Input handler class, used for processing key inputs and firing events based on that input
+	static InputHandler* inputHandler;
 	///Deconstructor
 	~GLFW_EngineCore() override;
 	///Sets up game window and other variables

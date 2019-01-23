@@ -135,6 +135,20 @@ public:
 		loadFromJSON(inputFile);
 		setUpDebugControls();
 	}
+	///Deconstructor
+	~InputHandler() {
+		std::map<int, InputCommand*>::iterator itr;
+		for (itr = m_controlMapping.begin(); itr != m_controlMapping.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		m_controlMapping.clear();
+		for (itr = m_debugMapping.begin(); itr != m_debugMapping.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		m_debugMapping.clear();
+	}
 	///Sets up debug controls
 	void setUpDebugControls() {
 		KeyInputFuncEvent* keyEvent = new KeyInputFuncEvent("ToggleDebugConsole");

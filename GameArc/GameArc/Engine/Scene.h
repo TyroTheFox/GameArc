@@ -49,6 +49,8 @@ public:
 	Scene(ObjectManager* oM);
 	///Constructor
 	Scene(DebugHelper* d, ObjectManager* oM);
+	///Deconstructor
+	~Scene();
 	///Load in and build level objects from JSON
 	bool loadLevelJSON(std::string levelFile);
 	///Returns game objects map

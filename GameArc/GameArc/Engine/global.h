@@ -8,13 +8,13 @@
 * These are external objects that are accessable by all classes but must be initialised before use. 
 */
 //#include "ModelHandler.h"
-#include "InputHandler.h"
+//#include "InputHandler.h"
 #include "EventHandler.h"
 
 //class ModelHandler;///Forward Declare
 /////External Model Handler, compiler is directed to pick only one of any given instance of object
 //extern __declspec(selectany) ModelHandler* modelHandler;
-///External Input Handler, compiler is directed to pick only one of any given instance of object
-extern __declspec(selectany) InputHandler* inputHandler;
+/////External Input Handler, compiler is directed to pick only one of any given instance of object
+//extern __declspec(selectany) InputHandler* inputHandler;
 ///External Key Event, compiler is directed to pick only one of any given instance of object
 extern __declspec(selectany) Event* keyEvent;

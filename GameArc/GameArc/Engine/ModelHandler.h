@@ -30,6 +30,8 @@ private:
 public:
 	///Constructor
 	ModelHandler();
+	///Deconstructor
+	~ModelHandler();
 	///Registers new models to the list
 	void registerModel(std::string fileName, Model* m);
 	///Checks whether model exists in list

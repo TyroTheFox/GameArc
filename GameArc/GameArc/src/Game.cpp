@@ -53,8 +53,9 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	debug->AddConsoleCommand("changescene", TextParser::InterpFunc([this](std::vector<std::string> s) { this->ChangeScene(s.at(0)); }));
 }
 
-void Game::init()
+void Game::init(InputHandler* iH)
 {
+	inputHandler = iH;
 	// update the camera
 	if (m_MainCamera == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
@@ -63,6 +64,18 @@ void Game::init()
 		m_engineInterfacePtr->setCamera(m_MainCamera);
 	}
 	debugHelper->WriteToConsole("Game Set Up Successfully");
+}
+
+void Game::CleanUp() {
+	delete debugHelper;
+	delete modelHandler;
+	std::map<string, Scene*>::iterator itr;
+	for (itr = sceneList.begin(); itr != sceneList.end(); itr++)
+	{
+		delete (itr->second);
+	}
+	sceneList.clear();
+	delete oM;
 }
 
 bool Game::loadFromJSON(string levelsFile) {

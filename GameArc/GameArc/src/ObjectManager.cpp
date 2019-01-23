@@ -25,6 +25,16 @@ ObjectManager::ObjectManager(DebugHelper* d, ModelHandler* mH)
 	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
 }
 
+ObjectManager::~ObjectManager() {
+	std::map<std::string, GameObject*>::iterator itr;
+	for (itr = m_gameObjects.begin(); itr != m_gameObjects.end(); itr++)
+	{
+		delete (itr->second);
+	}
+	m_gameObjects.clear();
+	sceneIDRegister.clear();
+}
+
 int ObjectManager::getNewID() {
 	int temp = ++ObjectManager::latestID;
 	return temp;

@@ -17,6 +17,7 @@
 #include "DebugHelper.h"
 #include "ObjectManager.h"
 #include "ModelHandler.h"
+#include "InputHandler.h"
 #include "global.h"
 ///Forward declared key event object
 extern Event* keyEvent;
@@ -41,16 +42,20 @@ public:
 	IEngineCore* m_engineInterfacePtr;
 	///Model Handler object pointer
 	ModelHandler* modelHandler;
+	///Input handler object pointer
+	InputHandler* inputHandler;
 	///Constructor
 	Game();
 	///Constructor
 	Game(string levelsFile, DebugHelper* debug);
+	///Deletes set up game objects
+	void CleanUp();
 	///Load scene data from JSON file
 	bool loadFromJSON(string levelsFile);
 	///Change currently displayed scene to a new one
 	void ChangeScene(string sceneName); 
 	///Initialise variables once Game Engine Core has been initialised
-	void init();
+	void init(InputHandler* iH);
 	///Update all scenes
 	void update(float dt);
 	///Render all scene contents

@@ -8,11 +8,16 @@
 std::vector<int> GLFW_EngineCore::m_keyBuffer;
 int GLFW_EngineCore::m_screenWidth;
 int GLFW_EngineCore::m_screenHeight;
+InputHandler* GLFW_EngineCore::inputHandler;
 
 GLFW_EngineCore::~GLFW_EngineCore()
 {
 	// cleanup
 	glfwTerminate();
+	delete inputHandler;
+	delete phong;
+	delete texturePhong;
+	delete textWriterShader;
 }
 
 bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
@@ -23,6 +28,8 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	
 	m_screenWidth = width;
 	m_screenHeight = height;
+
+	inputHandler = new InputHandler("assets/inputs.json");
 
 	m_window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
 	if (m_window == nullptr)
@@ -69,16 +76,12 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	// for this example just give the game direct access to the engine
 	// there are other ways this could be handled
 	game.m_engineInterfacePtr = this;
-
 	// message loop
-	game.init();
+	game.init(inputHandler);
 	while (!glfwWindowShouldClose(m_window))
 	{
 		auto start = clock.now();
 
-		/*for (InputHandler* handler : game.getInputHandlers()) {
-			handler->handleInputs(m_keyBuffer);
-		}*/
 		inputHandler->handleInputs(m_keyBuffer);
 		double xpos, ypos;
 		glfwGetCursorPos(m_window, &xpos, &ypos);
@@ -94,6 +97,8 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		std::chrono::duration<float> elapsed = finish - start;
 		delta = elapsed.count();
 	}
+
+	game.CleanUp();
 
 	return true;
 }

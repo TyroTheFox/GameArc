@@ -29,6 +29,9 @@ Scene::Scene(DebugHelper* d, ObjectManager* oM)
 	}));
 }
 
+Scene::~Scene() {
+}
+
 bool Scene::loadLevelJSON(std::string levelFile)
 {
 	if (objectManager->loadLevelJSON(levelFile, ID)) {
