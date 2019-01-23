@@ -1,11 +1,5 @@
 #pragma once
-/**
-* \class GLFW Engine Core
-* \file GLFW_EngineCore.h
-* \brief A rendering and utility core for wrapping GLFW opperation
-*
-* A wrapper for GLFW opperations and set up to allow for easy use of the library in the rest of the game
-*/
+
 #include "IEngineCore.h"
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
@@ -27,8 +21,14 @@
 
 ///Forward Declared
 class Game;
+///Forward Declared
 struct Character;
+/** \class GLFWEngineCore
+\file GLFW_EngineCore.h
+\brief A rendering and utility core for wrapping GLFW opperation
 
+A wrapper for GLFW opperations and set up to allow for easy use of the library in the rest of the game
+*/
 class GLFW_EngineCore : public IEngineCore
 {
 public:
@@ -52,7 +52,8 @@ public:
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
 	///Draw 2D text to the screen
 	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
-
+	///Used for drawing 2D rectandles to the screen
+	void draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) override;
 private:
 	///GLFW window object
 	GLFWwindow* m_window;
@@ -61,7 +62,9 @@ private:
 	///Texture Phong Shader
 	Shader* texturePhong; 
 	///Text Writer Shader
-	Shader* textWriterShader; 
+	Shader* textWriterShader;
+	///2D Object Shader
+	Shader* Shader2D;
 	///Width of the Window
 	static int m_screenWidth; 
 	///Height of the Window

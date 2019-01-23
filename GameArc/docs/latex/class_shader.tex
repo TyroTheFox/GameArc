@@ -1,43 +1,53 @@
-\hypertarget{class_shader}{}\section{Shader Class Reference}
+\hypertarget{class_shader}{\section{Shader Class Reference}
 \label{class_shader}\index{Shader@{Shader}}
+}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_shader_a3e135bbf914b087a939114d79c10d283}{Shader}} (const char $\ast$vertex\+Path, const char $\ast$fragment\+Path)
+\hypertarget{class_shader_a3e135bbf914b087a939114d79c10d283}{\hyperlink{class_shader_a3e135bbf914b087a939114d79c10d283}{Shader} (const char $\ast$vertex\+Path, const char $\ast$fragment\+Path)}\label{class_shader_a3e135bbf914b087a939114d79c10d283}
+
 \begin{DoxyCompactList}\small\item\em Constructor, finds and builds shaders for later use. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_shader_a870fa9f13d69e558815d6fd351a469dc}\label{class_shader_a870fa9f13d69e558815d6fd351a469dc}} 
-void \mbox{\hyperlink{class_shader_a870fa9f13d69e558815d6fd351a469dc}{use}} ()
+\hypertarget{class_shader_a870fa9f13d69e558815d6fd351a469dc}{void \hyperlink{class_shader_a870fa9f13d69e558815d6fd351a469dc}{use} ()}\label{class_shader_a870fa9f13d69e558815d6fd351a469dc}
+
 \begin{DoxyCompactList}\small\item\em Activates shader. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_shader_ab1a56d6c299bd7eaa18c2e142ef7bd9f}\label{class_shader_ab1a56d6c299bd7eaa18c2e142ef7bd9f}} 
-void \mbox{\hyperlink{class_shader_ab1a56d6c299bd7eaa18c2e142ef7bd9f}{set\+Bool}} (const std\+::string \&name, bool value) const
-\begin{DoxyCompactList}\small\item\em Sends uniform boolean to G\+PU. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_shader_ad362e2b654cd95a3574cd505411e41fd}\label{class_shader_ad362e2b654cd95a3574cd505411e41fd}} 
-void \mbox{\hyperlink{class_shader_ad362e2b654cd95a3574cd505411e41fd}{set\+Int}} (const std\+::string \&name, int value) const
-\begin{DoxyCompactList}\small\item\em Sends uniform int to G\+PU. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_shader_afe7367621f74c2d26431d8ac15252bf3}\label{class_shader_afe7367621f74c2d26431d8ac15252bf3}} 
-void \mbox{\hyperlink{class_shader_afe7367621f74c2d26431d8ac15252bf3}{set\+Float}} (const std\+::string \&name, float value) const
-\begin{DoxyCompactList}\small\item\em Sends uniform float to G\+PU. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hypertarget{class_shader_a23700270a4fb0aaa2c2404c54e27cced}{void \hyperlink{class_shader_a23700270a4fb0aaa2c2404c54e27cced}{set\+Bool} (const std\+::string \&name, bool value) const }\label{class_shader_a23700270a4fb0aaa2c2404c54e27cced}
+
+\begin{DoxyCompactList}\small\item\em Sends uniform boolean to G\+P\+U. \end{DoxyCompactList}\item 
+\hypertarget{class_shader_a060af09412f03f9576f1d7e2cbe76a92}{void \hyperlink{class_shader_a060af09412f03f9576f1d7e2cbe76a92}{set\+Int} (const std\+::string \&name, int value) const }\label{class_shader_a060af09412f03f9576f1d7e2cbe76a92}
+
+\begin{DoxyCompactList}\small\item\em Sends uniform int to G\+P\+U. \end{DoxyCompactList}\item 
+\hypertarget{class_shader_a066880ecc3bdb350ec7491c892162dd0}{void \hyperlink{class_shader_a066880ecc3bdb350ec7491c892162dd0}{set\+Float} (const std\+::string \&name, float value) const }\label{class_shader_a066880ecc3bdb350ec7491c892162dd0}
+
+\begin{DoxyCompactList}\small\item\em Sends uniform float to G\+P\+U. \end{DoxyCompactList}\item 
+\hypertarget{class_shader_a54a5c6215e1605728f49c11c38fbfd85}{void {\bfseries Set\+Vector2f} (const G\+Lchar $\ast$name, G\+Lfloat x, G\+Lfloat y, G\+Lboolean use\+Shader)}\label{class_shader_a54a5c6215e1605728f49c11c38fbfd85}
+
+\item 
+\hypertarget{class_shader_a7cf876e31d920a7d9c3c21ce8fd3a687}{void {\bfseries Set\+Vector2f} (const G\+Lchar $\ast$name, const glm\+::vec2 \&value, G\+Lboolean use\+Shader)}\label{class_shader_a7cf876e31d920a7d9c3c21ce8fd3a687}
+
+\item 
+\hypertarget{class_shader_aa5191fa6b28fcd18e84d7b8ea5c0e6fb}{void {\bfseries Set\+Vector3f} (const G\+Lchar $\ast$name, G\+Lfloat x, G\+Lfloat y, G\+Lfloat z, G\+Lboolean use\+Shader)}\label{class_shader_aa5191fa6b28fcd18e84d7b8ea5c0e6fb}
+
+\item 
+\hypertarget{class_shader_a61719d9b8a28197f3fb2cd683fa941bb}{void {\bfseries Set\+Vector3f} (const G\+Lchar $\ast$name, const glm\+::vec3 \&value, G\+Lboolean use\+Shader)}\label{class_shader_a61719d9b8a28197f3fb2cd683fa941bb}
+
+\item 
+\hypertarget{class_shader_a968b3e2164f7ba4c8de1c62f2345dff7}{void {\bfseries Set\+Vector4f} (const G\+Lchar $\ast$name, G\+Lfloat x, G\+Lfloat y, G\+Lfloat z, G\+Lfloat w, G\+Lboolean use\+Shader)}\label{class_shader_a968b3e2164f7ba4c8de1c62f2345dff7}
+
+\item 
+\hypertarget{class_shader_ab6c7940076c0a47bcc945065e1b398f5}{void {\bfseries Set\+Vector4f} (const G\+Lchar $\ast$name, const glm\+::vec4 \&value, G\+Lboolean use\+Shader)}\label{class_shader_ab6c7940076c0a47bcc945065e1b398f5}
+
+\item 
+\hypertarget{class_shader_adc310069fef7c6fab933f708e25c1257}{void {\bfseries Set\+Matrix4} (const G\+Lchar $\ast$name, const glm\+::mat4 \&matrix, G\+Lboolean use\+Shader)}\label{class_shader_adc310069fef7c6fab933f708e25c1257}
+
+\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_shader_a142a08b6fbdfc982d82ca10ee0b0f38d}\label{class_shader_a142a08b6fbdfc982d82ca10ee0b0f38d}} 
-unsigned int {\bfseries ID}
-\end{DoxyCompactItemize}
+\hypertarget{class_shader_a142a08b6fbdfc982d82ca10ee0b0f38d}{unsigned int \hyperlink{class_shader_a142a08b6fbdfc982d82ca10ee0b0f38d}{I\+D}}\label{class_shader_a142a08b6fbdfc982d82ca10ee0b0f38d}
 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_shader}{Shader} I\+D (for G\+P\+U) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\subsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{class_shader_a3e135bbf914b087a939114d79c10d283}\label{class_shader_a3e135bbf914b087a939114d79c10d283}} 
-\index{Shader@{Shader}!Shader@{Shader}}
-\index{Shader@{Shader}!Shader@{Shader}}
-\subsubsection{\texorpdfstring{Shader()}{Shader()}}
-{\footnotesize\ttfamily Shader\+::\+Shader (\begin{DoxyParamCaption}\item[{const char $\ast$}]{vertex\+Path,  }\item[{const char $\ast$}]{fragment\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Constructor, finds and builds shaders for later use. 
-
-\mbox{\hyperlink{class_shader}{Shader}} ID (for G\+PU) 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\mbox{\hyperlink{_shader_8h}{Shader.\+h}}\end{DoxyCompactItemize}
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_shader_8h}{Shader.\+h}\end{DoxyCompactItemize}

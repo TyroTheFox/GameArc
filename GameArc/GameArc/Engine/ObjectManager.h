@@ -21,8 +21,7 @@
 #include "ModelHandler.h"
 #include "DebugHelper.h"
 
-/**
-* \class Object Manager
+/** \class ObjectManager
 * \file ObjectManager.h
 * \brief A factory object that creates each component and game object from JSON files
 *

@@ -1,13 +1,4 @@
 #pragma once
-/**
-* \class Text Writer
-* \file TextWriter.h
-* \author Kieran Clare
-* \brief Used for writing 2D text to the screen
-*
-* Based on the Learn Open GL version, draws 2D text to the screen
-* Orignal version: https://learnopengl.com/code_viewer.php?code=in-practice/text_rendering
-*/
 /// Std. Includes
 #include <iostream>
 #include <map>
@@ -19,13 +10,18 @@
 /// GL includes
 #include "Shader.h"
 #include "IEngineCore.h"
+#include "2DRect.h"
 /// FreeType
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 class IEngineCore;///Forward declared
+class Rect;
 
-/// Holds all state information relevant to a character as loaded using FreeType
+/** \struct Character
+* 
+* Holds all state information relevant to a character as loaded using FreeType
+*/
 struct Character {
 	/// ID handle of the glyph texture
     GLuint TextureID;   
@@ -37,12 +33,25 @@ struct Character {
     GLuint Advance;    
 };
 
+/**\class TextWriter
+* \file TextWriter.h
+* \author Kieran Clare
+* \brief Used for writing 2D text to the screen
+*
+* Based on the Learn Open GL version, draws 2D text to the screen
+* Orignal version: https://learnopengl.com/code_viewer.php?code=in-practice/text_rendering
+*/
 class TextWriter {
 public:
 	///Engine Core Pointer, used for drawing
 	IEngineCore * m_engineInterfacePtr;
+	///2D Background Object
+	Rect* background;
 	///Constructor
 	TextWriter();
+	///Constructor
+	TextWriter(IEngineCore* m_engineInterfacePtr);
+	void init();
 	///Draws normal, white text to the screen
 	void DrawNormalText(std::string text, float x, float y, float scale);
 	///Draws red text to the screen

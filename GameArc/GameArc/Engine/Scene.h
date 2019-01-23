@@ -24,13 +24,12 @@
 
 using namespace std;
 
-/**
-* \class Scene
-* \file Scene.h
-* \author Kieran Clare
-* \brief Handles encapsulation of different objects into managable, arangable groups
-*
-* Encapsulates and manages game objects within to allow for quick and easy switching between 'screens' of the game
+/** \class Scene
+\file Scene.h
+\author Kieran Clare
+\brief Handles encapsulation of different objects into managable, arangable groups
+
+Encapsulates and manages game objects within to allow for quick and easy switching between 'screens' of the game
 */
 
 class Scene

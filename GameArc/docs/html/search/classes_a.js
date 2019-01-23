@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['reader',['Reader',['../class_json_1_1_reader.html',1,'Json']]]
+  ['reader',['Reader',['../class_json_1_1_reader.html',1,'Json']]],
+  ['rect',['Rect',['../class_rect.html',1,'']]]
 ];

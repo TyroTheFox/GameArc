@@ -1,16 +1,15 @@
 #pragma once
-/**
-* \class Text UI Component
-* \file TextUIComponent.h
-* \author Kieran Clare
-* \brief Draws text to the screen
-*
-* Draws 2D text to the screen when attached to an object
-*/
+
 #include "GameObject.h"
 #include "Component.h"
 #include "TextWriter.h"
+/**
+\file TextUIComponent.h
+\author Kieran Clare
+\brief Draws text to the screen
 
+Draws 2D text to the screen when attached to an object
+*/
 class TextUIComponent : public Component
 {
 private:
@@ -58,6 +57,7 @@ public:
 	void OnUpdate(float dt) override {}
 	///Called on render call, draws text to screen
 	void OnRender(IEngineCore* m_engineInterfacePtr) override {
+		textWriter->SetEnginePtr(m_engineInterfacePtr);
 		if (textWriter->m_engineInterfacePtr == nullptr) {
 			textWriter->SetEnginePtr(m_engineInterfacePtr);
 		}

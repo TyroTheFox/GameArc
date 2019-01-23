@@ -22,13 +22,12 @@
 ///Forward declared key event object
 extern Event* keyEvent;
 
-/**
-* \class Game
-* \file Game.h
-* \brief A container and manager object for the game that's driven by the Engine Core
-*
-* A container and manager object for scenes that's driven by the Engine Core. Updates and Sets Up all active game objects.
-* It's this that the player actually sees and interacts with.
+/** \class Game
+\file Game.h
+\brief A container and manager object for the game that's driven by the Engine Core
+
+A container and manager object for scenes that's driven by the Engine Core. Updates and Sets Up all active game objects.
+It's this that the player actually sees and interacts with.
 */
 
 class Game

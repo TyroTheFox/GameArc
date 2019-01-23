@@ -160,11 +160,10 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
 								std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO)
 {
-
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_screenWidth), 0.0f, static_cast<GLfloat>(m_screenHeight));
 
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
 
 	// Activate corresponding render state	
 	textWriterShader->use();
@@ -208,6 +207,34 @@ void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat s
 	}
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisable(GL_BLEND);
+}
+
+void GLFW_EngineCore::draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) {
+	// Prepare transformations
+	Shader2D->use();
+
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_screenWidth), 0.0f, static_cast<GLfloat>(m_screenHeight));
+	glUniformMatrix4fv(glGetUniformLocation(Shader2D->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(position, 0.0f));
+
+	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+	model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+
+	model = glm::scale(model, glm::vec3(size, 1.0f));
+
+	Shader2D->SetMatrix4("model", model, true);
+
+	// Render textured quad
+	Shader2D->SetVector3f("Color", color, true);
+
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
 }
 
 // loading some default shaders to get things up and running
@@ -216,6 +243,7 @@ void GLFW_EngineCore::setDefaultShaders()
 	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
 	texturePhong = new Shader("assets/shaders/surfaceTexture.vert", "assets/shaders/surfaceTexture.frag");
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
+	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
 }
 
 // a simple function to initialise a cube model in memory

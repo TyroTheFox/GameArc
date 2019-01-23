@@ -1,19 +1,18 @@
 #pragma once
-/**
-* \class Transform Component
-* \file TransformComponent.h
-* \author Kieran Clare
-* \brief Handles Game Object transformations
-*
-* Handles transformation of the game object in 3D space
-*/
+
 #include "Component.h"
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/mat4x4.hpp>
+/**
+\file TransformComponent.h
+\author Kieran Clare
+\brief Handles Game Object transformations
 
+Handles transformation of the game object in 3D space
+*/
 class TransformComponent : public Component
 {
 public:

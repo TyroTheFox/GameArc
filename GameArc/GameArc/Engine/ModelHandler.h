@@ -12,14 +12,13 @@
 
 class Model;
 
-/**
-* \class Model Handler
-* \file ModelHandler.h
-* \author Kieran Clare
-* \brief Handles and checks models that are loaded, preventing reloaded models
-*
-* Keeps a record of all registers models that have been loaded so far and allows model objects to load their variables from
-* this object rather than from file
+/** \class ModelHandler
+\file ModelHandler.h
+\author Kieran Clare
+\brief Handles and checks models that are loaded, preventing reloaded models
+
+Keeps a record of all registers models that have been loaded so far and allows model objects to load their variables from
+this object rather than from file
 */
 
 class ModelHandler

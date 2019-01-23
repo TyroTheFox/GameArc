@@ -6,12 +6,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 /**
-* \class Model Component
-* \file ModelComponent.h
-* \author Kieran Clare
-* \brief Handles model loading and rendering
-*
-* Handles loading models, rendering and registering them with the model handler
+\file ModelComponent.h
+\author Kieran Clare
+\brief Handles model loading and rendering
+
+Handles loading models, rendering and registering them with the model handler
 */
 
 class ModelComponent : public Component

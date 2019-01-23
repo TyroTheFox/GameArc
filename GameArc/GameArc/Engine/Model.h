@@ -8,13 +8,12 @@
 
 class ModelHandler;
 
-/**
-* \class Model
-* \file Model.h
-* \author Kieran Clare
-* \brief Contains all model meshes and texture information and loads that information from file
-*
-* Processes and loads models from file as well as handles and builds the meshes of the model, allowing for easy rendering
+/** \class Model
+\file Model.h
+\author Kieran Clare
+\brief Contains all model meshes and texture information and loads that information from file
+
+Processes and loads models from file as well as handles and builds the meshes of the model, allowing for easy rendering
 */
 
 class Model

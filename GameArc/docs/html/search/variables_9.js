@@ -23,7 +23,7 @@ var searchData=
   ['minint64',['minInt64',['../class_json_1_1_value.html#a815ef899bc312c93bc426511acfe31a7',1,'Json::Value']]],
   ['minlargestint',['minLargestInt',['../class_json_1_1_value.html#af91df130daa50dd43d2cd89e6ee67706',1,'Json::Value']]],
   ['model',['model',['../class_model_component.html#a3dd9367267556f8aeb6abca61ee9dc6b',1,'ModelComponent']]],
-  ['modelhandler',['modelHandler',['../_model_8h.html#adb9a1622f2facebeac4016bcc59b14b7',1,'Model.h']]],
+  ['modelhandler',['modelHandler',['../class_game.html#a8580f3eefae3f52b256225a73a0c4791',1,'Game::modelHandler()'],['../class_model.html#a25e22dcec702104e4493d8a0cc0b8208',1,'Model::modelHandler()'],['../class_model_component.html#a62105902fd46bfa4dd3f3fa34050ab47',1,'ModelComponent::modelHandler()']]],
   ['mousexy',['mouseXY',['../class_camera_component.html#a92d8a306e8b05c1bde2deecb4ae5e1f9',1,'CameraComponent']]],
   ['movementspeed',['movementSpeed',['../class_player_component.html#ac3e853e9e00be90dfebbc3d06d445257',1,'PlayerComponent']]]
 ];

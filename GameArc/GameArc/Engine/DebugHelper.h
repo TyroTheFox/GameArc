@@ -12,16 +12,17 @@
 
 ///Forward Declared Objects
 extern Event* keyEvent;
+///Forward Declared Objects
 class IEngineCore;
+///Forward Declared Objects
 class TextWriter;
 
-/**
-* \class Text Parser
-* \file DebugHelper.h
-* \brief A text parser class that takes in strings and interprets them into function fires
-*
-* A class that splits up string commands into tokens and uses them to find the correct lambda function to fire, 
-* complete with additional arguments to pass in
+/** \class TextParser
+\file DebugHelper.h
+\brief A text parser class that takes in strings and interprets them into function fires
+
+A class that splits up string commands into tokens and uses them to find the correct lambda function to fire, 
+complete with additional arguments to pass in
 */
 class TextParser {
 public:
@@ -60,12 +61,11 @@ public:
 	}
 };
 
-/**
-* \class Debug Helper
-* \file DebugHelper.h
-* \brief A debug rendering and console class that contains useful debugging tools
-*
-* A debug class that contains the debug console and functions needed to output to the debug console
+/** \class DebugHelper
+\file DebugHelper.h
+\brief A debug rendering and console class that contains useful debugging tools
+
+A debug class that contains the debug console and functions needed to output to the debug console
 */
 class DebugHelper {
 private:

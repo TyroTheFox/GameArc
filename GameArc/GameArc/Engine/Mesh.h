@@ -1,12 +1,5 @@
 #pragma once
-/**
-* \class Mesh
-* \file Mesh.h
-* \author Kieran Clare
-* \brief Contains information for one part of a model
-*
-* Contains the information for one part of a full model, including texture information and GPU-Needed objects
-*/
+
 #include <glad/glad.h> 
 
 #include <assimp/Importer.hpp>
@@ -18,10 +11,8 @@
 #include <vector>
 
 using namespace std;
-/**
-* Vertex
-*
-* Used for mesh geometry data
+/** \struct Vertex
+Used for mesh geometry data
 */
 struct Vertex 
 {
@@ -29,17 +20,21 @@ struct Vertex
 	glm::vec3 normal;
 	glm::vec2 textureCoords;
 };
-/**
-* Texture
-*
-* Used for texture information
+/** \struct Texture
+Used for texture information
 */
 struct Texture {
 	unsigned int id;
 	string type;
 	aiString filepath;
 };
+/** \class Mesh
+\file Mesh.h
+\author Kieran Clare
+\brief Contains information for one part of a model
 
+Contains the information for one part of a full model, including texture information and GPU-Needed objects
+*/
 class Mesh 
 {
 public:

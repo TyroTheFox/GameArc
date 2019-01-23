@@ -1,35 +1,37 @@
-\hypertarget{_object_manager_8h}{}\section{C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\+Object\+Manager.h File Reference}
-\label{_object_manager_8h}\index{C:/Users/Tyro/Source/Repos/GameArc/GameArc/GameArc/Engine/ObjectManager.h@{C:/Users/Tyro/Source/Repos/GameArc/GameArc/GameArc/Engine/ObjectManager.h}}
+\hypertarget{_object_manager_8h}{\section{H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\+Object\+Manager.h File Reference}
+\label{_object_manager_8h}\index{H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\+Object\+Manager.\+h@{H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\+Object\+Manager.\+h}}
+}
 
 
-A factory object that creates each component and game object from J\+S\+ON files.  
+A factory object that creates each component and game object from J\+S\+O\+N files.  
 
 
-{\ttfamily \#include \char`\"{}Model.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Game\+Object.\+h\char`\"{}}\newline
-{\ttfamily \#include $<$vector$>$}\newline
-{\ttfamily \#include $<$fstream$>$}\newline
-{\ttfamily \#include $<$string$>$}\newline
-{\ttfamily \#include $<$sstream$>$}\newline
-{\ttfamily \#include $<$iostream$>$}\newline
-{\ttfamily \#include $<$memory$>$}\newline
-{\ttfamily \#include $<$functional$>$}\newline
-{\ttfamily \#include \char`\"{}json.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Transform\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Colour\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Model\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Player\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Event\+Camera\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Text\+U\+I\+Component.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}Debug\+Helper.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Game\+Object.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$functional$>$}\\*
+{\ttfamily \#include \char`\"{}json.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Transform\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Colour\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Model\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Player\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Event\+Camera\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Text\+U\+I\+Component.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Model\+Handler.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Debug\+Helper.\+h\char`\"{}}\\*
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \mbox{\hyperlink{class_object_manager}{Object\+Manager}}
+class \hyperlink{class_object_manager}{Object\+Manager}
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-A factory object that creates each component and game object from J\+S\+ON files. 
+A factory object that creates each component and game object from J\+S\+O\+N files. 
 
-Partly based on the basic fundermentals provided by Stefan Bauer, this factory object dynamically reads in the J\+S\+ON file and constructs game objects with the use of lambda functions to call the correct functions for each required component 
+Partly based on the basic fundermentals provided by Stefan Bauer, this factory object dynamically reads in the J\+S\+O\+N file and constructs game objects with the use of lambda functions to call the correct functions for each required component 

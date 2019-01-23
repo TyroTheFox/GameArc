@@ -9,12 +9,12 @@ class GameObject;
 class IEngineCore;
 
 /**
-* \class Component
-* \file Component.h
-* \author Kieran Clare
-* \brief Base Component Template
-*
-* The base template for all components that contains all generic component variables
+\brief Base Component Template
+\file Component.h
+\author Kieran Clare
+
+
+The base template for all components that contains all generic component variables
 */
 
 class Component

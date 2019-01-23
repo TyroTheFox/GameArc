@@ -1,11 +1,5 @@
 #pragma once
-/**
-* \class IEngine Core
-* \file IEngineCore.h
-* \brief A basis template for engine cores
-*
-* A template to base all engine cores on and allow for the engine core to be swapped out whenever needed
-*/
+
 #include <string>
 #include <iostream>
 #include "Model.h"
@@ -14,10 +8,18 @@
 
 ///Forward Declared
 class Camera;
+///Forward Declared
 class Game;
+///Forward Declared
 class Model;
+///Forward Declared
 struct Character;
-
+/** \class IEngineCore
+* \file IEngineCore.h
+* \brief A basis template for engine cores
+*
+* A template to base all engine cores on and allow for the engine core to be swapped out whenever needed
+*/
 class IEngineCore
 {
 public:
@@ -37,4 +39,6 @@ public:
 	virtual void drawModel(Model* model, const glm::mat4& modelMatrix) = 0;
 	///Draws 2D text to the screen
 	virtual void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) = 0;
+	///Used for drawing 2D rectandles to the screen
+	virtual void draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) = 0;
 };

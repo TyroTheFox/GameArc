@@ -1,8 +1,9 @@
-\hypertarget{class_json_1_1_styled_stream_writer}{}\section{Json\+::Styled\+Stream\+Writer Class Reference}
-\label{class_json_1_1_styled_stream_writer}\index{Json::StyledStreamWriter@{Json::StyledStreamWriter}}
+\hypertarget{class_json_1_1_styled_stream_writer}{\section{Json\+:\+:Styled\+Stream\+Writer Class Reference}
+\label{class_json_1_1_styled_stream_writer}\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+}
 
 
-Writes a \mbox{\hyperlink{class_json_1_1_value}{Value}} in \href{http://www.json.org}{\texttt{ J\+S\+ON}} format in a human friendly way, to a stream rather than to a string.  
+Writes a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+O\+N} format in a human friendly way, to a stream rather than to a string.  
 
 
 
@@ -12,22 +13,22 @@ Writes a \mbox{\hyperlink{class_json_1_1_value}{Value}} in \href{http://www.json
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_ae87567a08de865b6dc84d7218a3001df}\label{class_json_1_1_styled_stream_writer_ae87567a08de865b6dc84d7218a3001df}} 
-{\bfseries Styled\+Stream\+Writer} (std\+::string indentation=\char`\"{}\textbackslash{}t\char`\"{})
+\hypertarget{class_json_1_1_styled_stream_writer_ae87567a08de865b6dc84d7218a3001df}{{\bfseries Styled\+Stream\+Writer} (std\+::string indentation=\char`\"{}\textbackslash{}t\char`\"{})}\label{class_json_1_1_styled_stream_writer_ae87567a08de865b6dc84d7218a3001df}
+
 \item 
-void \mbox{\hyperlink{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}{write}} (std\+::ostream \&out, const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&root)
-\begin{DoxyCompactList}\small\item\em Serialize a \mbox{\hyperlink{class_json_1_1_value}{Value}} in \href{http://www.json.org}{\texttt{ J\+S\+ON}} format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}{write} (std\+::ostream \&out, const \hyperlink{class_json_1_1_value}{Value} \&root)
+\begin{DoxyCompactList}\small\item\em Serialize a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+O\+N} format. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Writes a \mbox{\hyperlink{class_json_1_1_value}{Value}} in \href{http://www.json.org}{\texttt{ J\+S\+ON}} format in a human friendly way, to a stream rather than to a string. 
+Writes a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+O\+N} format in a human friendly way, to a stream rather than to a string. 
 
 The rules for line break and indent are as follow\+:
 \begin{DoxyItemize}
-\item \mbox{\hyperlink{class_object}{Object}} value\+:
+\item Object value\+:
 \begin{DoxyItemize}
 \item if empty then print \{\} without indent and line break
-\item if not empty the print \textquotesingle{}\{\textquotesingle{}, line break \& indent, print one value per line and then unindent and line break and print \textquotesingle{}\}\textquotesingle{}.
+\item if not empty the print '\{', line break \& indent, print one value per line and then unindent and line break and print '\}'.
 \end{DoxyItemize}
 \item Array value\+:
 \begin{DoxyItemize}
@@ -37,7 +38,7 @@ The rules for line break and indent are as follow\+:
 \end{DoxyItemize}
 \end{DoxyItemize}
 
-If the \mbox{\hyperlink{class_json_1_1_value}{Value}} have comments then they are outputed according to their \mbox{\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{Comment\+Placement}}.
+If the \hyperlink{class_json_1_1_value}{Value} have comments then they are outputed according to their \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{Comment\+Placement}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -45,33 +46,35 @@ If the \mbox{\hyperlink{class_json_1_1_value}{Value}} have comments then they ar
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{class_json_1_1_reader}{Reader}}, \mbox{\hyperlink{class_json_1_1_value}{Value}}, \mbox{\hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{Value\+::set\+Comment()}} 
+\hyperlink{class_json_1_1_reader}{Reader}, \hyperlink{class_json_1_1_value}{Value}, \hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{Value\+::set\+Comment()} 
 \end{DoxySeeAlso}
 
 
 \subsection{Member Function Documentation}
-\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}\label{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}} 
-\index{Json::StyledStreamWriter@{Json::StyledStreamWriter}!write@{write}}
-\index{write@{write}!Json::StyledStreamWriter@{Json::StyledStreamWriter}}
-\subsubsection{\texorpdfstring{write()}{write()}}
-{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{class_json_1_1_value}{Value}} \&}]{root }\end{DoxyParamCaption})}
+\hypertarget{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}{\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write@{write}}
+\index{write@{write}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}void Json\+::\+Styled\+Stream\+Writer\+::write (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf Value} \&}]{root}
+\end{DoxyParamCaption}
+)}}\label{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}
 
 
-
-Serialize a \mbox{\hyperlink{class_json_1_1_value}{Value}} in \href{http://www.json.org}{\texttt{ J\+S\+ON}} format. 
+Serialize a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+O\+N} format. 
 
 
 \begin{DoxyParams}{Parameters}
 {\em out} & Stream to write to. (Can be ostringstream, e.\+g.) \\
 \hline
-{\em root} & \mbox{\hyperlink{class_json_1_1_value}{Value}} to serialize. \\
+{\em root} & \hyperlink{class_json_1_1_value}{Value} to serialize. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-There is no point in deriving from \mbox{\hyperlink{class_json_1_1_writer}{Writer}}, since \mbox{\hyperlink{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}{write()}} should not return a value. 
+There is no point in deriving from \hyperlink{class_json_1_1_writer}{Writer}, since \hyperlink{class_json_1_1_styled_stream_writer_a07807741c6c43ecd35885a87234d0805}{write()} should not return a value. 
 \end{DoxyNote}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/json.\+h\end{DoxyCompactItemize}
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/json.\+h\end{DoxyCompactItemize}

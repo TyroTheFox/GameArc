@@ -6,13 +6,12 @@
 #include <iostream>
 #include <memory>
 
-/**
-* \class Event Handler
-* \file Event Handler.h
-* \author Kieran Clare
-* \brief A wrapper for lambda functions used in event calling
-*
-* A wrapper for lambda functions used in event calling that can take multiple different inputs and handle necessary assigning functions
+/** \class EventHandler
+\file EventHandler.h
+\author Kieran Clare
+\brief A wrapper for lambda functions used in event calling
+
+A wrapper for lambda functions used in event calling that can take multiple different inputs and handle necessary assigning functions
 */
 class EventHandler {
 public:
@@ -100,13 +99,13 @@ public:
 };
 
 /**
-* \class Event Handler
-* \file Event Handler.h
-* \author Kieran Clare
-* \brief A global object that handles event calls via registered lambda functions
-*
-* Effectively, a list of wrapped lambda functions that allow for event calls to be made in any object that includes the global header, allowing for
-* inter-object communication
+\class Event
+\file EventHandler.h
+\author Kieran Clare
+\brief A global object that handles event calls via registered lambda functions
+
+Effectively, a list of wrapped lambda functions that allow for event calls to be made in any object that includes the global header, allowing for
+inter-object communication
 */
 class Event {
 	std::map<std::string, std::unique_ptr<EventHandler>> handlers;

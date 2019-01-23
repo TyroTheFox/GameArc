@@ -75,6 +75,9 @@
     <ClCompile Include="src\ObjectManager.cpp">
       <Filter>Source Files\Engine Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="src\2DRect.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -161,12 +164,21 @@
     <ClInclude Include="Engine\ObjectManager.h">
       <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\2DRect.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\TextWriter.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="assets\shaders\TextWriter.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\Shader2D.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\Shader2D.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

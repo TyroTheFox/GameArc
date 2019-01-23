@@ -1,12 +1,5 @@
 #pragma once
-/**
-* \class Camera
-* \file Camera.h
-* \author Kieran Clare
-* \brief An object that creates and maintains the view matrix for use in later calculations
-*
-* Creates and maintains the view matrix for use in the Engine Core to procude the illusion of a camera viewport within the game world
-*/
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -16,7 +9,13 @@
 #include <cmath>
 
 #include <iostream>
+/** \class Camera
+\file Camera.h
+\author Kieran Clare
+\brief An object that creates and maintains the view matrix for use in later calculations
 
+Creates and maintains the view matrix for use in the Engine Core to procude the illusion of a camera viewport within the game world
+*/
 class Camera
 {
 private:

@@ -1,17 +1,15 @@
 #pragma once
-/**
-* \class Camera Component
-* \file CameraComponent.h
-* \author Kieran Clare
-* \brief Handles the contained camera object
-*
-* Handles the contained camera object so that a camera can be placed on a game object
-*/
 #include <iostream>
 #include "Component.h"
 #include "Camera.h"
 #include "GameObject.h"
+/**
+\file CameraComponent.h
+\author Kieran Clare
+\brief Handles the contained camera object
 
+Handles the contained camera object so that a camera can be placed on a game object
+*/
 class CameraComponent : public Component
 {
 private:

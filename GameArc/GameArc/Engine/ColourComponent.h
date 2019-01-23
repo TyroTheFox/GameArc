@@ -1,16 +1,15 @@
 #pragma once
-/**
-* \class Colour Component
-* \file ColourComponent.h
-* \author Kieran Clare
-* \brief Used to store and alter an RGB value
-*
-* Used to store and allow for changes in RBG values
-*/
+
 #include "Component.h"
 ///Default colour adjustment rate
 #define COLOUR_ADJUSTMENT_VALUE 0.001f
+/**
+\file ColourComponent.h
+\author Kieran Clare
+\brief Used to store and alter an RGB value
 
+Used to store and allow for changes in RBG values
+*/
 class ColourComponent : public Component
 {
 public:

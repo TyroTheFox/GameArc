@@ -1,13 +1,4 @@
 #pragma once
-/**
-* \class Player Component
-* \file PlayerComponent.h
-* \author Kieran Clare
-* \brief The component handling the player's in-game character
-*
-* The game's playable character. It handles most player controls, camera and the player's model though does need
-* components to work with.
-*/
 #include "GameObject.h"
 
 #include "TransformComponent.h"
@@ -17,7 +8,14 @@
 #include "global.h"
 ///External event handler class for key input
 extern Event* keyEvent;
+/**
+\file PlayerComponent.h
+\author Kieran Clare
+\brief The component handling the player's in-game character
 
+The game's playable character. It handles most player controls, camera and the player's model though does need
+components to work with.
+*/
 class PlayerComponent : public Component
 {
 private:

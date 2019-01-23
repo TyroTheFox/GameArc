@@ -1,18 +1,17 @@
 #pragma once
-/**
-* \class Game Object
-* \file Game Object.h
-* \brief A container for components that represents an object within the game
-*
-* An amorpheous blob that components are attached to in order to grant it function
-*/
+
 #include "Component.h"
 #include "IEngineCore.h"
 #include <unordered_map>
 #include <typeindex>
 ///Forward declared
 class IEngineCore;
+/** \class GameObject
+\file Game Object.h
+\brief A container for components that represents an object within the game
 
+An amorpheous blob that components are attached to in order to grant it function
+*/
 class GameObject
 {
 public:

@@ -54,6 +54,12 @@
     <None Include="assets\levels\scene1.json">
       <Filter>Resource Files\Level Data</Filter>
     </None>
+    <None Include="assets\shaders\Shader2D.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\Shader2D.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\GenericMobileSystem.ttf">

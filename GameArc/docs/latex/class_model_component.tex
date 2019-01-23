@@ -1,5 +1,6 @@
-\hypertarget{class_model_component}{}\section{Model\+Component Class Reference}
-\label{class_model_component}\index{ModelComponent@{ModelComponent}}
+\hypertarget{class_model_component}{\section{Model\+Component Class Reference}
+\label{class_model_component}\index{Model\+Component@{Model\+Component}}
+}
 Inheritance diagram for Model\+Component\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -9,35 +10,41 @@ Inheritance diagram for Model\+Component\+:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_model_component_a82182f738137f91b12cd90624ca7e458}\label{class_model_component_a82182f738137f91b12cd90624ca7e458}} 
-\mbox{\hyperlink{class_model_component_a82182f738137f91b12cd90624ca7e458}{Model\+Component}} ()
+\hypertarget{class_model_component_a82182f738137f91b12cd90624ca7e458}{\hyperlink{class_model_component_a82182f738137f91b12cd90624ca7e458}{Model\+Component} ()}\label{class_model_component_a82182f738137f91b12cd90624ca7e458}
+
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}\label{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}} 
-\mbox{\hyperlink{class_model_component_ad2cbf905edaace2b6db04b8a591ff593}{Model\+Component}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m)
+\hypertarget{class_model_component_a800de6ef05fdce0cd3d1be040a4840f2}{\hyperlink{class_model_component_a800de6ef05fdce0cd3d1be040a4840f2}{Model\+Component} (\hyperlink{class_model_handler}{Model\+Handler} $\ast$m\+H)}\label{class_model_component_a800de6ef05fdce0cd3d1be040a4840f2}
+
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}\label{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}} 
-void \mbox{\hyperlink{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}{On\+Set\+Up}} () override
+\hypertarget{class_model_component_ab42e7d87a85f8da41d9cc029b324af89}{\hyperlink{class_model_component_ab42e7d87a85f8da41d9cc029b324af89}{Model\+Component} (\hyperlink{class_model}{Model} $\ast$m, \hyperlink{class_model_handler}{Model\+Handler} $\ast$m\+H)}\label{class_model_component_ab42e7d87a85f8da41d9cc029b324af89}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}{void \hyperlink{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}{On\+Set\+Up} () override}\label{class_model_component_ac8474d853392a16c6879fdf1bfe6597f}
+
 \begin{DoxyCompactList}\small\item\em Called when added to object, sets up debug functions. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_a5def59776319943854fb5da3dc515051}\label{class_model_component_a5def59776319943854fb5da3dc515051}} 
-void \mbox{\hyperlink{class_model_component_a5def59776319943854fb5da3dc515051}{On\+Update}} (float dt) override
+\hypertarget{class_model_component_a5def59776319943854fb5da3dc515051}{void \hyperlink{class_model_component_a5def59776319943854fb5da3dc515051}{On\+Update} (float dt) override}\label{class_model_component_a5def59776319943854fb5da3dc515051}
+
 \begin{DoxyCompactList}\small\item\em Called on update tick. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}\label{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}} 
-void \mbox{\hyperlink{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}{On\+Render}} (\mbox{\hyperlink{class_i_engine_core}{I\+Engine\+Core}} $\ast$m\+\_\+engine\+Interface\+Ptr) override
+\hypertarget{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}{void \hyperlink{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}{On\+Render} (\hyperlink{class_i_engine_core}{I\+Engine\+Core} $\ast$m\+\_\+engine\+Interface\+Ptr) override}\label{class_model_component_a2d6c1972533982e1a8c6444a6f0a4120}
+
 \begin{DoxyCompactList}\small\item\em Called on render call, draws model to screen. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_a48d6170e857f323839039ce54e9418e1}\label{class_model_component_a48d6170e857f323839039ce54e9418e1}} 
-void \mbox{\hyperlink{class_model_component_a48d6170e857f323839039ce54e9418e1}{On\+Message}} (const std\+::string m) override
-\begin{DoxyCompactList}\small\item\em Called on event call, doesn\textquotesingle{}t do anything yet. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_model_component_ac77290f521c0bf24d370f88327b407d5}\label{class_model_component_ac77290f521c0bf24d370f88327b407d5}} 
-void \mbox{\hyperlink{class_model_component_ac77290f521c0bf24d370f88327b407d5}{Build\+From\+Json}} (const \mbox{\hyperlink{class_json_1_1_value}{Json\+::\+Value}} \&component\+J\+S\+ON) override
-\begin{DoxyCompactList}\small\item\em Builds component from J\+S\+ON values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hypertarget{class_model_component_a48d6170e857f323839039ce54e9418e1}{void \hyperlink{class_model_component_a48d6170e857f323839039ce54e9418e1}{On\+Message} (const std\+::string m) override}\label{class_model_component_a48d6170e857f323839039ce54e9418e1}
+
+\begin{DoxyCompactList}\small\item\em Called on event call, doesn't do anything yet. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_ac77290f521c0bf24d370f88327b407d5}{void \hyperlink{class_model_component_ac77290f521c0bf24d370f88327b407d5}{Build\+From\+Json} (const \hyperlink{class_json_1_1_value}{Json\+::\+Value} \&component\+J\+S\+O\+N) override}\label{class_model_component_ac77290f521c0bf24d370f88327b407d5}
+
+\begin{DoxyCompactList}\small\item\em Builds component from J\+S\+O\+N values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}\label{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}} 
-\mbox{\hyperlink{class_model}{Model}} $\ast$ \mbox{\hyperlink{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}{model}}
-\begin{DoxyCompactList}\small\item\em Contained model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hypertarget{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}{\hyperlink{class_model}{Model} $\ast$ \hyperlink{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}{model}}\label{class_model_component_a3dd9367267556f8aeb6abca61ee9dc6b}
+
+\begin{DoxyCompactList}\small\item\em Contained model. \end{DoxyCompactList}\item 
+\hypertarget{class_model_component_a62105902fd46bfa4dd3f3fa34050ab47}{\hyperlink{class_model_handler}{Model\+Handler} $\ast$ \hyperlink{class_model_component_a62105902fd46bfa4dd3f3fa34050ab47}{model\+Handler}}\label{class_model_component_a62105902fd46bfa4dd3f3fa34050ab47}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_model}{Model} Handler object pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Tyro/\+Source/\+Repos/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\mbox{\hyperlink{_model_component_8h}{Model\+Component.\+h}}\end{DoxyCompactItemize}
+H\+:/\+Documents/\+Git\+Hub/\+Game\+Arc/\+Game\+Arc/\+Game\+Arc/\+Engine/\hyperlink{_model_component_8h}{Model\+Component.\+h}\end{DoxyCompactItemize}

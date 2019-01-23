@@ -2,8 +2,7 @@
 
 DebugHelper::DebugHelper(IEngineCore* enginePtr)
 {
-	textWriter = new TextWriter();
-	textWriter->m_engineInterfacePtr = enginePtr;
+	textWriter = new TextWriter(enginePtr);
 
 	textParser = new TextParser();
 

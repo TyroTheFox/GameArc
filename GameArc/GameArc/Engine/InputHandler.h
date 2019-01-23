@@ -1,12 +1,5 @@
 #pragma once
-/**
-* \class Input Handler
-* \file InputHandler.h
-* \author Kieran Clare
-* \brief Mediates between Game Engine Core and Event System to fire events on key presses
-*
-* Interprets key inputs from the Game Engine Core and turns them into Events that are then handled by the Key Event object
-*/
+
 #include "global.h"
 #include "EventHandler.h"
 #include <map>
@@ -19,10 +12,9 @@
 ///External Event handler object
 extern Event* keyEvent;
 
-/**
-* Input Command
-*
-* Basis for Input Command Objects
+/** \class InputCommand
+
+Basis for Input Command Objects
 */
 class InputCommand
 {
@@ -39,10 +31,9 @@ public:
 	virtual void execute() = 0;
 };
 
-/**
-* Key Input Event
-*
-* Used for Key Events that send string messages
+/** \class KeyInputEvent
+
+Used for Key Events that send string messages
 */
 class KeyInputEvent : public InputCommand
 {
@@ -61,10 +52,9 @@ public:
 	}
 };
 
-/**
-* Key Input Int Event
-*
-* Used for Key Events that send int messages
+/** \class KeyInputIntEvent
+
+Used for Key Events that send int messages
 */
 class KeyInputIntEvent : public InputCommand
 {
@@ -83,8 +73,7 @@ public:
 	}
 };
 
-/**
-* Key Input Func Event
+/** \class Key InputFuncEvent
 *
 * Used for Key Events that don't need messages
 */
@@ -102,7 +91,13 @@ public:
 		keyEvent->notifyHandler(eventName);
 	}
 };
-
+/** \class InputHandler
+* \file InputHandler.h
+* \author Kieran Clare
+* \brief Mediates between Game Engine Core and Event System to fire events on key presses
+*
+* Interprets key inputs from the Game Engine Core and turns them into Events that are then handled by the Key Event object
+*/
 class InputHandler
 {
 private:

@@ -1,12 +1,5 @@
 #pragma once
-/**
-* \class Event Camera Component
-* \file EventCameraComponent.h
-* \author Kieran Clare
-* \brief Static camera made for title scenes
-*
-* Made for title scenes, this camera component can recieve event calls to change to a new scene
-*/
+
 #include "GameObject.h"
 #include "Component.h"
 #include "TransformComponent.h"
@@ -16,7 +9,13 @@
 
 ///External event object
 extern Event* keyEvent;
+/**
+\file EventCameraComponent.h
+\author Kieran Clare
+\brief Static camera made for title scenes
 
+Made for title scenes, this camera component can recieve event calls to change to a new scene
+*/
 class EventCameraComponent : public Component
 {
 private:
