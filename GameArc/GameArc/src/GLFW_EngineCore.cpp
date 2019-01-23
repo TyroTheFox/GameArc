@@ -301,7 +301,7 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
+	glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 1.0f, 1.0f);
 	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
 	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
 	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));

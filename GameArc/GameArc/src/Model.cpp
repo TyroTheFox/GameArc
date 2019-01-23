@@ -6,8 +6,14 @@
 Model::Model()
 {}
 
-Model::Model(string filepath)
+Model::Model(ModelHandler* mH)
 {
+	modelHandler = mH;
+}
+
+Model::Model(string filepath, ModelHandler* mH)
+{
+	modelHandler = mH;
 	loadModel(filepath);
 }
 

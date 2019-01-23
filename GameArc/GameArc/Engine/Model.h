@@ -1,4 +1,13 @@
 #pragma once
+#include <string>
+#include <vector>
+#include "Mesh.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include "ModelHandler.h"
+
+class ModelHandler;
+
 /**
 * \class Model
 * \file Model.h
@@ -7,20 +16,12 @@
 *
 * Processes and loads models from file as well as handles and builds the meshes of the model, allowing for easy rendering
 */
-#include <string>
-#include <vector>
-#include "Mesh.h"
-#include "global.h"
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
-class ModelHandler;///Forward declared
-extern ModelHandler* modelHandler;///External Model Handler object
 
 class Model
 {
 public:
+	///Model Handler object pointer
+	ModelHandler* modelHandler;
 	///Flag to show a texture was loaded
 	bool textureLoaded = false;
 	///Flag to show the model was loaded from the Model Handler
@@ -28,7 +29,9 @@ public:
 	///Constructor
 	Model();
 	///Constructor
-	Model(string filepath);
+	Model(ModelHandler* mH);
+	///Constructor
+	Model(string filepath, ModelHandler* mH);
 	///Draws each mesh to the screen
 	void render(const unsigned int shaderProgram);
 	///Finds texture information from the model file

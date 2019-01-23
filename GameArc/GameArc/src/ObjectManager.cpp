@@ -1,10 +1,19 @@
 #include "../Engine/ObjectManager.h"
 
-ObjectManager::ObjectManager(DebugHelper* d)
+/*Credit to Dynamic JSON loader to Stefan Bauer*/
+
+ObjectManager::ObjectManager(DebugHelper* d, ModelHandler* mH)
 {
 	debug = d;
+	modelHandler = mH;
 	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
-	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ModelComponent>(object, p_component); };
+	//Different because it needs to pass in the Model Handler
+	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { 	
+		ModelComponent* component = new ModelComponent(modelHandler);
+		component->debug = debug;
+		component->BuildFromJson(p_component);
+		object->addComponent<ModelComponent>(component); 
+	};
 	m_componentJsonBuilders["ColourComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<ColourComponent>(object, p_component); };
 	m_componentJsonBuilders["PlayerComponent"] = [this](GameObject* object, const Json::Value& p_component) {
 		attachComponent<PlayerComponent>(object, p_component);

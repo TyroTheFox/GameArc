@@ -1,12 +1,4 @@
 #pragma once
-/**
-* \class Game
-* \file Game.h
-* \brief A container and manager object for the game that's driven by the Engine Core
-*
-* A container and manager object for scenes that's driven by the Engine Core. Updates and Sets Up all active game objects.
-* It's this that the player actually sees and interacts with.
-*/
 #include "Model.h"
 
 #include "IEngineCore.h"
@@ -24,9 +16,19 @@
 #include "ModelComponent.h"
 #include "DebugHelper.h"
 #include "ObjectManager.h"
+#include "ModelHandler.h"
 #include "global.h"
 ///Forward declared key event object
 extern Event* keyEvent;
+
+/**
+* \class Game
+* \file Game.h
+* \brief A container and manager object for the game that's driven by the Engine Core
+*
+* A container and manager object for scenes that's driven by the Engine Core. Updates and Sets Up all active game objects.
+* It's this that the player actually sees and interacts with.
+*/
 
 class Game
 {
@@ -37,6 +39,8 @@ public:
 	DebugHelper * debugHelper;
 	///Engine core pointer used for updating and rendering objects
 	IEngineCore* m_engineInterfacePtr;
+	///Model Handler object pointer
+	ModelHandler* modelHandler;
 	///Constructor
 	Game();
 	///Constructor

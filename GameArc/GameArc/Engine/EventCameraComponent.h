@@ -9,11 +9,11 @@
 */
 #include "GameObject.h"
 #include "Component.h"
+#include "TransformComponent.h"
+#include "CameraComponent.h"
 
 #include "global.h"
 
-#include "TransformComponent.h"
-#include "CameraComponent.h"
 ///External event object
 extern Event* keyEvent;
 

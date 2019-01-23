@@ -9,7 +9,8 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	debugHelper = debug;
-	oM = new ObjectManager(debugHelper);
+	ModelHandler* modelHandler = new ModelHandler();
+	oM = new ObjectManager(debugHelper, modelHandler);
 	loadFromJSON(levelsFile);
 
 	std::map<std::string, GameObject*>::iterator it;

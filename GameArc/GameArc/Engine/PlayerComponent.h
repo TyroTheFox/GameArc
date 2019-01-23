@@ -9,13 +9,12 @@
 * components to work with.
 */
 #include "GameObject.h"
-#include "Component.h"
-
-#include "global.h"
 
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "ModelComponent.h"
+
+#include "global.h"
 ///External event handler class for key input
 extern Event* keyEvent;
 

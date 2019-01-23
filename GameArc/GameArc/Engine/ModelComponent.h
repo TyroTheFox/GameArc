@@ -1,4 +1,10 @@
 #pragma once
+#include "Component.h"
+#include "Model.h"
+#include "ModelHandler.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 /**
 * \class Model Component
 * \file ModelComponent.h
@@ -7,27 +13,29 @@
 *
 * Handles loading models, rendering and registering them with the model handler
 */
-#include "Component.h"
-#include "Model.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 class ModelComponent : public Component
 {
 public:
 	///Contained model
 	Model* model;
+	///Model Handler object pointer
+	ModelHandler* modelHandler;
 	///Constructor
 	ModelComponent() {}
 	///Constructor
-	ModelComponent(Model* m) : model(m) {}
+	ModelComponent(ModelHandler* mH) : modelHandler(mH) {}
+	///Constructor
+	ModelComponent(Model* m, ModelHandler* mH) : model(m), modelHandler(mH) {
+		model->modelHandler = mH;
+	}
 	///Called when added to object, sets up debug functions
 	void OnSetUp() override {
 		debug->AddConsoleCommand("changemodel", TextParser::InterpFunc([this](std::vector<std::string> s) {
 			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) {
-					model = new Model(s.at(1));
+					model = new Model(s.at(1), modelHandler);
 					this->debug->WriteToConsole("Model " + s.at(0) + " changed to " + s.at(1));
 				}
 				else {
@@ -52,7 +60,7 @@ public:
 		try {
 			if (componentJSON.isMember("fileName")) {
 				const Json::Value& fileName = componentJSON["fileName"];
-				model = new Model(fileName.asCString());
+				model = new Model(fileName.asCString(), modelHandler);
 			}
 			if (componentJSON.isMember("active")) {
 				const Json::Value& a = componentJSON["active"];

@@ -1,12 +1,4 @@
 #pragma once
-/**
-* \class Object Manager
-* \file ObjectManager.h
-* \brief A factory object that creates each component and game object from JSON files
-*
-* Partly based on the basic fundermentals provided by Stefan Bauer, this factory object dynamically reads in the JSON file
-* and constructs game objects with the use of lambda functions to call the correct functions for each required component
-*/
 #include "Model.h"
 #include "GameObject.h"
 
@@ -26,7 +18,17 @@
 #include "EventCameraComponent.h"
 #include "TextUIComponent.h"
 
+#include "ModelHandler.h"
 #include "DebugHelper.h"
+
+/**
+* \class Object Manager
+* \file ObjectManager.h
+* \brief A factory object that creates each component and game object from JSON files
+*
+* Partly based on the basic fundermentals provided by Stefan Bauer, this factory object dynamically reads in the JSON file
+* and constructs game objects with the use of lambda functions to call the correct functions for each required component
+*/
 
 class ObjectManager {
 private:
@@ -38,11 +40,13 @@ private:
 	std::multimap<int, std::string> sceneIDRegister;
 	///Latest Scene ID made
 	int latestID = 0;
-	///Debug handler object
+	///Debug handler object pointer
 	DebugHelper* debug;
+	///Model Handler object pointer
+	ModelHandler* modelHandler;
 public:
 	///Constructor
-	ObjectManager(DebugHelper* d);
+	ObjectManager(DebugHelper* d, ModelHandler* mH);
 	///Get new Scene ID
 	int getNewID();
 	///Load Level from file

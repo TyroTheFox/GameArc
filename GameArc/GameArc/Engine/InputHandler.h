@@ -10,9 +10,7 @@
 #include "global.h"
 #include "EventHandler.h"
 #include <map>
-#include "GameObject.h"
 #include <vector>
-#include "TransformComponent.h"
 #include <string>
 #include <fstream>
 #include <sstream>

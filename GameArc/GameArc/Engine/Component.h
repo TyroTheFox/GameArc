@@ -1,12 +1,4 @@
 #pragma once
-/**
-* \class Component
-* \file Component.h
-* \author Kieran Clare
-* \brief Base Component Template
-*
-* The base template for all components that contains all generic component variables
-*/
 #include <string>
 #include "json.h"
 #include "DebugHelper.h"
@@ -15,6 +7,15 @@
 class DebugHelper;
 class GameObject;
 class IEngineCore;
+
+/**
+* \class Component
+* \file Component.h
+* \author Kieran Clare
+* \brief Base Component Template
+*
+* The base template for all components that contains all generic component variables
+*/
 
 class Component
 {

@@ -1,7 +1,5 @@
 #include "Scene.h"
 
-/*Credit to Dynamic JSON loader to Stefan Bauer*/
-
 Scene::Scene(ObjectManager* oM)
 {
 	objectManager = oM;
