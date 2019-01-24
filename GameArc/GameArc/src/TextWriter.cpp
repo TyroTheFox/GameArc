@@ -101,7 +101,10 @@ void TextWriter::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scal
 	glm::vec3 invertedColor = glm::vec3(1.0f) - color;
 	m_engineInterfacePtr->drawText(text, x, y, scale, color, Characters, VAO, VBO);
 	if (background != nullptr) {
-		Character c = Characters.at(0);
-		background->DrawRect(glm::vec2(x, y), glm::vec2((c.Size.x * scale) * text.size(), c.Size.y * scale + 5), 0, invertedColor);
+		Character c = Characters[(int)'Q'];
+		float glyphHeight = c.Size.y * scale;
+		float glyphWidth = c.Size.x * scale;
+		float fullHeight = glyphHeight + (glyphHeight * 0.30f);
+		background->DrawRect(glm::vec2(x, y - (fullHeight - glyphHeight)/2), glm::vec2(glyphWidth * text.size(), fullHeight), 0, invertedColor);
 	}
 }
