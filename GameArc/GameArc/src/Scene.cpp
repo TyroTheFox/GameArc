@@ -13,7 +13,7 @@ Scene::Scene(DebugHelper* d, ObjectManager* oM)
 	ID = objectManager->getNewID();
 
 	debug->AddConsoleCommand("delete", TextParser::InterpFunc([this](std::vector<std::string> s) {
-		if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 		std::string name = s.at(0);
 		std::map<std::string, GameObject*>::iterator it;
 		std::map<std::string, GameObject*> objects = this->getGameObjects();
@@ -24,7 +24,7 @@ Scene::Scene(DebugHelper* d, ObjectManager* oM)
 			this->debug->WriteToConsole("Deleted " + name);
 		}
 		else {
-			this->debug->WriteToConsole("Cannot find " + name);
+			this->debug->WriteErrorToConsole("Cannot find " + name);
 		}
 	}));
 }

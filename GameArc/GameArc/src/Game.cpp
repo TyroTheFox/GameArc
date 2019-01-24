@@ -46,11 +46,17 @@ Game::Game(string levelsFile, DebugHelper* debug)
 		}
 	}
 
-	EventHandler::FuncMessage nextSceneMessage = [this](std::string message) { this->ChangeScene(message); };
-	EventHandler nextSceneListener(nextSceneMessage, "ChangeScene");
-	keyEvent->addHandler(nextSceneListener);
+	keyEvent->subscribeToEvent("ChangeScene", [this](std::string message) { this->ChangeScene(message); });
 
-	debug->AddConsoleCommand("changescene", TextParser::InterpFunc([this](std::vector<std::string> s) { this->ChangeScene(s.at(0)); }));
+	debugHelper->AddConsoleCommand("changeScene", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debugHelper->WriteErrorToConsole("Missing value"); return; }
+		this->ChangeScene(s.at(0)); }));
+	debugHelper->AddConsoleCommand("listScenes", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		std::string temp = "Scenes:";
+		for (auto scene : sceneList) {
+			temp += " " + scene.first;
+		}
+		this->debugHelper->WriteToConsole(temp);
+	}));
 }
 
 void Game::init(InputHandler* iH)

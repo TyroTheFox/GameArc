@@ -48,7 +48,7 @@ public:
 	KeyInputEvent(std::string eN, std::string m, bool onUp) : eventName(eN), message(m) { onKeyUp = onUp; eventType = "KeyInputEvent"; }
 	///Command to execute on key push
 	void execute() override {
-		keyEvent->notifyHandlerWithMessage(eventName, message);
+		keyEvent->notifyHandler(eventName, message);
 	}
 };
 
@@ -69,7 +69,7 @@ public:
 	KeyInputIntEvent(std::string eN, int m, bool onUp) : eventName(eN), message(m) { message = m; onKeyUp = onUp; eventType = "KeyInputIntEvent"; }
 	///Command to execute on key push
 	void execute() override {
-		keyEvent->notifyHandlerWithint(eventName, message);
+		keyEvent->notifyHandler(eventName, message);
 	}
 };
 
@@ -248,7 +248,7 @@ public:
 	void handleConsoleInput(char c) {
 		if (disableInput) {
 			if (c != '`') {
-				keyEvent->notifyHandlerWithint("DebugConsoleInput", c);
+				keyEvent->notifyHandler("DebugConsoleInput", c);
 			}
 		}
 	}
@@ -256,7 +256,7 @@ public:
 	void handleMouse(const glm::vec2 mouseXY) {
 		if (mouseXY != oldMouseXY) {
 			//Send mouse event
-			keyEvent->notifyHandlerWithVec2(mouseEventName, mouseXY);
+			keyEvent->notifyHandler(mouseEventName, mouseXY);
 			//Update old with new
 			oldMouseXY = mouseXY;
 		}

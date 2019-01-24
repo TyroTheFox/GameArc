@@ -26,15 +26,15 @@ public:
 	TextUIComponent() : scale(1.0f), text("") { textWriter = new TextWriter(); }
 	///Called when attached to object, sets up Debug functions
 	void OnSetUp() override {	
-		debug->AddConsoleCommand("changetext", TextParser::InterpFunc([this](std::vector<std::string> s) {
-			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
+		debug->AddConsoleCommand("changeText", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing Values"); return; }
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) {
 					this->SetText(s.at(1));
 					this->debug->WriteToConsole("Set Text " + s.at(0) + " changed to " + s.at(1));
 				}
 				else {
-					if (s.size() <= 0) { this->debug->WriteToConsole("Missing Text"); }
+					if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing Text"); }
 				}
 			}
 		}));

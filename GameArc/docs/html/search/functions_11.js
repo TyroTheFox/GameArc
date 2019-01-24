@@ -12,7 +12,7 @@ var searchData=
   ['setfov',['setFOV',['../class_camera.html#ade53ee61895c2143da3cec03d08ef3eb',1,'Camera']]],
   ['setgameobjects',['setGameObjects',['../class_scene.html#a9a1bad34e21edf3eda7fe8183c034b9c',1,'Scene']]],
   ['setint',['setInt',['../class_shader.html#a060af09412f03f9576f1d7e2cbe76a92',1,'Shader']]],
-  ['setparent',['setParent',['../class_event_camera_component.html#af7f1cde6285041f3d33707c52c52261e',1,'EventCameraComponent::setParent()'],['../class_player_component.html#a5a153f0d90650d6b9bf07fa2fac44ec3',1,'PlayerComponent::setParent()'],['../class_camera_component.html#a7c539add4157eec66586dd6f9c8e6484',1,'CameraComponent::SetParent()']]],
+  ['setparent',['SetParent',['../class_camera_component.html#a7c539add4157eec66586dd6f9c8e6484',1,'CameraComponent::SetParent()'],['../class_event_camera_component.html#af7f1cde6285041f3d33707c52c52261e',1,'EventCameraComponent::setParent()'],['../class_player_component.html#a5a153f0d90650d6b9bf07fa2fac44ec3',1,'PlayerComponent::setParent()']]],
   ['setposition',['SetPosition',['../class_text_u_i_component.html#a6b950479f75950657f2a694b95e637fa',1,'TextUIComponent::SetPosition(float x, float y)'],['../class_text_u_i_component.html#a69c924402ce18381aaf98e22b8ffe975',1,'TextUIComponent::SetPosition(glm::vec2 xy)']]],
   ['setscale',['SetScale',['../class_text_u_i_component.html#a19811b97b0a51afd3250096f5ea25f35',1,'TextUIComponent']]],
   ['settext',['SetText',['../class_text_u_i_component.html#a4fa8c750a70ed097055af9bed210160e',1,'TextUIComponent']]],
@@ -22,5 +22,6 @@ var searchData=
   ['shader',['Shader',['../class_shader.html#a3e135bbf914b087a939114d79c10d283',1,'Shader']]],
   ['size',['size',['../class_json_1_1_value.html#a4ca8ee6c48a34ca6c2f131956bab5e05',1,'Json::Value']]],
   ['strictmode',['strictMode',['../class_json_1_1_features.html#aed3a2845df0cfd2ebe7338442361bd13',1,'Json::Features']]],
+  ['subscribetoevent',['subscribeToEvent',['../class_event.html#a9d441ecc394728ab055ef8f551abcc6f',1,'Event::subscribeToEvent(std::string eventName, EventHandler::Func f)'],['../class_event.html#ab57f906b09aeae20a7a69f5da1590438',1,'Event::subscribeToEvent(std::string eventName, EventHandler::FuncMessage f)'],['../class_event.html#afe670e5b2204b2a0edd5f370440e0fe3',1,'Event::subscribeToEvent(std::string eventName, EventHandler::FuncInt f)'],['../class_event.html#aa3ebd41554279bd28a5626e923be179f',1,'Event::subscribeToEvent(std::string eventName, EventHandler::FuncVec2 f)']]],
   ['swap',['swap',['../class_json_1_1_value.html#aab841120d78e296e1bc06a373345e822',1,'Json::Value']]]
 ];

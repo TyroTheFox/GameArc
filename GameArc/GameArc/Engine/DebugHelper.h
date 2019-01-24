@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <utility>
 #include <functional>
 #include "global.h"
 
@@ -70,11 +71,11 @@ A debug class that contains the debug console and functions needed to output to 
 class DebugHelper {
 private:
 	///2D text rendering object
-	TextWriter* textWriter; 
+	TextWriter* textWriter;  
 	///Console positioning variables
 	float consoleX = 10.0f, consoleY = 10.0f, spacing = 20.0f; 
 	///Lines of console to render
-	std::vector<std::string> consoleLines;
+	std::map<std::string, int> consoleLines;
 	///Limit to console lines to render
 	int lineLimit = 5;
 	///Timing variables used to slowly remove console lines over time
@@ -104,6 +105,8 @@ public:
 	void render();
 	///Writes text to the console for rendering
 	void WriteToConsole(std::string message);
+	///Writes error text to the console for rendering
+	void WriteErrorToConsole(std::string message);
 	///Adds a new console command for the TextParser to record and recognise when called
 	void AddConsoleCommand(std::string commandName, TextParser::InterpFunc f);
 };

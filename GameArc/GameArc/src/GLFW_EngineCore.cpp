@@ -163,7 +163,7 @@ void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat s
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_screenWidth), 0.0f, static_cast<GLfloat>(m_screenHeight));
 
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA);
 
 	// Activate corresponding render state	
 	textWriterShader->use();

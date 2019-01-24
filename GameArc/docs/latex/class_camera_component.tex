@@ -49,17 +49,8 @@ Inheritance diagram for Camera\+Component\+:\begin{figure}[H]
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-float \hyperlink{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{m\+\_\+direction\+X} \{ 0 \}
+glm\+::vec3 \hyperlink{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}{front} = glm\+::vec3(0.\+0f, 0.\+0f, 1.\+0f)
 \begin{DoxyCompactList}\small\item\em \hyperlink{class_camera}{Camera} object. \end{DoxyCompactList}\item 
-\hypertarget{class_camera_component_a89b5e6d77f8def9bdcdda71be27cd83f}{float {\bfseries m\+\_\+direction\+Y} \{ 0 \}}\label{class_camera_component_a89b5e6d77f8def9bdcdda71be27cd83f}
-
-\item 
-\hypertarget{class_camera_component_abfe4cac0ee5fc5768bdedada791b925e}{float {\bfseries m\+\_\+direction\+Z} \{ 0 \}}\label{class_camera_component_abfe4cac0ee5fc5768bdedada791b925e}
-
-\item 
-\hypertarget{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}{glm\+::vec3 \hyperlink{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}{front} = glm\+::vec3(0.\+0f, 0.\+0f, 1.\+0f)}\label{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}
-
-\begin{DoxyCompactList}\small\item\em Front movement vector. \end{DoxyCompactList}\item 
 \hypertarget{class_camera_component_a62040ca115beaa48627fe56d330647c0}{glm\+::vec3 \hyperlink{class_camera_component_a62040ca115beaa48627fe56d330647c0}{right}}\label{class_camera_component_a62040ca115beaa48627fe56d330647c0}
 
 \begin{DoxyCompactList}\small\item\em Right movement vector. \end{DoxyCompactList}\item 
@@ -71,10 +62,10 @@ float \hyperlink{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{m\+\_
 \begin{DoxyCompactList}\small\item\em Movement matrix. \end{DoxyCompactList}\item 
 \hypertarget{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}{float \hyperlink{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}{xoffset}}\label{class_camera_component_a385f35e4c5d616580e0bd4ded5c4653f}
 
-\begin{DoxyCompactList}\small\item\em Mouse movement offsets. \end{DoxyCompactList}\item 
-\hypertarget{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}{float {\bfseries yoffset}}\label{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}
+\begin{DoxyCompactList}\small\item\em Mouse movement offset. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}{float \hyperlink{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}{yoffset}}\label{class_camera_component_aac7aad40b74b70920b8b5d214550fe91}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Mouse movement offset. \end{DoxyCompactList}\item 
 \hypertarget{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}{bool \hyperlink{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}{first\+Person\+Camera}}\label{class_camera_component_ac1d3fbcc4d2d4a0f079339a238798cd8}
 
 \begin{DoxyCompactList}\small\item\em First person camera switch (switch to 3rd person if false) \end{DoxyCompactList}\item 
@@ -83,10 +74,10 @@ float \hyperlink{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{m\+\_
 \begin{DoxyCompactList}\small\item\em Distance from central point when in 3rd person mode. \end{DoxyCompactList}\item 
 \hypertarget{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}{glm\+::vec2 \hyperlink{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}{mouse\+X\+Y}}\label{class_camera_component_a92d8a306e8b05c1bde2deecb4ae5e1f9}
 
-\begin{DoxyCompactList}\small\item\em Current and previous tick mouse positions. \end{DoxyCompactList}\item 
-\hypertarget{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}{glm\+::vec2 {\bfseries last\+Mouse\+X\+Y}}\label{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}
+\begin{DoxyCompactList}\small\item\em Current tick mouse positions. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}{glm\+::vec2 \hyperlink{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}{last\+Mouse\+X\+Y}}\label{class_camera_component_aef5b26e5e9b68eab4efec97b74c11b13}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Previous tick mouse positions. \end{DoxyCompactList}\item 
 \hypertarget{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}{float \hyperlink{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}{sensitivity} = 0.\+01f}\label{class_camera_component_acaa50f9d7c6df9e3c18dad170a1298fc}
 
 \begin{DoxyCompactList}\small\item\em Mouse movement sensitivity. \end{DoxyCompactList}\item 
@@ -96,14 +87,14 @@ float \hyperlink{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{m\+\_
 
 
 \subsection{Member Data Documentation}
-\hypertarget{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}{\index{Camera\+Component@{Camera\+Component}!m\+\_\+direction\+X@{m\+\_\+direction\+X}}
-\index{m\+\_\+direction\+X@{m\+\_\+direction\+X}!Camera\+Component@{Camera\+Component}}
-\subsubsection[{m\+\_\+direction\+X}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\+Component\+::m\+\_\+direction\+X \{ 0 \}}}\label{class_camera_component_a7a95ace18cee6a6b88ac5873233e2cc3}
+\hypertarget{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}{\index{Camera\+Component@{Camera\+Component}!front@{front}}
+\index{front@{front}!Camera\+Component@{Camera\+Component}}
+\subsubsection[{front}]{\setlength{\rightskip}{0pt plus 5cm}glm\+::vec3 Camera\+Component\+::front = glm\+::vec3(0.\+0f, 0.\+0f, 1.\+0f)}}\label{class_camera_component_a3cc09f3e499de24e429ad2ad30b6ff43}
 
 
 \hyperlink{class_camera}{Camera} object. 
 
-Direction Vector the \hyperlink{class_camera}{Camera} is facing in 
+Front movement vector 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

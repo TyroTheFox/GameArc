@@ -4,9 +4,9 @@
 #include "Camera.h"
 #include "GameObject.h"
 /**
+\brief Handles the contained camera object
 \file CameraComponent.h
 \author Kieran Clare
-\brief Handles the contained camera object
 
 Handles the contained camera object so that a camera can be placed on a game object
 */
@@ -15,10 +15,6 @@ class CameraComponent : public Component
 private:
 	Camera * camera;///Camera object
 public:
-	///Direction Vector the Camera is facing in
-	float m_directionX{ 0 };
-	float m_directionY{ 0 };
-	float m_directionZ{ 0 };
 	///Front movement vector
 	glm::vec3 front = glm::vec3(0.0f, 0.0f, 1.0f);
 	///Right movement vector
@@ -27,14 +23,18 @@ public:
 	glm::vec3 up;
 	///Movement matrix
 	glm::mat4 viewMatrix;
-	///Mouse movement offsets
-	float xoffset, yoffset;
+	///Mouse movement offset
+	float xoffset;
+	///Mouse movement offset
+	float yoffset;
 	///First person camera switch (switch to 3rd person if false)
 	bool firstPersonCamera;
 	///Distance from central point when in 3rd person mode
 	float offsetFactor;
-	///Current and previous tick mouse positions
-	glm::vec2 mouseXY, lastMouseXY;
+	///Current tick mouse positions
+	glm::vec2 mouseXY;
+	///Previous tick mouse positions
+	glm::vec2 lastMouseXY;
 	///Mouse movement sensitivity
 	float sensitivity = 0.01f;
 	///Attached game object
@@ -47,13 +47,13 @@ public:
 	}
 	///Called when attached to object, sets up debug functions
 	void OnSetUp() override{
-		debug->AddConsoleCommand("setfpc", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		debug->AddConsoleCommand("setFPC", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			this->firstPersonCamera = std::stoi(s.at(0)); this->debug->WriteToConsole("Set First Person Camera to " + s.at(0)); }));
-		debug->AddConsoleCommand("setcamoffset", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		debug->AddConsoleCommand("setCamOffset", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			this->offsetFactor = std::stof(s.at(0)); this->debug->WriteToConsole("Set Distance From Player in Third Person Mode to " + s.at(0)); }));
-		debug->AddConsoleCommand("setmousesen", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		debug->AddConsoleCommand("setMouseSen", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			this->sensitivity = std::stof(s.at(0)); this->debug->WriteToConsole("Set Mouse Sensitivity to " + s.at(0)); }));
-		debug->AddConsoleCommand("setfov", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		debug->AddConsoleCommand("setFOV", TextParser::InterpFunc([this](std::vector<std::string> s) { if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			this->GetCamera()->setFOV(std::stof(s.at(0))); this->debug->WriteToConsole("Set Camera FOV to " + s.at(0)); }));
 	}
 	///Returns camera object

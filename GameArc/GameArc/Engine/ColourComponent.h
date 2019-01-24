@@ -18,12 +18,12 @@ public:
 	///Called when added to object, sets up debug function
 	void OnSetUp() override {
 		debug->AddConsoleCommand("setColour", TextParser::InterpFunc([this](std::vector<std::string> s) {
-			if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			std::string returnMessage = "Colour " + s.at(0);
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) { this->m_red = std::stof(s.at(1)); returnMessage.append(" set to " + s.at(1)); }
-				if (s.size() > 2) { this->m_blue = std::stof(s.at(2)); returnMessage.append(", " + s.at(2)); }
-				if (s.size() > 3) { this->m_green = std::stof(s.at(3)); returnMessage.append(", " + s.at(3)); }
+				if (s.size() > 2) { this->m_green = std::stof(s.at(2)); returnMessage.append(", " + s.at(2)); }
+				if (s.size() > 3) { this->m_blue = std::stof(s.at(3)); returnMessage.append(", " + s.at(3)); }
 				if (s.size() > 4) { this->m_alpha = std::stof(s.at(4)); returnMessage.append(", " + s.at(4)); }
 				this->debug->WriteToConsole(returnMessage);
 			}

@@ -30,15 +30,15 @@ public:
 	}
 	///Called when added to object, sets up debug functions
 	void OnSetUp() override {
-		debug->AddConsoleCommand("changemodel", TextParser::InterpFunc([this](std::vector<std::string> s) {
-			if (s.size() <= 0) { this->debug->WriteToConsole("Missing Values"); return; }
+		debug->AddConsoleCommand("changeModel", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing Values"); return; }
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) {
 					model = new Model(s.at(1), modelHandler);
 					this->debug->WriteToConsole("Model " + s.at(0) + " changed to " + s.at(1));
 				}
 				else {
-					if (s.size() <= 0) { this->debug->WriteToConsole("Need a model directory"); }
+					if (s.size() <= 0) { this->debug->WriteErrorToConsole("Need a model directory"); }
 				}
 			}
 		}));

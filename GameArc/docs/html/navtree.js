@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "GameArc Engine", "index.html", [
+  [ "GameArcEngine", "index.html", [
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -37,8 +37,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "2_d_rect_8h_source.html",
-"class_json_1_1_features.html#a1162c37a1458adc32582b585b552f9c3",
-"class_object_manager.html#a25b057e6d1e60c9cbeb29d41923d8c2c"
+"class_json_1_1_features.html#ad15a091cb61bb31323299a95970d2644",
+"class_object_manager.html#a95ac987cd70496b17d7ac6bd2a79682c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

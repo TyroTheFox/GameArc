@@ -8,6 +8,7 @@ var class_debug_helper =
     [ "render", "class_debug_helper.html#a2af378fe6006f6024d5486d8090732aa", null ],
     [ "ToggleDisplayConsole", "class_debug_helper.html#a43b172bef6f51e3a6107438c58050c28", null ],
     [ "update", "class_debug_helper.html#a8ef4429ee0c1146b563c53d4a4b44ca8", null ],
+    [ "WriteErrorToConsole", "class_debug_helper.html#a181175763a5aef7ace818e4c54618979", null ],
     [ "WriteToConsole", "class_debug_helper.html#a44cff1d53586f120fcab4b8e3e84e438", null ],
     [ "displayConsole", "class_debug_helper.html#a4353de086099b07a758df1ce5f44bed7", null ]
 ];

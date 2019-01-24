@@ -115,17 +115,47 @@ public:
 		if(handlers[name] != nullptr) (*handlers[name])();
 	}
 	///Fires Event by name with string message
-	void notifyHandlerWithMessage(const std::string name, const std::string message) {
+	void notifyHandler(const std::string name, const std::string message) {
 		if (handlers[name] != nullptr) (*handlers[name])(message);
 	}
 	///Fires Event by name with two-dimentional vector
-	void notifyHandlerWithVec2(const std::string name, const glm::vec2 vec) {
+	void notifyHandler(const std::string name, const glm::vec2 vec) {
 		if (handlers[name] != nullptr) (*handlers[name])(vec);
 	}
 	///Fires Event by name with integer
-	void notifyHandlerWithint(const std::string name, const int i) {
+	void notifyHandler(const std::string name, const int i) {
 		if (handlers[name] != nullptr) (*handlers[name])(i);
 	}
+	///Subscribes to a given event
+	void subscribeToEvent(std::string eventName, EventHandler::Func f) {
+		EventHandler::Func e = f;
+		EventHandler eListener(e, eventName);
+		this->addHandler(eListener);
+	}
+	///Subscribes to a given event that needs a string message
+	void subscribeToEvent(std::string eventName, EventHandler::FuncMessage f) {
+		EventHandler::FuncMessage e = f;
+		EventHandler eListener(e, eventName);
+		this->addHandler(eListener);
+	}
+	///Subscribes to a given event that needs an int message
+	void subscribeToEvent(std::string eventName, EventHandler::FuncInt f) {
+		EventHandler::FuncInt e = f;
+		EventHandler eListener(e, eventName);
+		this->addHandler(eListener);
+	}
+	///Subscribes to a given event that needs a Vec2 message
+	void subscribeToEvent(std::string eventName, EventHandler::FuncVec2 f) {
+		EventHandler::FuncVec2 e = f;
+		EventHandler eListener(e, eventName);
+		this->addHandler(eListener);
+	}
+	///Removes event handler from list by name
+	void unsubscribeFromEvent(const std::string name) {
+		std::map<std::string, std::unique_ptr<EventHandler>>::iterator to_remove = this->handlers.find(name);
+		this->handlers.erase(to_remove);
+	}
+private:
 	///Adds new Event Handler
 	void addHandler(const EventHandler &handler) {
 		this->handlers[handler.name] = std::unique_ptr<EventHandler>(new EventHandler{ handler });
@@ -139,11 +169,6 @@ public:
 				break;
 			}
 		}
-	}
-	///Removes event handler from list by name
-	void removeHandler(const std::string name) {
-		std::map<std::string, std::unique_ptr<EventHandler>>::iterator to_remove = this->handlers.find(name);
-		this->handlers.erase(to_remove);
 	}
 	///Fires handler by name
 	void operator()(std::string name) {
@@ -161,4 +186,6 @@ public:
 
 		return *this;
 	}
+
+
 };

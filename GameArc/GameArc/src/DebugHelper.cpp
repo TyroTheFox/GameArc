@@ -6,25 +6,11 @@ DebugHelper::DebugHelper(IEngineCore* enginePtr)
 
 	textParser = new TextParser();
 
-	EventHandler::Func displayMessage = [this] { this->ToggleDisplayConsole(); };
-	EventHandler displayListener(displayMessage, "ToggleDebugConsole");
-	keyEvent->addHandler(displayListener);
-
-	EventHandler::FuncInt consoleInputMessage = [this](int i) { this->HandleInputLine(i); };
-	EventHandler consoleInputMessageListener(consoleInputMessage, "DebugConsoleInput");
-	keyEvent->addHandler(consoleInputMessageListener);
-
-	EventHandler::Func consoleEnterHit = [this] { this->ProcessInputLine(); };
-	EventHandler consoleEnterHitListener(consoleEnterHit, "DebugEnterHit");
-	keyEvent->addHandler(consoleEnterHitListener);
-
-	EventHandler::Func consoleBackspaceHit = [this] { this->DeleteLastChar(); };
-	EventHandler consoleBackspaceHitListener(consoleBackspaceHit, "DebugBackspaceHit");
-	keyEvent->addHandler(consoleBackspaceHitListener);
-
-	EventHandler::FuncInt consoleShiftHit = [this](int i) { caps = i; };
-	EventHandler consoleShiftHitListener(consoleShiftHit, "DebugShiftHit");
-	keyEvent->addHandler(consoleShiftHitListener);
+	keyEvent->subscribeToEvent("ToggleDebugConsole", [this] { this->ToggleDisplayConsole(); });
+	keyEvent->subscribeToEvent("DebugConsoleInput", [this](int i) { this->HandleInputLine(i); });
+	keyEvent->subscribeToEvent("DebugEnterHit", [this] { this->ProcessInputLine(); });
+	keyEvent->subscribeToEvent("DebugBackspaceHit", [this] { this->DeleteLastChar(); });
+	keyEvent->subscribeToEvent("DebugShiftHit", [this](int i) { caps = i; });
 }
 
 void DebugHelper::update(float dt)
@@ -74,8 +60,15 @@ void DebugHelper::render()
 		textWriter->DrawNormalText("> " + consoleInput + "_", consoleX, consoleY + (spacing * (lineLimit + 2)), 0.5f);
 
 		int i = 0;
-		for (std::string line : consoleLines) {
-			textWriter->DrawNormalText(line, consoleX, consoleY + (spacing * i), 0.5f);
+		for (auto line : consoleLines) {
+			//Normal
+			if (line.second == 0) {
+				textWriter->DrawNormalText(line.first, consoleX, consoleY + (spacing * i), 0.5f);
+			}
+			//Error
+			if (line.second == 1) {
+				textWriter->DrawErrorText(line.first, consoleX, consoleY + (spacing * i), 0.5f);
+			}
 			i++;
 		}
 	}
@@ -83,7 +76,12 @@ void DebugHelper::render()
 
 void DebugHelper::WriteToConsole(std::string message)
 {
-	consoleLines.push_back(message);
+	consoleLines.insert(std::make_pair(message, 0));
+}
+
+void DebugHelper::WriteErrorToConsole(std::string message)
+{
+	consoleLines.insert(std::make_pair(message, 1));
 }
 
 void DebugHelper::AddConsoleCommand(std::string commandName, TextParser::InterpFunc f) {

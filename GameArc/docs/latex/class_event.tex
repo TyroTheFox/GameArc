@@ -7,33 +7,30 @@
 \hypertarget{class_event_a144119cf594d4a6f6c2bf77811f223e3}{void \hyperlink{class_event_a144119cf594d4a6f6c2bf77811f223e3}{notify\+Handler} (const std\+::string name)}\label{class_event_a144119cf594d4a6f6c2bf77811f223e3}
 
 \begin{DoxyCompactList}\small\item\em Fires \hyperlink{class_event}{Event} Handler by name. \end{DoxyCompactList}\item 
-\hypertarget{class_event_aff88b52545b4bd41eb1e7c148acfa3c9}{void \hyperlink{class_event_aff88b52545b4bd41eb1e7c148acfa3c9}{notify\+Handler\+With\+Message} (const std\+::string name, const std\+::string message)}\label{class_event_aff88b52545b4bd41eb1e7c148acfa3c9}
+\hypertarget{class_event_ad36b10d25df1e94f8a4f6c63087d2ee9}{void \hyperlink{class_event_ad36b10d25df1e94f8a4f6c63087d2ee9}{notify\+Handler} (const std\+::string name, const std\+::string message)}\label{class_event_ad36b10d25df1e94f8a4f6c63087d2ee9}
 
 \begin{DoxyCompactList}\small\item\em Fires \hyperlink{class_event}{Event} by name with string message. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a0521173a49e2c86e5d56aed25872114c}{void \hyperlink{class_event_a0521173a49e2c86e5d56aed25872114c}{notify\+Handler\+With\+Vec2} (const std\+::string name, const glm\+::vec2 vec)}\label{class_event_a0521173a49e2c86e5d56aed25872114c}
+\hypertarget{class_event_a907738a2574c1762bdd44fa282fe6af6}{void \hyperlink{class_event_a907738a2574c1762bdd44fa282fe6af6}{notify\+Handler} (const std\+::string name, const glm\+::vec2 vec)}\label{class_event_a907738a2574c1762bdd44fa282fe6af6}
 
 \begin{DoxyCompactList}\small\item\em Fires \hyperlink{class_event}{Event} by name with two-\/dimentional vector. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a9116b6d26e9d489b652d96d25caeea4d}{void \hyperlink{class_event_a9116b6d26e9d489b652d96d25caeea4d}{notify\+Handler\+Withint} (const std\+::string name, const int i)}\label{class_event_a9116b6d26e9d489b652d96d25caeea4d}
+\hypertarget{class_event_a418ae9b1a1f59c0e3833f320c5d36e26}{void \hyperlink{class_event_a418ae9b1a1f59c0e3833f320c5d36e26}{notify\+Handler} (const std\+::string name, const int i)}\label{class_event_a418ae9b1a1f59c0e3833f320c5d36e26}
 
 \begin{DoxyCompactList}\small\item\em Fires \hyperlink{class_event}{Event} by name with integer. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a6860c013fdd5c1bfea9c49fb6b627442}{void \hyperlink{class_event_a6860c013fdd5c1bfea9c49fb6b627442}{add\+Handler} (const \hyperlink{class_event_handler}{Event\+Handler} \&handler)}\label{class_event_a6860c013fdd5c1bfea9c49fb6b627442}
+\hypertarget{class_event_a9d441ecc394728ab055ef8f551abcc6f}{void \hyperlink{class_event_a9d441ecc394728ab055ef8f551abcc6f}{subscribe\+To\+Event} (std\+::string event\+Name, \hyperlink{class_event_handler_af1c003b45c76eb6eb0852801a997561b}{Event\+Handler\+::\+Func} f)}\label{class_event_a9d441ecc394728ab055ef8f551abcc6f}
 
-\begin{DoxyCompactList}\small\item\em Adds new \hyperlink{class_event}{Event} Handler. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a2f1428fb85f6b18a4ebda87b4dd4c52a}{void \hyperlink{class_event_a2f1428fb85f6b18a4ebda87b4dd4c52a}{remove\+Handler} (const \hyperlink{class_event_handler}{Event\+Handler} \&handler)}\label{class_event_a2f1428fb85f6b18a4ebda87b4dd4c52a}
+\begin{DoxyCompactList}\small\item\em Subscribes to a given event. \end{DoxyCompactList}\item 
+\hypertarget{class_event_ab57f906b09aeae20a7a69f5da1590438}{void \hyperlink{class_event_ab57f906b09aeae20a7a69f5da1590438}{subscribe\+To\+Event} (std\+::string event\+Name, \hyperlink{class_event_handler_a21c76d0c722afe4925c87aa3544e2ce6}{Event\+Handler\+::\+Func\+Message} f)}\label{class_event_ab57f906b09aeae20a7a69f5da1590438}
 
-\begin{DoxyCompactList}\small\item\em Removes \hyperlink{class_event}{Event} Handler from list. \end{DoxyCompactList}\item 
-\hypertarget{class_event_aa747543d37a7c6a5f36a8ae936b2570f}{void \hyperlink{class_event_aa747543d37a7c6a5f36a8ae936b2570f}{remove\+Handler} (const std\+::string name)}\label{class_event_aa747543d37a7c6a5f36a8ae936b2570f}
+\begin{DoxyCompactList}\small\item\em Subscribes to a given event that needs a string message. \end{DoxyCompactList}\item 
+\hypertarget{class_event_afe670e5b2204b2a0edd5f370440e0fe3}{void \hyperlink{class_event_afe670e5b2204b2a0edd5f370440e0fe3}{subscribe\+To\+Event} (std\+::string event\+Name, \hyperlink{class_event_handler_afc053859d1bdb89bd10f01ff22c99fed}{Event\+Handler\+::\+Func\+Int} f)}\label{class_event_afe670e5b2204b2a0edd5f370440e0fe3}
 
-\begin{DoxyCompactList}\small\item\em Removes event handler from list by name. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a2d7239dd7af997cfe4d52a5e3338a84e}{void \hyperlink{class_event_a2d7239dd7af997cfe4d52a5e3338a84e}{operator()} (std\+::string name)}\label{class_event_a2d7239dd7af997cfe4d52a5e3338a84e}
+\begin{DoxyCompactList}\small\item\em Subscribes to a given event that needs an int message. \end{DoxyCompactList}\item 
+\hypertarget{class_event_aa3ebd41554279bd28a5626e923be179f}{void \hyperlink{class_event_aa3ebd41554279bd28a5626e923be179f}{subscribe\+To\+Event} (std\+::string event\+Name, \hyperlink{class_event_handler_a814f37c7df5b2bf170d82904b3e525d6}{Event\+Handler\+::\+Func\+Vec2} f)}\label{class_event_aa3ebd41554279bd28a5626e923be179f}
 
-\begin{DoxyCompactList}\small\item\em Fires handler by name. \end{DoxyCompactList}\item 
-\hypertarget{class_event_a76d4a7410cab58baeb0b7f2bf6adb4a4}{\hyperlink{class_event}{Event} \& \hyperlink{class_event_a76d4a7410cab58baeb0b7f2bf6adb4a4}{operator+=} (const \hyperlink{class_event_handler}{Event\+Handler} \&handler)}\label{class_event_a76d4a7410cab58baeb0b7f2bf6adb4a4}
+\begin{DoxyCompactList}\small\item\em Subscribes to a given event that needs a Vec2 message. \end{DoxyCompactList}\item 
+\hypertarget{class_event_a7f2fdac68d9d23f52c0d2cd657f18705}{void \hyperlink{class_event_a7f2fdac68d9d23f52c0d2cd657f18705}{unsubscribe\+From\+Event} (const std\+::string name)}\label{class_event_a7f2fdac68d9d23f52c0d2cd657f18705}
 
-\begin{DoxyCompactList}\small\item\em Adds new handler. \end{DoxyCompactList}\item 
-\hypertarget{class_event_ab5cdb51d593ed01fcd4d1c8dd781db72}{\hyperlink{class_event}{Event} \& \hyperlink{class_event_ab5cdb51d593ed01fcd4d1c8dd781db72}{operator-\/=} (const \hyperlink{class_event_handler}{Event\+Handler} \&handler)}\label{class_event_ab5cdb51d593ed01fcd4d1c8dd781db72}
-
-\begin{DoxyCompactList}\small\item\em Removes handler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Removes event handler from list by name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

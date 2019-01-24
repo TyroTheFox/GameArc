@@ -4,7 +4,6 @@ var searchData=
   ['m_5fblue',['m_blue',['../class_colour_component.html#a8da5ecb3619ae04479119083e1086bd3',1,'ColourComponent']]],
   ['m_5fcontrolmapping',['m_controlMapping',['../class_input_handler.html#abe853597d11b94e0668c8db6638a0548',1,'InputHandler']]],
   ['m_5fdebugmapping',['m_debugMapping',['../class_input_handler.html#ab472e9acd5163f068a3d009f8415fab1',1,'InputHandler']]],
-  ['m_5fdirectionx',['m_directionX',['../class_camera_component.html#a7a95ace18cee6a6b88ac5873233e2cc3',1,'CameraComponent']]],
   ['m_5fengineinterfaceptr',['m_engineInterfacePtr',['../class_game.html#ad01d32edc479a3edc79e5a3d7b4281d2',1,'Game::m_engineInterfacePtr()'],['../class_text_writer.html#a322f1ca93660d2385928d301dfdcb379',1,'TextWriter::m_engineInterfacePtr()']]],
   ['m_5ffov',['m_fov',['../class_camera.html#aa404a4e057fa16fb82ce8668d7a661b6',1,'Camera']]],
   ['m_5fgreen',['m_green',['../class_colour_component.html#a679613f98b6d1677900aa3341016e7b5',1,'ColourComponent']]],

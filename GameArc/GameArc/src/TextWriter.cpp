@@ -98,7 +98,7 @@ void TextWriter::SetEnginePtr(IEngineCore * enginePtr) {
 }
 
 void TextWriter::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color) {
-	glm::vec3 invertedColor = glm::vec3(1.0f) - color;
+	glm::vec3 invertedColor = glm::vec3(0.0f);
 	m_engineInterfacePtr->drawText(text, x, y, scale, color, Characters, VAO, VBO);
 	if (background != nullptr) {
 		Character c = Characters[(int)'Q'];

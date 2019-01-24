@@ -37,7 +37,8 @@ public:
 	///Called when added to object, sets up component events
 	void OnSetUp() override {
 		buildEvents();
-		debug->AddConsoleCommand("setecrot", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		debug->AddConsoleCommand("setSRot", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Event Camera " + s.at(0) + " rotated"); return; }
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) {
 					camera->GetCamera()->yaw(std::stof(s.at(1)));
@@ -51,7 +52,8 @@ public:
 				this->debug->WriteToConsole("Event Camera " + s.at(0) + " rotated");
 			}
 		}));
-		debug->AddConsoleCommand("setectran", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		debug->AddConsoleCommand("setSTran", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Event Camera " + s.at(0) + " rotated"); return; }
 			if (this->parent->name == s.at(0)) {
 				if (s.size() > 1) {
 					camera->GetCamera()->m_position.x = std::stof(s.at(1));
@@ -73,9 +75,7 @@ public:
 	}
 	///Builds camera events for changing scene
 	void buildEvents() {
-		EventHandler::Func movementMessage = [this]() { this->OnChangeScene(this->switchToScene); };
-		movementListener = EventHandler(movementMessage, "ChangeScene");
-		keyEvent->addHandler(movementListener);
+		keyEvent->subscribeToEvent("ChangeScene", [this]() { this->OnChangeScene(this->switchToScene); });
 	}
 	///Called on update call, doesn't do anything
 	void OnUpdate(float dt) override {
@@ -85,8 +85,8 @@ public:
 	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	///Notifies event object with the next scene the Game class should switch to
 	void OnChangeScene(const std::string m) {
-		keyEvent->notifyHandlerWithMessage("NextScene", m);
-		keyEvent->removeHandler("ChangeScene");
+		keyEvent->notifyHandler("NextScene", m);
+		keyEvent->unsubscribeFromEvent("ChangeScene");
 	}
 	///Called on event call, does nothing
 	void OnMessage(const std::string m) override {}

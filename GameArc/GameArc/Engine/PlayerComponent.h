@@ -48,8 +48,8 @@ public:
 		}
 		buildEvents();
 
-		debug->AddConsoleCommand("setplayerspeed", TextParser::InterpFunc([this](std::vector<std::string> s) {
-			if (s.size() <= 0) { this->debug->WriteToConsole("Missing value"); return; }
+		debug->AddConsoleCommand("setPlayerSpeed", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
 			this->movementSpeed = std::stof(s.at(0)); 
 			this->debug->WriteToConsole("Player Movement Speed set to " + s.at(0)); 
 		}));
@@ -80,12 +80,8 @@ public:
 			//Get transform comp
 			transform = parent->getComponent<TransformComponent>();
 		}
-		EventHandler::FuncMessage movementMessage = [this](std::string message) { this->OnMessage(message); };
-		EventHandler movementListener(movementMessage, "PlayerMovement");
-		keyEvent->addHandler(movementListener);
-		EventHandler::FuncVec2 mouseUpdate = [&](glm::vec2 vec) { camera->mouseXY = vec; };
-		EventHandler mouseListener(mouseUpdate, "PlayerMouseXY");
-		keyEvent->addHandler(mouseListener);
+		keyEvent->subscribeToEvent("PlayerMovement", [this](std::string message) { this->OnMessage(message); });
+		keyEvent->subscribeToEvent("PlayerMouseXY", [&](glm::vec2 vec) { camera->mouseXY = vec; });
 	}
 	///Called every update tick, updates camera and player position
 	void OnUpdate(float dt) override {
