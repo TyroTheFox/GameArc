@@ -164,6 +164,8 @@
     <ClCompile Include="src\GLAD\glad.c" />
     <ClCompile Include="src\GLFW_EngineCore.cpp" />
     <ClCompile Include="src\jsoncpp.cpp" />
+    <ClCompile Include="src\Light.cpp" />
+    <ClCompile Include="src\LightHandler.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ModelHandler.cpp" />
@@ -190,6 +192,8 @@
     <ClInclude Include="Engine\InputHandler.h" />
     <ClInclude Include="Engine\json-forwards.h" />
     <ClInclude Include="Engine\json.h" />
+    <ClInclude Include="Engine\Light.h" />
+    <ClInclude Include="Engine\LightHandler.h" />
     <ClInclude Include="Engine\Mesh.h" />
     <ClInclude Include="Engine\Model.h" />
     <ClInclude Include="Engine\ModelComponent.h" />

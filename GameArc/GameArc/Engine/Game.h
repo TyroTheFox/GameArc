@@ -18,6 +18,7 @@
 #include "ObjectManager.h"
 #include "ModelHandler.h"
 #include "InputHandler.h"
+#include "LightHandler.h"
 #include "global.h"
 ///Forward declared key event object
 extern Event* keyEvent;
@@ -43,6 +44,7 @@ public:
 	ModelHandler* modelHandler;
 	///Input handler object pointer
 	InputHandler* inputHandler;
+	LightHandler* lightHandler;
 	///Constructor
 	Game();
 	///Constructor

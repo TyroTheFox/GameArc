@@ -50,6 +50,7 @@ public:
 	void drawCube(const glm::mat4& modelMatrix) override;
 	///Draw a given model using a given transformation matrix
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
+	void calculateLight(Light* light, int pointLightTotal, int spotLightTotal) override;
 	///Draw 2D text to the screen
 	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
 	///Used for drawing 2D rectandles to the screen

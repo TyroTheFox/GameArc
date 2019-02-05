@@ -16,11 +16,21 @@ class ModelHandler;
 Processes and loads models from file as well as handles and builds the meshes of the model, allowing for easy rendering
 */
 
+struct ModelColour {
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+	float shininess;
+	ModelColour() : ambient(glm::vec3(1)), diffuse(glm::vec3(0.1f)), specular(glm::vec3(1)), shininess(32) {};
+	ModelColour(glm::vec3 a, glm::vec3 d, glm::vec3 s, float sh) : ambient(a), diffuse(d), specular(s), shininess(sh) {};
+};
+
 class Model
 {
 public:
 	///Model Handler object pointer
 	ModelHandler* modelHandler;
+	ModelColour modelColour;
 	///Flag to show a texture was loaded
 	bool textureLoaded = false;
 	///Flag to show the model was loaded from the Model Handler

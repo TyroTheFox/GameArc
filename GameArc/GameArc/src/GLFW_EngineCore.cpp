@@ -154,7 +154,144 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 	temp->use();
 	// set the model component of our shader to the object model
 	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+	phong->SetVector3f("material.ambient", model->modelColour.ambient, true);
+	phong->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
+	phong->SetVector3f("material.specular", model->modelColour.specular, true);
+	phong->setFloat("material.shininess", model->modelColour.shininess);
+	texturePhong->SetVector3f("material.ambient", model->modelColour.ambient, true);
+	texturePhong->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
+	texturePhong->SetVector3f("material.specular", model->modelColour.specular, true);
+	texturePhong->setFloat("material.shininess", model->modelColour.shininess);
 	model->render(temp->ID);
+}
+
+void GLFW_EngineCore::calculateLight(Light * light, int pointLightTotal, int spotLightTotal)
+{
+	phong->use();
+	phong->setInt("noOfPointLights", pointLightTotal);
+	texturePhong->use();
+	texturePhong->setInt("noOfPointLights", pointLightTotal);
+
+	phong->use();
+	phong->setInt("noOfSpotLights", spotLightTotal);
+	texturePhong->use();
+	texturePhong->setInt("noOfSpotLights", spotLightTotal);
+
+	std::string stringID;
+	std::string stringItem;
+
+	switch(light->lType()){
+		case Light::LightType::DIRECTIONAL:
+			phong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
+			phong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
+			phong->SetVector3f("dirLight.specular", light->lColour().specular, true);
+			phong->SetVector3f("dirLight.direction", light->direction(), true);
+			texturePhong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
+			texturePhong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
+			texturePhong->SetVector3f("dirLight.specular", light->lColour().specular, true);
+			texturePhong->SetVector3f("dirLight.direction", light->direction(), true);
+			break;
+		case Light::LightType::POINT:
+			stringID = "pointLights[";
+			stringID += std::to_string(light->GetID());
+
+			stringItem = stringID;
+			stringItem += "].position";
+			phong->SetVector3f(stringItem.c_str(), light->position(), true);
+
+			stringItem = stringID;
+			stringItem += "].ambient";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
+
+			stringItem = stringID;
+			stringItem += "].diffuse";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
+
+			stringItem = stringID;
+			stringItem += "].specular";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
+			phong->use();
+			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].constant", light->pointLightData.constant);
+			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].linear", light->pointLightData.linear);
+			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].quadratic", light->pointLightData.quadratic);
+
+			stringItem = stringID;
+			stringItem += "].position";
+			texturePhong->SetVector3f(stringItem.c_str(), light->position(), true);
+
+			stringItem = stringID;
+			stringItem += "].ambient";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
+
+			stringItem = stringID;
+			stringItem += "].diffuse";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
+
+			stringItem = stringID;
+			stringItem += "].specular";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
+			texturePhong->use();
+			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].constant", light->pointLightData.constant);
+			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].linear", light->pointLightData.linear);
+			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].quadratic", light->pointLightData.quadratic);
+			break;
+		case Light::LightType::SPOT:
+			stringID = "spotLights[";
+			stringID += std::to_string(light->GetID());
+
+			stringItem = stringID;
+			stringItem += "].position";
+			phong->SetVector3f(stringItem.c_str(), light->position(), true);
+
+			stringItem = stringID;
+			stringItem += "].direction";
+			phong->SetVector3f(stringItem.c_str(), light->direction(), true);
+
+			stringItem = stringID;
+			stringItem += "].ambient";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
+
+			stringItem = stringID;
+			stringItem += "].diffuse";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
+
+			stringItem = stringID;
+			stringItem += "].specular";
+			phong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
+			phong->use();
+			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].constant", light->spotLightData.constant);
+			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].linear", light->spotLightData.linear);
+			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].quadratic", light->spotLightData.quadratic);
+			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].cutOff", light->spotLightData.cutOff);
+			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].outerCutOff", light->spotLightData.outerCutOff);
+
+			stringItem = stringID;
+			stringItem += "].position";
+			texturePhong->SetVector3f(stringItem.c_str(), light->position(), true);
+
+			stringItem = stringID;
+			stringItem += "].direction";
+			texturePhong->SetVector3f(stringItem.c_str(), light->direction(), true);
+
+			stringItem = stringID;
+			stringItem += "].ambient";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
+
+			stringItem = stringID;
+			stringItem += "].diffuse";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
+
+			stringItem = stringID;
+			stringItem += "].specular";
+			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
+			texturePhong->use();
+			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].constant", light->spotLightData.constant);
+			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].linear", light->spotLightData.linear);
+			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].quadratic", light->spotLightData.quadratic);
+			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].cutOff", light->spotLightData.cutOff);
+			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].outerCutOff", light->spotLightData.outerCutOff);
+			break;
+	}
 }
 
 void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
@@ -240,8 +377,8 @@ void GLFW_EngineCore::draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rot
 // loading some default shaders to get things up and running
 void GLFW_EngineCore::setDefaultShaders()
 {
-	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
-	texturePhong = new Shader("assets/shaders/surfaceTexture.vert", "assets/shaders/surfaceTexture.frag");
+	phong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
+	texturePhong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
 }
@@ -322,22 +459,21 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	glUniform3f(glGetUniformLocation(phong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
-	glUniform3f(glGetUniformLocation(phong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(glGetUniformLocation(phong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
+	//glUniform3f(glGetUniformLocation(phong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
+	//glUniform3f(glGetUniformLocation(phong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
+	//glUniform3f(glGetUniformLocation(phong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
 	glUniform3fv(glGetUniformLocation(phong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
 	texturePhong->use();
 	// set the view and projection components of our shader to the camera values
-	projection = glm::perspective(glm::radians(cam->m_fov), (float)m_screenWidth / (float)m_screenHeight, 0.1f, 1000.0f);
 	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(glGetUniformLocation(texturePhong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
-	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
+	//glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 1.0f, 1.0f);
+	//glUniform3f(glGetUniformLocation(texturePhong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
+	//glUniform3f(glGetUniformLocation(texturePhong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
+	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewDir"), 1, glm::value_ptr(cam->position()));
 	
 }
 

@@ -164,6 +164,8 @@
     <None Include="assets\levels\scene1.json" />
     <None Include="assets\shaders\defaultShader.frag" />
     <None Include="assets\shaders\defaultShader.vert" />
+    <None Include="assets\shaders\phong2.frag" />
+    <None Include="assets\shaders\phong2.vert" />
     <None Include="assets\shaders\Shader2D.frag" />
     <None Include="assets\shaders\Shader2D.vert" />
     <None Include="assets\shaders\surfaceTexture.frag" />

@@ -8,6 +8,37 @@ Game::Game() {
 
 Game::Game(string levelsFile, DebugHelper* debug)
 {
+	lightHandler = new LightHandler();
+	//lightHandler->createNewLight(
+	//	Light::DIRECTIONAL,
+	//	LightColour(glm::vec3(0.0f), glm::vec3(0.05f), glm::vec3(0.2f)),
+	//	glm::vec3(0),
+	//	glm::vec3(-90, 0, 0)
+	//);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.09, 0.032),
+	//	LightColour(glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0)),
+	//	glm::vec3(0.0f, 1.0f, 0.0f),
+	//	glm::vec3(0, 0, 0)
+	//);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.09, 0.032),
+	//	LightColour(glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0)),
+	//	glm::vec3(1.0f, 1.0f, 0.0f),
+	//	glm::vec3(0, 0, 0)
+	//);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.09, 0.032),
+	//	LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
+	//	glm::vec3(-1.0f, 1.0f, 0.0f),
+	//	glm::vec3(0, 0, 0)
+	//);
+	lightHandler->createNewLight(
+		SpotLightData(1, 0.09f, 0.032f, glm::cos(glm::radians(10.0f)), glm::cos(glm::radians(15.0f))),
+		LightColour(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
+		glm::vec3(0.0f, 0.1f, 0.0f),
+		glm::vec3(-90, 0, 0)
+	);
 	debugHelper = debug;
 	ModelHandler* modelHandler = new ModelHandler();
 	oM = new ObjectManager(debugHelper, modelHandler);
@@ -63,6 +94,10 @@ void Game::init(InputHandler* iH)
 {
 	inputHandler = iH;
 	// update the camera
+	std::vector<Light*> gameLights = lightHandler->getLights();
+	for (Light* light : gameLights) {
+		m_engineInterfacePtr->calculateLight(light, lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
+	}
 	if (m_MainCamera == nullptr) {
 		m_engineInterfacePtr->setCamera(&m_camera);
 	}
@@ -158,6 +193,10 @@ void Game::update(float dt)
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
 		it->second->updateAllComponents(dt);
+	}
+	std::vector<Light*> gameLights = lightHandler->getLights();
+	for (Light* light : gameLights) {
+		m_engineInterfacePtr->calculateLight(light, lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
 	}
 	// update the camera
 	if (m_MainCamera == nullptr) {

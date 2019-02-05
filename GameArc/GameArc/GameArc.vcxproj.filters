@@ -78,6 +78,12 @@
     <ClCompile Include="src\2DRect.cpp">
       <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\Light.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightHandler.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Camera.h">
@@ -165,6 +171,12 @@
       <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Engine\2DRect.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LightHandler.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
   </ItemGroup>
