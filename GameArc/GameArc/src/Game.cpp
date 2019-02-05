@@ -9,34 +9,34 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	//lightHandler->createNewLight(
-	//	Light::DIRECTIONAL,
-	//	LightColour(glm::vec3(0.0f), glm::vec3(0.05f), glm::vec3(0.2f)),
-	//	glm::vec3(0),
-	//	glm::vec3(-90, 0, 0)
-	//);
-	//lightHandler->createNewLight(
-	//	PointLightData(1, 0.09, 0.032),
-	//	LightColour(glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0)),
-	//	glm::vec3(0.0f, 1.0f, 0.0f),
-	//	glm::vec3(0, 0, 0)
-	//);
-	//lightHandler->createNewLight(
-	//	PointLightData(1, 0.09, 0.032),
-	//	LightColour(glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0)),
-	//	glm::vec3(1.0f, 1.0f, 0.0f),
-	//	glm::vec3(0, 0, 0)
-	//);
-	//lightHandler->createNewLight(
-	//	PointLightData(1, 0.09, 0.032),
-	//	LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
-	//	glm::vec3(-1.0f, 1.0f, 0.0f),
-	//	glm::vec3(0, 0, 0)
-	//);
 	lightHandler->createNewLight(
-		SpotLightData(1, 0.09f, 0.032f, glm::cos(glm::radians(10.0f)), glm::cos(glm::radians(15.0f))),
-		LightColour(glm::vec3(0), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
-		glm::vec3(0.0f, 0.1f, 0.0f),
+		Light::DIRECTIONAL,
+		LightColour(glm::vec3(0.4f), glm::vec3(0.4f), glm::vec3(0.02f)),
+		glm::vec3(0.0f, 100.0f, 0.0f),
+		glm::vec3(-90, 0, 0)
+	);
+	lightHandler->createNewLight(
+		PointLightData(1, 0.022f, 0.0019f),
+		LightColour(glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0)),
+		glm::vec3(0.0f, 30.0f, -100.0f),
+		glm::vec3(0, 0, 0)
+	);
+	lightHandler->createNewLight(
+		PointLightData(1, 0.014f, 0.0007f),
+		LightColour(glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0)),
+		glm::vec3(200.0f, 30.0f, -100.0f),
+		glm::vec3(0, 0, 0)
+	);
+	lightHandler->createNewLight(
+		PointLightData(1, 0.014f, 0.0007f),
+		LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
+		glm::vec3(-200.0f, 30.0f, -100.0f),
+		glm::vec3(0, 0, 0)
+	);
+	lightHandler->createNewLight(
+		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
+		glm::vec3(-10.0f, 20.0f, 50.0f),
 		glm::vec3(-90, 0, 0)
 	);
 	debugHelper = debug;
