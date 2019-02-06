@@ -6,6 +6,7 @@
 class LightHandler {
 private:
 	int lightCount;
+	int directionalLightCount;
 	int pointLightCount;
 	int spotLightCount;
 	int lightMax = 16;
@@ -33,6 +34,7 @@ public:
 
 	void addLight(Light& light);
 	vector<Light*> getLights();
+	const int getDirectionalLightCount();
 	const int getPointLightCount();
 	const int getSpotLightCount();
 };

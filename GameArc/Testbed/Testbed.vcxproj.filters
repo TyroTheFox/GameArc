@@ -66,6 +66,18 @@
     <None Include="assets\shaders\phong2.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="assets\shaders\simpleShadow.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\simpleShadow.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\debugShadow.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\debugShadow.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Testbed.cpp">

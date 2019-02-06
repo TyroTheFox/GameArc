@@ -10,9 +10,21 @@ Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
 	lightHandler->createNewLight(
-		LightColour(glm::vec3(0.2f), glm::vec3(0.2f), glm::vec3(0.02f)),
-		glm::vec3(-90, 0, 0)
+		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+		glm::vec3(0, -75, 0)
 	);
+	//lightHandler->createNewLight(
+	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+	//	glm::vec3(-45, 20, 0)
+	//);
+	//lightHandler->createNewLight(
+	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+	//	glm::vec3(-90, 20, 0)
+	//);
+	//lightHandler->createNewLight(
+	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+	//	glm::vec3(-45, 20, 0)
+	//);
 	//for (int i = 0; i < 16; i++) {
 	//	lightHandler->createNewLight(
 	//		PointLightData(1, 0.022f, 0.0019f),
@@ -26,27 +38,27 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//		glm::vec3(-90, 0, 0)
 	//	);
 	//}
-	lightHandler->createNewLight(
-		PointLightData(1, 0.022f, 0.0019f),
-		LightColour(glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0)),
-		glm::vec3(0.0f, 30.0f, -100.0f)
-	);
-	lightHandler->createNewLight(
-		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0)),
-		glm::vec3(200.0f, 30.0f, -100.0f)
-	);
-	lightHandler->createNewLight(
-		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
-		glm::vec3(-200.0f, 30.0f, -100.0f)
-	);
-	lightHandler->createNewLight(
-		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
-		glm::vec3(-10.0f, 20.0f, 50.0f),
-		glm::vec3(-90, 0, 0)
-	);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.022f, 0.0019f),
+	//	LightColour(glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0)),
+	//	glm::vec3(0.0f, 30.0f, -100.0f)
+	//);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0)),
+	//	glm::vec3(200.0f, 30.0f, -100.0f)
+	//);
+	//lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
+	//	glm::vec3(-200.0f, 30.0f, -100.0f)
+	//);
+	//lightHandler->createNewLight(
+	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
+	//	glm::vec3(-10.0f, 20.0f, 50.0f),
+	//	glm::vec3(-90, 0, 0)
+	//);
 	debugHelper = debug;
 	ModelHandler* modelHandler = new ModelHandler();
 	oM = new ObjectManager(debugHelper, modelHandler);
@@ -104,13 +116,7 @@ void Game::init(InputHandler* iH)
 	// update the camera
 	std::vector<Light*> gameLights = lightHandler->getLights();
 	for (Light* light : gameLights) {
-		m_engineInterfacePtr->calculateLight(light, lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
-	}
-	if (m_MainCamera == nullptr) {
-		m_engineInterfacePtr->setCamera(&m_camera);
-	}
-	else {
-		m_engineInterfacePtr->setCamera(m_MainCamera);
+		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
 	}
 	debugHelper->WriteToConsole("Game Set Up Successfully");
 }
@@ -204,14 +210,7 @@ void Game::update(float dt)
 	}
 	std::vector<Light*> gameLights = lightHandler->getLights();
 	for (Light* light : gameLights) {
-		m_engineInterfacePtr->calculateLight(light, lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
-	}
-	// update the camera
-	if (m_MainCamera == nullptr) {
-		m_engineInterfacePtr->setCamera(&m_camera);
-	}
-	else {
-		m_engineInterfacePtr->setCamera(m_MainCamera);
+		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
 	}
 }
 

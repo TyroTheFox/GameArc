@@ -7,7 +7,8 @@ LightHandler::LightHandler()
 void LightHandler::setUpLight(Light * l)
 {
 	if (l->lType() == Light::DIRECTIONAL) {
-		l->ID = 10;
+		l->ID = directionalLightCount;
+		directionalLightCount++;
 	}
 	if (l->lType() == Light::POINT) {
 		l->ID = pointLightCount;
@@ -78,6 +79,11 @@ void LightHandler::addLight(Light& light)
 vector<Light*> LightHandler::getLights()
 {
 	return lights;
+}
+
+const int LightHandler::getDirectionalLightCount()
+{
+	return directionalLightCount;
 }
 
 const int LightHandler::getPointLightCount()

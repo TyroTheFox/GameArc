@@ -73,11 +73,19 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 
 bool GLFW_EngineCore::runEngine(Game& game)
 {
+	gameptr = &game;
 	// for this example just give the game direct access to the engine
 	// there are other ways this could be handled
 	game.m_engineInterfacePtr = this;
 	// message loop
 	game.init(inputHandler);
+	if (game.m_MainCamera == nullptr) {
+		setCamera(&game.m_camera);
+	}
+	else {
+		setCamera(game.m_MainCamera);
+	}
+	initShadows();
 	while (!glfwWindowShouldClose(m_window))
 	{
 		auto start = clock.now();
@@ -87,11 +95,20 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		glfwGetCursorPos(m_window, &xpos, &ypos);
 		inputHandler->handleMouse(glm::vec2(xpos, ypos));
 		game.update(delta); // update game logic
+		//renderShadows(game);
+
+		if (game.m_MainCamera == nullptr) {
+			setCamera(&game.m_camera);
+		}
+		else {
+			setCamera(game.m_MainCamera);
+		}
+		glActiveTexture(GL_TEXTURE8);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
 		game.render(); // prepare game to send info to the renderer in engine core
-		
+		glEnable(GL_FRAMEBUFFER_SRGB);
 		// swap buffers
 		glfwSwapBuffers(m_window);
-		glEnable(GL_FRAMEBUFFER_SRGB);
 		glfwPollEvents();
 		
 		auto finish = clock.now();
@@ -145,6 +162,8 @@ void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, i
 
 void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 {
+	calculateShadows(gameptr, model, modelMatrix);
+
 	Shader* temp;
 	if (model->GetTextureSize() > 0) {
 		temp = texturePhong;
@@ -152,9 +171,15 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 	else {
 		temp = phong;
 	}
+
+	//temp = debugShadow;
+	//temp->setFloat("near_plane", 1.0f);
+	//temp->setFloat("far_plane", 7.5f);
 	temp->use();
+	
 	// set the model component of our shader to the object model
 	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
 	phong->SetVector3f("material.ambient", model->modelColour.ambient, true);
 	phong->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
 	phong->SetVector3f("material.specular", model->modelColour.specular, true);
@@ -163,18 +188,18 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 	texturePhong->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
 	texturePhong->SetVector3f("material.specular", model->modelColour.specular, true);
 	texturePhong->setFloat("material.shininess", model->modelColour.shininess);
+
 	model->render(temp->ID);
 }
 
-void GLFW_EngineCore::calculateLight(Light * light, int pointLightTotal, int spotLightTotal)
+void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, int pointLightTotal, int spotLightTotal)
 {
-	phong->use();
-	phong->setInt("noOfPointLights", pointLightTotal);
+	texturePhong->use();
+	texturePhong->setInt("noOfDirectionalLights", directionalLightTotal);
+
 	texturePhong->use();
 	texturePhong->setInt("noOfPointLights", pointLightTotal);
 
-	phong->use();
-	phong->setInt("noOfSpotLights", spotLightTotal);
 	texturePhong->use();
 	texturePhong->setInt("noOfSpotLights", spotLightTotal);
 
@@ -188,10 +213,11 @@ void GLFW_EngineCore::calculateLight(Light * light, int pointLightTotal, int spo
 
 	switch(light->lType()){
 		case Light::LightType::DIRECTIONAL:
-			texturePhong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
-			texturePhong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
-			texturePhong->SetVector3f("dirLight.specular", light->lColour().specular, true);
-			texturePhong->SetVector3f("dirLight.direction", light->direction(), true);
+			texturePhong->SetArrayVector3f("dirLights", "ambient", light->GetID(), light->lColour().ambient, true);
+			texturePhong->SetArrayVector3f("dirLights", "diffuse", light->GetID(), light->lColour().diffuse, true);
+			texturePhong->SetArrayVector3f("dirLights", "specular", light->GetID(), light->lColour().specular, true);
+			texturePhong->SetArrayVector3f("dirLights", "direction", light->GetID(), light->direction(), true);
+
 			break;
 		case Light::LightType::POINT:
 			texturePhong->SetArrayVector3f("pointLights", "position", light->GetID(), light->position(), true);
@@ -217,6 +243,70 @@ void GLFW_EngineCore::calculateLight(Light * light, int pointLightTotal, int spo
 
 			break;
 	}
+}
+
+void GLFW_EngineCore::initShadows()
+{	
+	// configure depth map FBO
+	// -----------------------
+	glGenFramebuffers(1, &depthMapFBO);
+	// create depth texture
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	// attach depth texture as FBO's depth buffer
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void GLFW_EngineCore::calculateShadows(Game* game, Model* model, const glm::mat4& modelMatrix) {
+	// 1. render depth of scene to texture (from light's perspective)
+	// --------------------------------------------------------------
+	glm::mat4 lightProjection, lightView;
+	glm::mat4 lightSpaceMatrix;
+	float near_plane = 1.0f, far_plane = 7.5f;
+	lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+	std::vector<Light*> gameLights = game->lightHandler->getLights();
+	int i = 0;
+	for (Light* light : gameLights) {
+		if (light->lType() != Light::DIRECTIONAL) { continue; }
+		lightView = glm::lookAt(light->position(), glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightSpaceMatrix = lightProjection * lightView;
+		// render scene from light's point of view
+		simpleDepth->SetMatrix4("lightSpaceMatrix", lightSpaceMatrix, true);
+		simpleDepth->SetMatrix4("model", modelMatrix, true);
+
+		///Switch to rendering to 2D shadow texture
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		model->render(simpleDepth->ID);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, m_screenWidth, m_screenHeight);
+}
+
+void GLFW_EngineCore::renderShadows(Game& game)
+{
+	///Switch to rendering to 2D shadow texture
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	simpleDepth->use();
+	game.render();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, m_screenWidth, m_screenHeight);
 }
 
 void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
@@ -306,8 +396,11 @@ void GLFW_EngineCore::setDefaultShaders()
 	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
 	///Normal Blin-Phong Shader for proper rendering
 	texturePhong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
+	simpleDepth = new Shader("assets/shaders/simpleShadow.vert", "assets/shaders/simpleShadow.frag");
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
+
+	debugShadow = new Shader("assets/shaders/debugShadow.vert", "assets/shaders/debugShadow.frag");
 }
 
 // a simple function to initialise a cube model in memory

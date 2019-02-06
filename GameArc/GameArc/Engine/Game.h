@@ -44,7 +44,13 @@ public:
 	ModelHandler* modelHandler;
 	///Input handler object pointer
 	InputHandler* inputHandler;
-	LightHandler* lightHandler;
+	LightHandler* lightHandler;	
+	///Currently rendered scene
+	Scene* m_currentScene;
+	///Default camera if no camera is found among game objects
+	Camera m_camera;
+	///Main current camera among objects in a scene
+	Camera* m_MainCamera;
 	///Constructor
 	Game();
 	///Constructor
@@ -64,12 +70,6 @@ public:
 private:
 	///Background colour
 	GameObject* m_playerBackground;
-	///Default camera if no camera is found among game objects
-	Camera m_camera;
-	///Main current camera among objects in a scene
-	Camera* m_MainCamera;
-	///Currently rendered scene
-	Scene* m_currentScene;
 	///List of active scenes
 	std::map<string, Scene*> sceneList;
 	///Currently active player object

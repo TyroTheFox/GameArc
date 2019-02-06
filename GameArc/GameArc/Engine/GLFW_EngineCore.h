@@ -7,6 +7,7 @@
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 #include <chrono>
+#include "Game.h"
 #include "Camera.h"
 #include "Model.h"
 #include "TextWriter.h"
@@ -36,6 +37,7 @@ public:
 	float delta = 0;
 	///Input handler class, used for processing key inputs and firing events based on that input
 	static InputHandler* inputHandler;
+	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	///Deconstructor
 	~GLFW_EngineCore() override;
 	///Sets up game window and other variables
@@ -50,22 +52,32 @@ public:
 	void drawCube(const glm::mat4& modelMatrix) override;
 	///Draw a given model using a given transformation matrix
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
-	void calculateLight(Light* light, int pointLightTotal, int spotLightTotal) override;
+	void calculateLight(Light* light, int directionalLightTotal, int pointLightTotal, int spotLightTotal) override;
+	void initShadows();
+	void calculateShadows(Game* game, Model* model, const glm::mat4& modelMatrix);
+	void renderShadows(Game& game);
 	///Draw 2D text to the screen
 	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
 	///Used for drawing 2D rectandles to the screen
 	void draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) override;
 private:
+	///Game Pointer
+	Game* gameptr;
 	///GLFW window object
 	GLFWwindow* m_window;
 	///Default Shader
 	Shader* phong; 
 	///Texture Phong Shader
 	Shader* texturePhong; 
+	Shader* simpleDepth;
+	Shader* debugShadow;
 	///Text Writer Shader
 	Shader* textWriterShader;
 	///2D Object Shader
 	Shader* Shader2D;
+	///Shadow Map FBO
+	unsigned int depthMapFBO;
+	unsigned int depthMap;
 	///Width of the Window
 	static int m_screenWidth; 
 	///Height of the Window

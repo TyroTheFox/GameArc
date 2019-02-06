@@ -39,7 +39,7 @@ public:
 	virtual void drawCube(const glm::mat4& modelMatrix) = 0;
 	///Draws a given model using a given transformation matrix
 	virtual void drawModel(Model* model, const glm::mat4& modelMatrix) = 0;
-	virtual void calculateLight(Light* light, int pointLightTotal, int spotLightTotal) = 0;
+	virtual void calculateLight(Light* light, int directionalLightTotal, int pointLightTotal, int spotLightTotal) = 0;
 	///Draws 2D text to the screen
 	virtual void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) = 0;
 	///Used for drawing 2D rectandles to the screen
