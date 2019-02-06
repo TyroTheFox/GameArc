@@ -49,13 +49,11 @@ public:
 	PointLightData pointLightData;
 	SpotLightData spotLightData;
 	Light();
-	Light(LightType lT, LightColour lC);
-	Light(LightType lT, LightColour lC, glm::vec3 p);
-	Light(LightType lT, LightColour lC, glm::vec3 p, glm::vec3 o);
+	Light(LightColour lC);
+	Light(LightColour lC, glm::vec3 o);
 
 	Light(PointLightData pLD, LightColour lC);
 	Light(PointLightData pLD, LightColour lC, glm::vec3 p);
-	Light(PointLightData pLD, LightColour lC, glm::vec3 p, glm::vec3 o);
 
 	Light(SpotLightData sLD, LightColour lC);
 	Light(SpotLightData sLD, LightColour lC, glm::vec3 p);

@@ -136,6 +136,111 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
+	///Sends uniform float to GPU
+	void SetArrayFloat(const std::string &variableName, const std::string &elementName, int i, float value) const
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+
+		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+	}
+	void SetArrayVector2f(const std::string &variableName, const std::string &elementName, int i, GLfloat x, GLfloat y, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform2f(glGetUniformLocation(this->ID, name.c_str()), x, y);
+	}
+	void SetArrayVector2f(const std::string &variableName, const std::string &elementName, int i, const glm::vec2 &value, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform2f(glGetUniformLocation(this->ID, name.c_str()), value.x, value.y);
+	}
+	void SetArrayVector3f(const std::string &variableName, const std::string &elementName, int i, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform3f(glGetUniformLocation(this->ID, name.c_str()), x, y, z);
+	}
+	void SetArrayVector3f(const std::string &variableName, const std::string &elementName, int i, const glm::vec3 &value, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform3f(glGetUniformLocation(this->ID, name.c_str()), value.x, value.y, value.z);
+	}
+	void SetArrayVector4f(const std::string &variableName, const std::string &elementName, int i, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform4f(glGetUniformLocation(this->ID, name.c_str()), x, y, z, w);
+	}
+	void SetArrayVector4f(const std::string &variableName, const std::string &elementName, int i, const glm::vec4 &value, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniform4f(glGetUniformLocation(this->ID, name.c_str()), value.x, value.y, value.z, value.w);
+	}
+	void SetArrayMatrix4(const std::string &variableName, const std::string &elementName, int i, const glm::mat4 &matrix, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+		if (useShader)
+			this->use();
+		glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
 private:
 	///Checks each shader to ensure it has been constructed correctly
 	void checkCompileErrors(unsigned int shader, std::string type)

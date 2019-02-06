@@ -91,6 +91,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		
 		// swap buffers
 		glfwSwapBuffers(m_window);
+		glEnable(GL_FRAMEBUFFER_SRGB);
 		glfwPollEvents();
 		
 		auto finish = clock.now();
@@ -177,119 +178,43 @@ void GLFW_EngineCore::calculateLight(Light * light, int pointLightTotal, int spo
 	texturePhong->use();
 	texturePhong->setInt("noOfSpotLights", spotLightTotal);
 
+	phong->use();
+	phong->setBool("blinn", false);
+	texturePhong->use();
+	texturePhong->setBool("blinn", false);
+
 	std::string stringID;
 	std::string stringItem;
 
 	switch(light->lType()){
 		case Light::LightType::DIRECTIONAL:
-			phong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
-			phong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
-			phong->SetVector3f("dirLight.specular", light->lColour().specular, true);
-			phong->SetVector3f("dirLight.direction", light->direction(), true);
 			texturePhong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
 			texturePhong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
 			texturePhong->SetVector3f("dirLight.specular", light->lColour().specular, true);
 			texturePhong->SetVector3f("dirLight.direction", light->direction(), true);
 			break;
 		case Light::LightType::POINT:
-			stringID = "pointLights[";
-			stringID += std::to_string(light->GetID());
+			texturePhong->SetArrayVector3f("pointLights", "position", light->GetID(), light->position(), true);
+			texturePhong->SetArrayVector3f("pointLights", "ambient", light->GetID(), light->lColour().ambient, true);
+			texturePhong->SetArrayVector3f("pointLights", "diffuse", light->GetID(), light->lColour().diffuse, true);
+			texturePhong->SetArrayVector3f("pointLights", "specular", light->GetID(), light->lColour().specular, true);
+			texturePhong->SetArrayFloat("pointLights", "constant", light->GetID(), light->pointLightData.constant);
+			texturePhong->SetArrayFloat("pointLights", "linear", light->GetID(), light->pointLightData.linear);
+			texturePhong->SetArrayFloat("pointLights", "quadratic", light->GetID(), light->pointLightData.quadratic);
 
-			stringItem = stringID;
-			stringItem += "].position";
-			phong->SetVector3f(stringItem.c_str(), light->position(), true);
-
-			stringItem = stringID;
-			stringItem += "].ambient";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
-
-			stringItem = stringID;
-			stringItem += "].diffuse";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
-
-			stringItem = stringID;
-			stringItem += "].specular";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
-			phong->use();
-			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].constant", light->pointLightData.constant);
-			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].linear", light->pointLightData.linear);
-			phong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].quadratic", light->pointLightData.quadratic);
-
-			stringItem = stringID;
-			stringItem += "].position";
-			texturePhong->SetVector3f(stringItem.c_str(), light->position(), true);
-
-			stringItem = stringID;
-			stringItem += "].ambient";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
-
-			stringItem = stringID;
-			stringItem += "].diffuse";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
-
-			stringItem = stringID;
-			stringItem += "].specular";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
-			texturePhong->use();
-			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].constant", light->pointLightData.constant);
-			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].linear", light->pointLightData.linear);
-			texturePhong->setFloat("pointLights[" + std::to_string(light->GetID()) + "].quadratic", light->pointLightData.quadratic);
 			break;
 		case Light::LightType::SPOT:
-			stringID = "spotLights[";
-			stringID += std::to_string(light->GetID());
+			texturePhong->SetArrayVector3f("spotLights", "position", light->GetID(), light->position(), true);
+			texturePhong->SetArrayVector3f("spotLights", "direction", light->GetID(), light->direction(), true);
+			texturePhong->SetArrayVector3f("spotLights", "ambient", light->GetID(), light->lColour().ambient, true);
+			texturePhong->SetArrayVector3f("spotLights", "diffuse", light->GetID(), light->lColour().diffuse, true);
+			texturePhong->SetArrayVector3f("spotLights", "specular", light->GetID(), light->lColour().specular, true);
+			texturePhong->SetArrayFloat("spotLights", "constant", light->GetID(), light->spotLightData.constant);
+			texturePhong->SetArrayFloat("spotLights", "linear", light->GetID(), light->spotLightData.linear);
+			texturePhong->SetArrayFloat("spotLights", "quadratic", light->GetID(), light->spotLightData.quadratic);
+			texturePhong->SetArrayFloat("spotLights", "cutOff", light->GetID(), light->spotLightData.cutOff);
+			texturePhong->SetArrayFloat("spotLights", "outerCutOff", light->GetID(), light->spotLightData.outerCutOff);
 
-			stringItem = stringID;
-			stringItem += "].position";
-			phong->SetVector3f(stringItem.c_str(), light->position(), true);
-
-			stringItem = stringID;
-			stringItem += "].direction";
-			phong->SetVector3f(stringItem.c_str(), light->direction(), true);
-
-			stringItem = stringID;
-			stringItem += "].ambient";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
-
-			stringItem = stringID;
-			stringItem += "].diffuse";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
-
-			stringItem = stringID;
-			stringItem += "].specular";
-			phong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
-			phong->use();
-			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].constant", light->spotLightData.constant);
-			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].linear", light->spotLightData.linear);
-			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].quadratic", light->spotLightData.quadratic);
-			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].cutOff", light->spotLightData.cutOff);
-			phong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].outerCutOff", light->spotLightData.outerCutOff);
-
-			stringItem = stringID;
-			stringItem += "].position";
-			texturePhong->SetVector3f(stringItem.c_str(), light->position(), true);
-
-			stringItem = stringID;
-			stringItem += "].direction";
-			texturePhong->SetVector3f(stringItem.c_str(), light->direction(), true);
-
-			stringItem = stringID;
-			stringItem += "].ambient";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().ambient, true);
-
-			stringItem = stringID;
-			stringItem += "].diffuse";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().diffuse, true);
-
-			stringItem = stringID;
-			stringItem += "].specular";
-			texturePhong->SetVector3f(stringItem.c_str(), light->lColour().specular, true);
-			texturePhong->use();
-			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].constant", light->spotLightData.constant);
-			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].linear", light->spotLightData.linear);
-			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].quadratic", light->spotLightData.quadratic);
-			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].cutOff", light->spotLightData.cutOff);
-			texturePhong->setFloat("spotLights[" + std::to_string(light->GetID()) + "].outerCutOff", light->spotLightData.outerCutOff);
 			break;
 	}
 }
@@ -377,7 +302,9 @@ void GLFW_EngineCore::draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rot
 // loading some default shaders to get things up and running
 void GLFW_EngineCore::setDefaultShaders()
 {
-	phong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
+	///Use Default Phong for Showing Errors Loading Materials and Objects Without Materials
+	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
+	///Normal Blin-Phong Shader for proper rendering
 	texturePhong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
@@ -459,9 +386,6 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	//glUniform3f(glGetUniformLocation(phong->ID, "objectColour"), 1.0f, 0.6f, 0.61f);
-	//glUniform3f(glGetUniformLocation(phong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
-	//glUniform3f(glGetUniformLocation(phong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
 	glUniform3fv(glGetUniformLocation(phong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
 	texturePhong->use();
 	// set the view and projection components of our shader to the camera values
@@ -470,9 +394,6 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	//glUniform3f(glGetUniformLocation(texturePhong->ID, "objectColour"), 1.0f, 1.0f, 1.0f);
-	//glUniform3f(glGetUniformLocation(texturePhong->ID, "lightColour"), 1.0f, 1.0f, 1.0f);
-	//glUniform3f(glGetUniformLocation(texturePhong->ID, "lightPos"), 0.0f, 100.0f, 10.0f);
 	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewDir"), 1, glm::value_ptr(cam->position()));
 	
 }

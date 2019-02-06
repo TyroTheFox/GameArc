@@ -9,7 +9,7 @@ Light::Light()
 	CalculateDirection();
 }
 
-Light::Light(LightType lT, LightColour lC)
+Light::Light(LightColour lC)
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
@@ -18,20 +18,11 @@ Light::Light(LightType lT, LightColour lC)
 	CalculateDirection();
 }
 
-Light::Light(LightType lT, LightColour lC, glm::vec3 p)
+Light::Light(LightColour lC, glm::vec3 o)
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
-	m_position = p;
-	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-	CalculateDirection();
-}
-
-Light::Light(LightType lT, LightColour lC, glm::vec3 p, glm::vec3 o)
-{
-	lightType = LightType::DIRECTIONAL;
-	lightColour = lC;
-	m_position = p;
+	m_position = glm::vec3(1.0f);
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	pitch(o.x);
 	yaw(o.y);
@@ -56,19 +47,6 @@ Light::Light(PointLightData pLD, LightColour lC, glm::vec3 p)
 	pointLightData = pLD;
 	m_position = p;
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-	CalculateDirection();
-}
-
-Light::Light(PointLightData pLD, LightColour lC, glm::vec3 p, glm::vec3 o)
-{
-	lightType = LightType::POINT;
-	lightColour = lC;
-	pointLightData = pLD;
-	m_position = p;
-	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-	pitch(o.x);
-	yaw(o.y);
-	roll(o.z);
 	CalculateDirection();
 }
 

@@ -21,27 +21,15 @@ void LightHandler::setUpLight(Light * l)
 	lightCount++;
 }
 
-void LightHandler::createNewLight(Light::LightType lT, LightColour lC)
+void LightHandler::createNewLight(LightColour lC)
 {
-	if (pointLightCount > lightMax && lT == Light::POINT) { return; }
-	if (spotLightCount > lightMax && lT == Light::SPOT) { return; }
-	Light* l = new Light(lT, lC);
+	Light* l = new Light(lC);
 	setUpLight(l);
 }
 
-void LightHandler::createNewLight(Light::LightType lT, LightColour lC, glm::vec3 p)
+void LightHandler::createNewLight(LightColour lC, glm::vec3 p)
 {
-	if (pointLightCount > lightMax && lT == Light::POINT) { return; }
-	if (spotLightCount > lightMax && lT == Light::SPOT) { return; }
-	Light* l = new Light(lT, lC, p);
-	setUpLight(l);
-}
-
-void LightHandler::createNewLight(Light::LightType lT, LightColour lC, glm::vec3 p, glm::vec3 o)
-{
-	if (pointLightCount > lightMax && lT == Light::POINT) { return; }
-	if (spotLightCount > lightMax && lT == Light::SPOT) { return; }
-	Light* l = new Light(lT, lC, p, o);
+	Light* l = new Light(lC, p);
 	setUpLight(l);
 }
 
@@ -56,13 +44,6 @@ void LightHandler::createNewLight(PointLightData pLD, LightColour lC, glm::vec3 
 {
 	if (pointLightCount > lightMax) { return; }
 	Light* l = new Light(pLD, lC, p);
-	setUpLight(l);
-}
-
-void LightHandler::createNewLight(PointLightData pLD, LightColour lC, glm::vec3 p, glm::vec3 o)
-{
-	if (pointLightCount > lightMax) { return; }
-	Light* l = new Light(pLD, lC, p, o);
 	setUpLight(l);
 }
 
