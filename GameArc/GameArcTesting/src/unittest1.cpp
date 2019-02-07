@@ -38,7 +38,7 @@ namespace GameArcTesting
 		
 		TEST_METHOD(InputCommandTest)
 		{
-			inputHandler = new InputHandler();
+			/*inputHandler = new InputHandler();
 			keyEvent = new Event();
 			Assert::IsNotNull(inputHandler);
 			Assert::IsTrue(inputHandler->loadFromJSON("H:/Documents/GitHub/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
@@ -77,12 +77,12 @@ namespace GameArcTesting
 					HasSent = false;
 					recievedInt = 0;
 				}
-			}
+			}*/
 		}
 
 		TEST_METHOD(DebugInputCommandTest)
 		{
-			inputHandler = new InputHandler();
+			/*inputHandler = new InputHandler();
 			keyEvent = new Event();
 			Assert::IsNotNull(inputHandler);
 			Assert::IsTrue(inputHandler->loadFromJSON("H:/Documents/GitHub/GameArc/GameArc/GameArcTesting/assets/inputs.json"));
@@ -111,7 +111,7 @@ namespace GameArcTesting
 				key->execute();
 				Assert::IsTrue(HasSent);
 				HasSent = false;
-			}
+			}*/
 		}
 
 		TEST_METHOD(DebugInputTest1) {
