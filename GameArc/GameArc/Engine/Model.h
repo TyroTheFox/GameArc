@@ -21,7 +21,7 @@ struct ModelColour {
 	glm::vec3 diffuse;
 	glm::vec3 specular;
 	float shininess;
-	ModelColour() : ambient(glm::vec3(1)), diffuse(glm::vec3(0.1f)), specular(glm::vec3(1)), shininess(32) {};
+	ModelColour() : ambient(glm::vec3(0.3)), diffuse(glm::vec3(0.1f)), specular(glm::vec3(0.8)), shininess(32) {};
 	ModelColour(glm::vec3 a, glm::vec3 d, glm::vec3 s, float sh) : ambient(a), diffuse(d), specular(s), shininess(sh) {};
 };
 

@@ -55,11 +55,27 @@
         },
         {
           "class": "ModelComponent",
-          "fileName": "assets/models/CubeLand.obj"
+          "fileName": "assets/models/basicLand.obj"
         }
       ],
       "visible": true,
       "name": "cubeLevel"
+    },
+	{
+      "components": [
+        {
+          "class": "TransformComponent",
+          "orientation": [ 1, 0, 0, 0 ],
+          "position": [ -10, -5, -20 ],
+          "scale": [ 10, 10, 10 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/plane.obj"
+        }
+      ],
+      "visible": true,
+      "name": "floor"
     }
   ]
 }

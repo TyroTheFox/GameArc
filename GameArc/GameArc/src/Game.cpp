@@ -11,7 +11,7 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	lightHandler = new LightHandler();
 	lightHandler->createNewLight(
 		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-		glm::vec3(0, -75, 0)
+		glm::vec3(110, 90, 0)
 	);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),

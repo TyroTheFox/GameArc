@@ -54,8 +54,6 @@ void Mesh::render(const unsigned int shaderProgram)
 
 	// return to default texture
 	glActiveTexture(GL_TEXTURE0);
-
-
 }
 
 // initialises all the buffer arrays

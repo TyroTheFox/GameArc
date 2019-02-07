@@ -52,6 +52,7 @@ public:
 	Light();
 	Light(LightColour lC);
 	Light(LightColour lC, glm::vec3 o);
+	Light(LightColour lC, glm::vec3 p, glm::vec3 o);
 
 	Light(PointLightData pLD, LightColour lC);
 	Light(PointLightData pLD, LightColour lC, glm::vec3 p);

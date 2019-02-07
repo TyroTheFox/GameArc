@@ -19,6 +19,8 @@ public:
 	void createNewLight(LightColour lC);
 	///Creates Directional Light
 	void createNewLight(LightColour lC, glm::vec3 o);
+	///Creates Directional Light
+	void createNewLight(LightColour lC, glm::vec3 p, glm::vec3 o);
 
 	///Creates Point Light
 	void createNewLight(PointLightData pLD, LightColour lC);

@@ -99,6 +99,7 @@ public:
 				glm::vec3 sideways = camera->right * (intendedDirection.x * movementSpeed);
 				transform->m_position.x += forwards.x + sideways.x;
 				transform->m_position.z += forwards.z + sideways.z;
+				transform->m_position.y += forwards.y + sideways.y;
 			}
 			intendedDirection *= 0;
 		}

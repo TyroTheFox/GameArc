@@ -28,9 +28,15 @@ void LightHandler::createNewLight(LightColour lC)
 	setUpLight(l);
 }
 
-void LightHandler::createNewLight(LightColour lC, glm::vec3 p)
+void LightHandler::createNewLight(LightColour lC, glm::vec3 o)
 {
-	Light* l = new Light(lC, p);
+	Light* l = new Light(lC, o);
+	setUpLight(l);
+}
+
+void LightHandler::createNewLight(LightColour lC, glm::vec3 p, glm::vec3 o)
+{
+	Light* l = new Light(lC, p, o);
 	setUpLight(l);
 }
 
