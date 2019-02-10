@@ -39,13 +39,14 @@ class Light {
 public:
 	enum LightType { DIRECTIONAL, POINT, SPOT };
 private:
-	glm::vec3 m_position;
-	glm::quat m_orientation;
 	glm::vec3 m_direction;
 	glm::vec3 m_up;
+	glm::mat4 matrix;
 	LightType lightType;
 	LightColour lightColour;
 public:
+	glm::vec3 m_position;
+	glm::quat m_orientation;
 	int ID;
 	PointLightData pointLightData;
 	SpotLightData spotLightData;
@@ -79,6 +80,8 @@ public:
 	int GetID();
 
 	void CalculateDirection();
+
+	glm::mat4& GetMatrix();
 
 	///Translate by vector
 	void translate(const glm::vec3 &v);

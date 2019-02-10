@@ -179,6 +179,9 @@
     <ClInclude Include="Engine\LightHandler.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\LightComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\TextWriter.frag">

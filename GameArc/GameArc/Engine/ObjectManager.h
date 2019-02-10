@@ -17,9 +17,11 @@
 #include "PlayerComponent.h"
 #include "EventCameraComponent.h"
 #include "TextUIComponent.h"
+#include "LightComponent.h"
 
 #include "ModelHandler.h"
 #include "DebugHelper.h"
+#include "LightHandler.h"
 
 /** \class ObjectManager
 * \file ObjectManager.h
@@ -43,9 +45,10 @@ private:
 	DebugHelper* debug;
 	///Model Handler object pointer
 	ModelHandler* modelHandler;
+	LightHandler* lightHandler;
 public:
 	///Constructor
-	ObjectManager(DebugHelper* d, ModelHandler* mH);
+	ObjectManager(DebugHelper* d, ModelHandler* mH, LightHandler* lH);
 	///Deconstructor
 	~ObjectManager();
 	///Get new Scene ID

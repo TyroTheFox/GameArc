@@ -2,10 +2,11 @@
 
 /*Credit to Dynamic JSON loader to Stefan Bauer*/
 
-ObjectManager::ObjectManager(DebugHelper* d, ModelHandler* mH)
+ObjectManager::ObjectManager(DebugHelper* d, ModelHandler* mH, LightHandler* lH)
 {
 	debug = d;
 	modelHandler = mH;
+	lightHandler = lH;
 	m_componentJsonBuilders["TransformComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TransformComponent>(object, p_component); };
 	//Different because it needs to pass in the Model Handler
 	m_componentJsonBuilders["ModelComponent"] = [this](GameObject* object, const Json::Value& p_component) { 	
@@ -23,6 +24,13 @@ ObjectManager::ObjectManager(DebugHelper* d, ModelHandler* mH)
 		object->getComponent<EventCameraComponent>()->buildEvents();
 	};
 	m_componentJsonBuilders["TextUIComponent"] = [this](GameObject* object, const Json::Value& p_component) { attachComponent<TextUIComponent>(object, p_component); };
+	m_componentJsonBuilders["LightComponent"] = [this](GameObject* object, const Json::Value& p_component) { 
+		LightComponent* component = new LightComponent();
+		component->lightHandler = lightHandler;
+		component->debug = debug;
+		component->BuildFromJson(p_component);
+		object->addComponent<LightComponent>(component);
+	};
 }
 
 ObjectManager::~ObjectManager() {

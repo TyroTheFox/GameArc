@@ -23,7 +23,7 @@
     <ProjectGuid>{9071CAED-D7F3-46CA-817A-5EA964818EF8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameArcTesting</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

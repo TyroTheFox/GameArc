@@ -1,12 +1,12 @@
 #pragma once
 
-#include "IEngineCore.h"
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 #include <chrono>
+#include "IEngineCore.h"
 #include "Game.h"
 #include "Camera.h"
 #include "Model.h"
@@ -54,8 +54,7 @@ public:
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
 	void calculateLight(Light* light, int directionalLightTotal, int pointLightTotal, int spotLightTotal) override;
 	void initShadows();
-	void calculateShadows(Game* game, Model* model, const glm::mat4& modelMatrix);
-	void renderShadows(Game& game);
+	void calculateShadows(Game* game) override;
 	///Draw 2D text to the screen
 	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
 	///Used for drawing 2D rectandles to the screen
@@ -71,13 +70,16 @@ private:
 	Shader* texturePhong; 
 	Shader* simpleDepth;
 	Shader* debugShadow;
+	Shader* debugBuffer;
 	///Text Writer Shader
 	Shader* textWriterShader;
 	///2D Object Shader
 	Shader* Shader2D;
 	///Shadow Map FBO
-	unsigned int depthMapFBO;
+	unsigned int depthMapFBO = 0;
 	unsigned int depthMap;
+	unsigned int cubeVBO, cubeVAO;
+	GLuint vaoDebugTexturedRect;
 	///Width of the Window
 	static int m_screenWidth; 
 	///Height of the Window
@@ -94,9 +96,11 @@ private:
 	static void characterCallbackEvent(GLFWwindow * window, unsigned int codepoint);
 	///Called when window is resized
 	static void windowResizeCallbackEvent(GLFWwindow* window, int width, int height); 
+	void DisplayFramebufferTexture(GLuint textureID);
 	///Sets default shaders up
 	void setDefaultShaders();
 	///Initialises internal cube model
 	void initCubeModel();
+	GLenum glCheckError_(const char *file, int line);
 };
 

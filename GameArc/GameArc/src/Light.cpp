@@ -4,7 +4,7 @@ Light::Light()
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = LightColour();
-	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_position = glm::vec3(0.0f, 1000.0f, 0.0f);
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	CalculateDirection();
 }
@@ -13,7 +13,7 @@ Light::Light(LightColour lC)
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
-	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_position = glm::vec3(0.0f, 1000.0f, 0.0f);
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	CalculateDirection();
 }
@@ -22,7 +22,7 @@ Light::Light(LightColour lC, glm::vec3 o)
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
-	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_position = glm::vec3(0.0f, 1000.0f, 0.0f);
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	pitch(o.x);
 	yaw(o.y);
@@ -143,9 +143,14 @@ int Light::GetID()
 
 void Light::CalculateDirection()
 {
-	glm::mat4 matrix = glm::translate(glm::mat4_cast(m_orientation), m_position);
+	matrix = glm::translate(glm::mat4_cast(m_orientation), m_position);
 	m_direction = glm::vec3(matrix[0].z, matrix[1].z, matrix[2].z);
 	m_up = glm::vec3(matrix[0].y, matrix[1].y, matrix[2].y);
+}
+
+glm::mat4& Light::GetMatrix()
+{
+	return matrix;
 }
 
 void Light::translate(const glm::vec3 & v)

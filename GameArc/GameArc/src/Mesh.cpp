@@ -56,6 +56,14 @@ void Mesh::render(const unsigned int shaderProgram)
 	glActiveTexture(GL_TEXTURE0);
 }
 
+void Mesh::renderWithoutTextures(const unsigned int shaderProgram)
+{
+	// draw mesh
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
 // initialises all the buffer arrays
 void Mesh::setupMesh()
 {

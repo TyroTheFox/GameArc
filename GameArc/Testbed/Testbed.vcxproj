@@ -23,7 +23,7 @@
     <ProjectGuid>{CE5A30E7-9A27-4524-B1B2-1D6957F0F2C4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Testbed</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -162,6 +162,8 @@
     <None Include="assets\levels.json" />
     <None Include="assets\levels\myCubeLevel.json" />
     <None Include="assets\levels\scene1.json" />
+    <None Include="assets\shaders\debugging.frag" />
+    <None Include="assets\shaders\debugging.vert" />
     <None Include="assets\shaders\debugShadow.frag" />
     <None Include="assets\shaders\debugShadow.vert" />
     <None Include="assets\shaders\defaultShader.frag" />

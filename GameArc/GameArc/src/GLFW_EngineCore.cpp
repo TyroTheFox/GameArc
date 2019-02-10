@@ -5,6 +5,7 @@
 #include <glm/detail/type_vec3.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+void APIENTRY glDebugOutput(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
 std::vector<int> GLFW_EngineCore::m_keyBuffer;
 int GLFW_EngineCore::m_screenWidth;
 int GLFW_EngineCore::m_screenHeight;
@@ -23,9 +24,12 @@ GLFW_EngineCore::~GLFW_EngineCore()
 bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 {
 	glfwInit();
+
+	glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+
 	m_screenWidth = width;
 	m_screenHeight = height;
 
@@ -64,9 +68,19 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	// set the drawable model as a cube
 	// note: this will be changed later when we can draw many kinds of objects
 	initCubeModel();
-
+	initShadows();
 	// enable depth test
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	GLint flags = 0; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	{
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // makes sure errors are displayed synchronously
+		glDebugMessageCallback(glDebugOutput, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 	return true;
 }
 
@@ -78,12 +92,9 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	game.m_engineInterfacePtr = this;
 	// message loop
 	game.init(inputHandler);
-	initShadows();
-	//for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it) {
-	//	if(it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr)
-	//	calculateShadows(gameptr, it->second->getComponent<ModelComponent>()->model, it->second->getComponent<TransformComponent>()->getModelMatrix());
-	//}
 	
+	calculateShadows(gameptr);
+
 	if (game.m_MainCamera == nullptr) {
 		setCamera(&game.m_camera);
 	}
@@ -100,15 +111,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		glfwGetCursorPos(m_window, &xpos, &ypos);
 		inputHandler->handleMouse(glm::vec2(xpos, ypos));
 		game.update(delta); // update game logic
-		 
-		std::map<std::string, GameObject*>::iterator it;
-		std::map<std::string, GameObject*> sceneObjects = game.m_currentScene->getGameObjects();
-		//if (sceneObjects["cube01"] != nullptr)
-			//calculateShadows(gameptr, sceneObjects["cube01"]->getComponent<ModelComponent>()->model, sceneObjects["cube01"]->getComponent<TransformComponent>()->getModelMatrix());
-		for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it) {
-			if (it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr)
-				calculateShadows(gameptr, it->second->getComponent<ModelComponent>()->model, it->second->getComponent<TransformComponent>()->getModelMatrix());
-		}
+		calculateShadows(gameptr);
 
 		if (game.m_MainCamera == nullptr) {
 			setCamera(&game.m_camera);
@@ -126,7 +129,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		std::chrono::duration<float> elapsed = finish - start;
 		delta = elapsed.count();
 	}
-
+	glDeleteFramebuffers(1, &depthMapFBO);
 	game.CleanUp();
 
 	return true;
@@ -181,26 +184,27 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		temp = phong;
 	}
 	temp->use();
-	
+
 	// set the model component of our shader to the object model
 	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-	texturePhong->SetVector3f("material.ambient", model->modelColour.ambient, true);
-	texturePhong->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
-	texturePhong->SetVector3f("material.specular", model->modelColour.specular, true);
-	texturePhong->setFloat("material.shininess", model->modelColour.shininess);
-	glActiveTexture(GL_TEXTURE1);
+	temp->SetVector3f("material.ambient", model->modelColour.ambient, true);
+	temp->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
+	temp->SetVector3f("material.specular", model->modelColour.specular, true);
+	temp->setFloat("material.shininess", model->modelColour.shininess);
+	
+	temp->setInt("diffuseTexture0", 0);
+	temp->setInt("shadowMap", model->GetTextureSize());
+	glActiveTexture(GL_TEXTURE0 + model->GetTextureSize());
 	glBindTexture(GL_TEXTURE_2D, depthMap);
-
-	texturePhong->setInt("diffuseTexture0", 0);
-	texturePhong->setInt("shadowMap", 1);
 	model->render(temp->ID);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	debugShadow->setFloat("near_plane", 1.0f);
-	debugShadow->setFloat("far_plane", 100.0f);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	model->render(debugShadow->ID);
+	//debugShadow->use();
+	//debugShadow->setFloat("near_plane", 1.0f);
+	//debugShadow->setFloat("far_plane", 100.0f);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, depthMap);
+	//model->render(debugShadow->ID);
+	//DisplayFramebufferTexture(depthMap);
 }
 
 void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, int pointLightTotal, int spotLightTotal)
@@ -261,73 +265,111 @@ void GLFW_EngineCore::initShadows()
 	// configure depth map FBO
 	// -----------------------
 	glGenFramebuffers(1, &depthMapFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-
 	// create depth texture
 	glGenTextures(1, &depthMap);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
-
-	//float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-	//glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 	// attach depth texture as FBO's depth buffer
-	
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "FRAMEBUFFER IS INCOMPLETE" << std::endl;
-	
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GLFW_EngineCore::calculateShadows(Game* game, Model* model, const glm::mat4& modelMatrix) {
-	// 1. render depth of scene to texture (from light's perspective)
-	// --------------------------------------------------------------
+void GLFW_EngineCore::calculateShadows(Game* game) {
+	glEnable(GL_BLEND);
 	glm::mat4 lightProjection, lightView;
 	glm::mat4 lightSpaceMatrix;
-	float near_plane = 1.0f, far_plane = 50.0f;
-	lightProjection = glm::ortho<float>(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
+	float near_plane = 1.0f, far_plane = 1500.0f;
+	lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane); // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
+	//lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+
+	std::map<std::string, GameObject*>::iterator it;
+	std::map<std::string, GameObject*> sceneObjects = game->m_currentScene->getGameObjects();
+
+
 	std::vector<Light*> gameLights = game->lightHandler->getLights();
-	int i = 0;
-	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	//glClear(GL_DEPTH_BUFFER_BIT);
 	for (Light* light : gameLights) {
-		//if (light->lType() != Light::DIRECTIONAL) { continue; }
-		//lightView = glm::lookAt(-light->direction(), glm::vec3(modelMatrix[3]), light->up());
-		lightView = glm::lookAt(-light->direction(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		lightSpaceMatrix = lightProjection * lightView * glm::mat4(1.0);
+		switch (light->lType()) {
+		case Light::DIRECTIONAL:
+			lightView = glm::lookAt(glm::vec3(0.0f), light->direction(), glm::vec3(0.0, 1.0, 0.0));
+			//lightView = glm::lookAt(light->position(), glm::vec3(0.0f), light->up());
+			lightSpaceMatrix = lightProjection * lightView;
+			break;
+		case Light::POINT:
+			break;
+		case Light::SPOT:
+			lightView = glm::lookAt(light->position(), glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+			lightSpaceMatrix = lightProjection * lightView;
+			break;
+		}
 		// render scene from light's point of view
-		
-		simpleDepth->SetMatrix4("lightSpaceMatrix", lightSpaceMatrix, true);
-		//simpleDepth->SetMatrix4("model", modelMatrix, true);
 		simpleDepth->use();
-		///Switch to rendering to 2D shadow texture
-		model->render(simpleDepth->ID);
-		
+		simpleDepth->SetMatrix4("lightSpaceMatrix", lightSpaceMatrix, true);
+
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it) {
+			if (it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr && it->second->getComponent<ModelComponent>()->active) {
+				glUniformMatrix4fv(glGetUniformLocation(simpleDepth->ID, "model"), 1, GL_FALSE, glm::value_ptr(it->second->getComponent<TransformComponent>()->getModelMatrix()));
+				it->second->getComponent<ModelComponent>()->model->render(simpleDepth->ID);
+			}
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glDisable(GL_BLEND);
 	glViewport(0, 0, m_screenWidth, m_screenHeight);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void GLFW_EngineCore::renderShadows(Game& game)
+void GLFW_EngineCore::DisplayFramebufferTexture(GLuint textureID)
 {
-	///Switch to rendering to 2D shadow texture
-	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	simpleDepth->use();
-	game.render();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glViewport(0, 0, m_screenWidth, m_screenHeight);
+	debugBuffer->use();
+	GLuint VBO;
+	GLfloat vertices[] = {
+		// Pos      // Tex
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
+
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f
+	};
+
+	glGenVertexArrays(1, &vaoDebugTexturedRect);
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindVertexArray(vaoDebugTexturedRect);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	glActiveTexture(GL_TEXTURE0);
+	glUseProgram(debugBuffer->ID);
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(m_screenWidth), 0.0f, static_cast<GLfloat>(m_screenHeight));
+	glUniformMatrix4fv(glGetUniformLocation(debugBuffer->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f));
+	model = glm::scale(model, glm::vec3(200.0f, 100.0f, 1.0f));
+	debugBuffer->SetMatrix4("model", model, true);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glBindVertexArray(vaoDebugTexturedRect);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,
@@ -422,6 +464,7 @@ void GLFW_EngineCore::setDefaultShaders()
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
 
 	debugShadow = new Shader("assets/shaders/debugShadow.vert", "assets/shaders/debugShadow.frag");
+	debugBuffer = new Shader("assets/shaders/debugging.vert", "assets/shaders/debugging.frag");
 }
 
 // a simple function to initialise a cube model in memory
@@ -472,13 +515,12 @@ void GLFW_EngineCore::initCubeModel()
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 	
-	unsigned int VBO, VAO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &cubeVAO);
+	glGenBuffers(1, &cubeVBO);
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(cubeVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// position attribute
@@ -509,16 +551,85 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 
 	// be sure to activate shader when setting uniforms/drawing objects
 	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewDir"), 1, glm::value_ptr(cam->position()));
-	
 }
 
 void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)
 {
 	glUseProgram(phong->ID);
+	glBindVertexArray(cubeVAO);
 	// set the model component of our shader to the cube model
 	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 	// the only thing we can draw so far is the cube, so we know it is bound already
 	// this will obviously have to change later
 	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindVertexArray(0);
+}
+
+GLenum GLFW_EngineCore::glCheckError_(const char *file, int line)
+{
+	GLenum errorCode;
+	while ((errorCode = glGetError()) != GL_NO_ERROR)
+	{
+		std::string error;
+		switch (errorCode)
+		{
+		case GL_INVALID_ENUM:                  error = "INVALID_ENUM"; break;
+		case GL_INVALID_VALUE:                 error = "INVALID_VALUE"; break;
+		case GL_INVALID_OPERATION:             error = "INVALID_OPERATION"; break;
+		case 0x0503:                error = "STACK_OVERFLOW"; break;
+		case 0x0504:               error = "STACK_UNDERFLOW"; break;
+		case GL_OUT_OF_MEMORY:                 error = "OUT_OF_MEMORY"; break;
+		case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
+		}
+		std::cout << error << " | " << file << " (" << line << ")" << std::endl;
+	}
+	return errorCode;
+}
+#define glCheckError() glCheckError_(__FILE__, __LINE__)
+
+void APIENTRY glDebugOutput(GLenum source,
+	GLenum type,
+	GLuint id,
+	GLenum severity,
+	GLsizei length,
+	const GLchar *message,
+	const void *userParam)
+{
+	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return; // ignore these non-significant error codes
+
+	std::cout << "---------------" << std::endl;
+	std::cout << "Debug message (" << id << "): " << message << std::endl;
+
+	switch (source)
+	{
+	case GL_DEBUG_SOURCE_API:             std::cout << "Source: API"; break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cout << "Source: Window System"; break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Source: Shader Compiler"; break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cout << "Source: Third Party"; break;
+	case GL_DEBUG_SOURCE_APPLICATION:     std::cout << "Source: Application"; break;
+	case GL_DEBUG_SOURCE_OTHER:           std::cout << "Source: Other"; break;
+	} std::cout << std::endl;
+
+	switch (type)
+	{
+	case GL_DEBUG_TYPE_ERROR:               std::cout << "Type: Error"; break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Type: Deprecated Behaviour"; break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  std::cout << "Type: Undefined Behaviour"; break;
+	case GL_DEBUG_TYPE_PORTABILITY:         std::cout << "Type: Portability"; break;
+	case GL_DEBUG_TYPE_PERFORMANCE:         std::cout << "Type: Performance"; break;
+	case GL_DEBUG_TYPE_MARKER:              std::cout << "Type: Marker"; break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:          std::cout << "Type: Push Group"; break;
+	case GL_DEBUG_TYPE_POP_GROUP:           std::cout << "Type: Pop Group"; break;
+	case GL_DEBUG_TYPE_OTHER:               std::cout << "Type: Other"; break;
+	} std::cout << std::endl;
+
+	switch (severity)
+	{
+	case GL_DEBUG_SEVERITY_HIGH:         std::cout << "Severity: high"; break;
+	case GL_DEBUG_SEVERITY_MEDIUM:       std::cout << "Severity: medium"; break;
+	case GL_DEBUG_SEVERITY_LOW:          std::cout << "Severity: low"; break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
+	} std::cout << std::endl;
+	std::cout << std::endl;
 }

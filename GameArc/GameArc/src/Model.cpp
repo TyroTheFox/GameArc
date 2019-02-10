@@ -11,7 +11,7 @@ Model::Model(ModelHandler* mH)
 	modelHandler = mH;
 }
 
-Model::Model(string filepath, ModelHandler* mH)
+Model::Model(std::string filepath, ModelHandler* mH)
 {
 	modelHandler = mH;
 	loadModel(filepath);
@@ -128,6 +128,14 @@ void Model::render(const unsigned int shaderProgram)
 	for (auto mesh : v_meshes)
 	{
 		mesh.render(shaderProgram);
+	}
+}
+
+void Model::renderWithoutTextures(const unsigned int shaderProgram)
+{
+	for (auto mesh : v_meshes)
+	{
+		mesh.renderWithoutTextures(shaderProgram);
 	}
 }
 

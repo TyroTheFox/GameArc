@@ -50,6 +50,7 @@ public:
 	Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
 	///Draws mesh to screen
 	void render(const unsigned int shaderProgram);
+	void renderWithoutTextures(const unsigned int shaderProgram);
 private:
 	///Buffer objects
 	unsigned int VBO, EBO;

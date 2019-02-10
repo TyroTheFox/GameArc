@@ -44,4 +44,5 @@ public:
 	virtual void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) = 0;
 	///Used for drawing 2D rectandles to the screen
 	virtual void draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) = 0;
+	virtual void calculateShadows(Game* game) = 0;
 };

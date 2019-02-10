@@ -78,6 +78,12 @@
     <None Include="assets\shaders\debugShadow.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="assets\shaders\debugging.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\debugging.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Testbed.cpp">

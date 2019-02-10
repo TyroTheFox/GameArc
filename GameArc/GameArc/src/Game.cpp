@@ -9,10 +9,10 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	lightHandler->createNewLight(
-		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-		glm::vec3(110, 90, 0)
-	);
+	//lightHandler->createNewLight(
+	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+	//	glm::vec3(-50, 0, 0)
+	//);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
 	//	glm::vec3(-45, 20, 0)
@@ -56,12 +56,12 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//lightHandler->createNewLight(
 	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
-	//	glm::vec3(-10.0f, 20.0f, 50.0f),
-	//	glm::vec3(-90, 0, 0)
+	//	glm::vec3(15, 5, -15),
+	//	glm::vec3(-70, 0, 0)
 	//);
 	debugHelper = debug;
 	ModelHandler* modelHandler = new ModelHandler();
-	oM = new ObjectManager(debugHelper, modelHandler);
+	oM = new ObjectManager(debugHelper, modelHandler, lightHandler);
 	loadFromJSON(levelsFile);
 
 	std::map<std::string, GameObject*>::iterator it;
@@ -227,7 +227,7 @@ void Game::render()
 
 	// e.g. pass object details to the engine to render the next frame
 	m_engineInterfacePtr->renderColouredBackground(redValue, greenValue, blueValue);
-
+	m_engineInterfacePtr->calculateShadows(this);
 	//for (GameObject* object : m_currentScene->getGameObjects()) {
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();

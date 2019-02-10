@@ -40,9 +40,10 @@ public:
 	///Constructor
 	Model(ModelHandler* mH);
 	///Constructor
-	Model(string filepath, ModelHandler* mH);
+	Model(std::string filepath, ModelHandler* mH);
 	///Draws each mesh to the screen
 	void render(const unsigned int shaderProgram);
+	void renderWithoutTextures(const unsigned int shaderProgram);
 	///Finds texture information from the model file
 	static unsigned int TextureFromFile(const char* filepath, const string& directory, bool gamma = false);
 	///Loads in model information from file
