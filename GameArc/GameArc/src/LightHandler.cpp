@@ -24,6 +24,7 @@ void LightHandler::setUpLight(Light * l)
 
 Light* LightHandler::createNewLight(LightColour lC)
 {
+	if (spotLightCount > maxDirectional) { return nullptr; }
 	Light* l = new Light(lC);
 	setUpLight(l);
 	return l;
@@ -31,6 +32,7 @@ Light* LightHandler::createNewLight(LightColour lC)
 
 Light* LightHandler::createNewLight(LightColour lC, glm::vec3 o)
 {
+	if (spotLightCount > maxDirectional) { return nullptr; }
 	Light* l = new Light(lC, o);
 	setUpLight(l);
 	return l;
@@ -38,6 +40,7 @@ Light* LightHandler::createNewLight(LightColour lC, glm::vec3 o)
 
 Light* LightHandler::createNewLight(LightColour lC, glm::vec3 p, glm::vec3 o)
 {
+	if (spotLightCount > maxDirectional) { return nullptr; }
 	Light* l = new Light(lC, p, o);
 	setUpLight(l);
 	return l;

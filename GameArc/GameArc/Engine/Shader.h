@@ -135,7 +135,18 @@ public:
 			this->use();
 		glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
+	void SetArrayInt(const std::string &variableName, const std::string &elementName, int i, float value) const
+	{
+		std::string name;
 
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "].";
+		name += elementName;
+
+		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	}
 	///Sends uniform float to GPU
 	void SetArrayFloat(const std::string &variableName, const std::string &elementName, int i, float value) const
 	{
@@ -226,6 +237,18 @@ public:
 		if (useShader)
 			this->use();
 		glUniform4f(glGetUniformLocation(this->ID, name.c_str()), value.x, value.y, value.z, value.w);
+	}
+	void SetArrayMatrix4(const std::string &variableName, int i, const glm::mat4 &matrix, GLboolean useShader)
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "]";
+		if (useShader)
+			this->use();
+		glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 	void SetArrayMatrix4(const std::string &variableName, const std::string &elementName, int i, const glm::mat4 &matrix, GLboolean useShader)
 	{

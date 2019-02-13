@@ -44,6 +44,7 @@ private:
 	LightType lightType;
 	LightColour lightColour;
 public:	
+	glm::mat4 lightSpaceMatrix;
 	unsigned int depthMapFBO = 0;
 	unsigned int depthMap;
 	glm::vec3 m_direction;

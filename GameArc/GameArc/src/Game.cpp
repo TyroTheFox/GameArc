@@ -9,11 +9,11 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	//testLight = lightHandler->createNewLight(
-	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-	//	glm::vec3(0.0f, 100.0f, 0.0f),
-	//	glm::vec3(0, 0, 0)
-	//);
+	testLight = lightHandler->createNewLight(
+		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+		glm::vec3(0.0f, 100.0f, 0.0f),
+		glm::vec3(0, 0, 0)
+	);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
 	//	glm::vec3(-45, 20, 0)
@@ -54,12 +54,21 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//	LightColour(glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1)),
 	//	glm::vec3(-200.0f, 30.0f, -100.0f)
 	//);
-	testLight = lightHandler->createNewLight(
-		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
-		glm::vec3(0, -10.0f, 0),
-		glm::vec3(0, 0, 0)
-	);
+
+	//rotates BY, not TO
+	//lightHandler->createNewLight(
+	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
+	//	glm::vec3(0, -10.0f, 0),
+	//	glm::vec3(0, -170, 0)
+	//);
+	//testLight = lightHandler->createNewLight(
+	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
+	//	glm::vec3(0, -10.0f, 0),
+	//	glm::vec3(0, 0, 0)
+	//);
+
 	debugHelper = debug;
 	ModelHandler* modelHandler = new ModelHandler();
 	oM = new ObjectManager(debugHelper, modelHandler, lightHandler);
@@ -209,11 +218,10 @@ void Game::update(float dt)
 	{
 		it->second->updateAllComponents(dt);
 	}
-	keyEvent->subscribeToEvent("rotYawL-", [this]() { this->testLight->yaw(-0.01); });
-	keyEvent->subscribeToEvent("rotYawL+", [this]() { this->testLight->yaw(0.01); });
-	keyEvent->subscribeToEvent("rotPitL-", [this]() { this->testLight->pitch(-0.01); });
-	keyEvent->subscribeToEvent("rotPitL+", [this]() { this->testLight->pitch(0.01); });
-	testLight->CalculateDirection();
+	keyEvent->subscribeToEvent("rotYawL-", [this]() { this->testLight->yaw(-0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotYawL+", [this]() { this->testLight->yaw(0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotPitL-", [this]() { this->testLight->pitch(-0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotPitL+", [this]() { this->testLight->pitch(0.01); testLight->CalculateDirection(); });
 }
 
 void Game::render()
@@ -226,11 +234,12 @@ void Game::render()
 			blueValue = m_playerBackground->getComponent<ColourComponent>()->m_blue;
 		}
 	}
-
 	// e.g. pass object details to the engine to render the next frame
 	m_engineInterfacePtr->renderColouredBackground(redValue, greenValue, blueValue);
-	std::vector<Light*> gameLights = lightHandler->getLights();
+	
 	m_engineInterfacePtr->calculateShadows(this);
+
+	std::vector<Light*> gameLights = lightHandler->getLights();
 	for (Light* light : gameLights) {
 		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
 		m_engineInterfacePtr->drawCube(glm::inverse(light->GetMatrix()));
@@ -245,11 +254,13 @@ void Game::render()
 		//std::cout << "Direction: " << light->direction().x * 5.0f << " " << light->direction().y * 5.0f << " " << light->direction().z * 5.0f << " " << std::endl;
 		m_engineInterfacePtr->drawCube(marker);
 	}
+
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 	{
 		it->second->renderAllComponents(m_engineInterfacePtr);
 	}
+
 	debugHelper->render();
 }

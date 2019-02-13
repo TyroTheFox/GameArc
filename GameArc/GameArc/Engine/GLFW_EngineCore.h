@@ -53,7 +53,6 @@ public:
 	///Draw a given model using a given transformation matrix
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
 	void calculateLight(Light* light, int directionalLightTotal, int pointLightTotal, int spotLightTotal) override;
-	void initShadows();
 	void calculateShadows(Game* game) override;
 	///Draw 2D text to the screen
 	void drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, std::map<GLchar, Character> Characters, GLuint VAO, GLuint VBO) override;
@@ -79,8 +78,8 @@ private:
 	//unsigned int depthMapFBO = 0;
 	unsigned int depthMap;
 	unsigned int cubeVBO, cubeVAO;
-	glm::mat4 lightSpaceMatrix;
 	GLuint vaoDebugTexturedRect;
+	std::vector<Light*> sceneLights;
 	///Width of the Window
 	static int m_screenWidth; 
 	///Height of the Window

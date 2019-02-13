@@ -9,7 +9,8 @@ private:
 	int directionalLightCount;
 	int pointLightCount;
 	int spotLightCount;
-	int lightMax = 16;
+	int lightMax = 8;
+	int maxDirectional = 1;
 	std::vector<Light*> lights;
 	void setUpLight(Light* l);
 public:
