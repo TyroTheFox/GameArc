@@ -284,7 +284,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 	//glEnable(GL_BLEND);
 	glm::mat4 lightProjection, lightView;
 	
-	float near_plane = 1.0f, far_plane = 50.0f;
+	float near_plane = 1.0f, far_plane = 100.0f;
 	//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
 	// note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
 	lightProjection = glm::ortho(-far_plane, far_plane, -far_plane, far_plane, near_plane, far_plane);
@@ -319,9 +319,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 
 		switch (light->lType()) {
 		case Light::DIRECTIONAL:
-			//lightView = glm::lookAt(point, glm::vec3(0.0f), light->up());
 			lightView = light->GetMatrix();
-			//lightView = glm::lookAt(light->position(), glm::vec3(0.0f), light->up());
 			lightSpaceMatrix = lightProjection * lightView;
 			break;
 		case Light::POINT:

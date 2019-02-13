@@ -31,6 +31,22 @@
       "EventName": "PlayerMovement",
       "EventMessage": "switchCamera",
       "OnKeyUp": true
+    },
+    {
+      "Key": "H",
+      "EventName": "rotYawL-"
+    },
+    {
+      "Key": "K",
+      "EventName": "rotYawL+"
+    },
+    {
+      "Key": "U",
+      "EventName": "rotPitL-"
+    },
+    {
+      "Key": "J",
+      "EventName": "rotPitL+"
     }
   ]
 }
