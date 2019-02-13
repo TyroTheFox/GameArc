@@ -22,11 +22,11 @@ Light::Light(LightColour lC, glm::vec3 o)
 {
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
-	m_position = glm::vec3(0.0f, 100.0f, 0.0f);
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	pitch(o.x);
 	yaw(o.y);
 	roll(o.z);
+	m_position = glm::vec3(0.0f, 100.0f, 0.0f);
 	CalculateDirection();
 }
 
@@ -87,11 +87,11 @@ Light::Light(SpotLightData sLD, LightColour lC, glm::vec3 p, glm::vec3 o)
 	lightType = LightType::SPOT;
 	lightColour = lC;
 	spotLightData = sLD;
-	m_position = p;
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 	pitch(o.x);
 	yaw(o.y);
 	roll(o.z);
+	m_position = p;
 	CalculateDirection();
 }
 
@@ -178,14 +178,14 @@ void Light::rotate(float angle, float x, float y, float z)
 	CalculateDirection();
 }
 
-void Light::yaw(float angle)
-{
-	rotate(angle, 0.0f, 1.0f, 0.0f);
-}
-
 void Light::pitch(float angle)
 {
 	rotate(angle, 1.0f, 0.0f, 0.0f);
+}
+
+void Light::yaw(float angle)
+{
+	rotate(angle, 0.0f, 1.0f, 0.0f);
 }
 
 void Light::roll(float angle)

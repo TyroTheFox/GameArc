@@ -9,10 +9,10 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	lightHandler->createNewLight(
+	testLight = lightHandler->createNewLight(
 		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-		glm::vec3(0.0f, 50.0f, 0.0f),
-		glm::vec3(140, 70, 0)
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0, 0, 0)
 	);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
@@ -195,6 +195,11 @@ void Game::ChangeScene(string sceneName) {
 				break;
 			}
 		}
+	}
+	else {
+		TransformComponent* tC = activePlayer->parent->getComponent< TransformComponent>();
+		testLight->m_position = tC->position();
+		testLight->m_orientation = tC->orientation();
 	}
 	debugHelper->WriteToConsole("SceneChanged to " + sceneName);
 }

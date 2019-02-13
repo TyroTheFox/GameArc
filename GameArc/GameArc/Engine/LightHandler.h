@@ -16,23 +16,23 @@ public:
 	///Creates Directional Light
 	LightHandler();
 	///Creates Directional Light
-	void createNewLight(LightColour lC);
+	Light* createNewLight(LightColour lC);
 	///Creates Directional Light
-	void createNewLight(LightColour lC, glm::vec3 o);
+	Light* createNewLight(LightColour lC, glm::vec3 o);
 	///Creates Directional Light
-	void createNewLight(LightColour lC, glm::vec3 p, glm::vec3 o);
+	Light* createNewLight(LightColour lC, glm::vec3 p, glm::vec3 o);
 
 	///Creates Point Light
-	void createNewLight(PointLightData pLD, LightColour lC);
+	Light* createNewLight(PointLightData pLD, LightColour lC);
 	///Creates Point Light
-	void createNewLight(PointLightData pLD, LightColour lC, glm::vec3 p);
+	Light* createNewLight(PointLightData pLD, LightColour lC, glm::vec3 p);
 
 	///Creates Spot Light
-	void createNewLight(SpotLightData sLD, LightColour lC);
+	Light* createNewLight(SpotLightData sLD, LightColour lC);
 	///Creates Spot Light
-	void createNewLight(SpotLightData sLD, LightColour lC, glm::vec3 p);
+	Light* createNewLight(SpotLightData sLD, LightColour lC, glm::vec3 p);
 	///Creates Spot Light
-	void createNewLight(SpotLightData sLD, LightColour lC, glm::vec3 p, glm::vec3 o);
+	Light* createNewLight(SpotLightData sLD, LightColour lC, glm::vec3 p, glm::vec3 o);
 
 	void addLight(Light& light);
 	vector<Light*> getLights();

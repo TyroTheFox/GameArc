@@ -51,6 +51,7 @@ public:
 	Camera m_camera;
 	///Main current camera among objects in a scene
 	Camera* m_MainCamera;
+	Light* testLight;
 	///Constructor
 	Game();
 	///Constructor

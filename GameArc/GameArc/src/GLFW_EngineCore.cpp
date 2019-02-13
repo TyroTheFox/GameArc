@@ -25,7 +25,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 {
 	glfwInit();
 
-	glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
+	//glfwWindowHint(GLFW_SAMPLES, 2); // 4x antialiasing
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_FALSE);
