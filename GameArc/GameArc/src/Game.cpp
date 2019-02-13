@@ -9,10 +9,11 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	//lightHandler->createNewLight(
-	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-	//	glm::vec3(-50, 0, 0)
-	//);
+	lightHandler->createNewLight(
+		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+		glm::vec3(0.0f, 50.0f, 0.0f),
+		glm::vec3(140, 70, 0)
+	);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
 	//	glm::vec3(-45, 20, 0)
@@ -208,10 +209,6 @@ void Game::update(float dt)
 	{
 		it->second->updateAllComponents(dt);
 	}
-	std::vector<Light*> gameLights = lightHandler->getLights();
-	for (Light* light : gameLights) {
-		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
-	}
 }
 
 void Game::render()
@@ -227,8 +224,12 @@ void Game::render()
 
 	// e.g. pass object details to the engine to render the next frame
 	m_engineInterfacePtr->renderColouredBackground(redValue, greenValue, blueValue);
+	std::vector<Light*> gameLights = lightHandler->getLights();
 	m_engineInterfacePtr->calculateShadows(this);
-	//for (GameObject* object : m_currentScene->getGameObjects()) {
+	for (Light* light : gameLights) {
+		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
+		m_engineInterfacePtr->drawCube(light->GetMatrix());
+	}
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = m_currentScene->getGameObjects();
 	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)

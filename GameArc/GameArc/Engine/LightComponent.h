@@ -47,7 +47,7 @@ public:
 		if (parent->getComponent<TransformComponent>() != nullptr) {
 			TransformComponent* pTransform = parent->getComponent<TransformComponent>();
 			light->m_position = pTransform->position();
-			//light->m_orientation = pTransform->orientation();
+			light->m_orientation = pTransform->orientation();
 			light->CalculateDirection();
 		}
 	}
@@ -58,6 +58,8 @@ public:
 		right = glm::vec3(viewMatrix[0].x, viewMatrix[1].x, viewMatrix[2].x);
 		up = glm::vec3(viewMatrix[0].y, viewMatrix[1].y, viewMatrix[2].y);
 		front = glm::vec3(viewMatrix[0].z, viewMatrix[1].z, viewMatrix[2].z);
+		light->m_up = up;
+		light->m_direction = front;
 	}
 	///Called on update tick, updates all camera values and handles mouse movement
 	void OnUpdate(float dt) override {

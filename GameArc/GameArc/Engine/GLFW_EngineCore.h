@@ -76,9 +76,10 @@ private:
 	///2D Object Shader
 	Shader* Shader2D;
 	///Shadow Map FBO
-	unsigned int depthMapFBO = 0;
+	//unsigned int depthMapFBO = 0;
 	unsigned int depthMap;
 	unsigned int cubeVBO, cubeVAO;
+	glm::mat4 lightSpaceMatrix;
 	GLuint vaoDebugTexturedRect;
 	///Width of the Window
 	static int m_screenWidth; 

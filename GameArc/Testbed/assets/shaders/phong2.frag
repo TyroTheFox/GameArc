@@ -8,7 +8,7 @@ in VS_OUT {
     vec4 FragPosLightSpace;
 } fs_in;
   
-uniform vec3 lightPos; 
+uniform vec3 lightPos;
 uniform vec3 viewPos; 
 
 uniform sampler2D texture_diffuse0;

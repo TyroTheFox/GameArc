@@ -39,12 +39,16 @@ class Light {
 public:
 	enum LightType { DIRECTIONAL, POINT, SPOT };
 private:
-	glm::vec3 m_direction;
-	glm::vec3 m_up;
+
 	glm::mat4 matrix;
 	LightType lightType;
 	LightColour lightColour;
-public:
+public:	
+	unsigned int depthMapFBO = 0;
+	unsigned int depthMap;
+	glm::vec3 m_direction;
+	glm::vec3 m_up;
+	glm::vec3 m_right;
 	glm::vec3 m_position;
 	glm::quat m_orientation;
 	int ID;
@@ -81,7 +85,7 @@ public:
 
 	void CalculateDirection();
 
-	glm::mat4& GetMatrix();
+	glm::mat4 GetMatrix();
 
 	///Translate by vector
 	void translate(const glm::vec3 &v);

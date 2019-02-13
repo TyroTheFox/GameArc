@@ -20,7 +20,7 @@ namespace GameArcTesting
 
 	TEST_CLASS(EventTesting)
 	{
-	public:
+	/*public:
 		int windowWidth = 800, windowHeight = 600;
 		bool HasSent = false;
 		std::string recievedMessage;
@@ -211,6 +211,6 @@ namespace GameArcTesting
 			Assert::AreEqual(sentMessage, recievedFloat);
 			recievedFloat = 0.0f;
 			recievedInt = 0;
-		}
+		}*/
 	};
 }
