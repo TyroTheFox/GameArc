@@ -147,6 +147,17 @@ public:
 
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
+	void SetArrayInt(const std::string &variableName, int i, float value) const
+	{
+		std::string name;
+
+		name = variableName;
+		name += "[";
+		name += std::to_string(i);
+		name += "]";
+
+		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	}
 	///Sends uniform float to GPU
 	void SetArrayFloat(const std::string &variableName, const std::string &elementName, int i, float value) const
 	{

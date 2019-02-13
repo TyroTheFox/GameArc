@@ -183,8 +183,8 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		temp->setFloat("material.shininess", model->modelColour.shininess);
 
 		int i = 0;
-		std::vector<uint32_t> unitPointIDs;
-		std::vector<uint32_t> unitSpotIDs;
+		//std::vector<uint32_t> unitPointIDs;
+		//std::vector<uint32_t> unitSpotIDs;
 		for (Light* light : sceneLights) {
 			switch (light->lType()) {
 			case Light::LightType::DIRECTIONAL:
@@ -196,33 +196,49 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 			case Light::LightType::POINT:
 				glActiveTexture(GL_TEXTURE0 + model->GetTextureSize() + i);
 				glBindTexture(GL_TEXTURE_2D, light->depthMap);
-				unitPointIDs.push_back(model->GetTextureSize() + i);
+				temp->SetArrayInt("shadowMapPOINT", light->ID, model->GetTextureSize() + i);
 				temp->SetArrayMatrix4("PointLightMatrix", light->ID, light->lightSpaceMatrix, true);
 				break;
 			case Light::LightType::SPOT:
 				glActiveTexture(GL_TEXTURE0 + model->GetTextureSize() + i);
 				glBindTexture(GL_TEXTURE_2D, light->depthMap);
-				unitSpotIDs.push_back(model->GetTextureSize() + i);
+				temp->SetArrayInt("shadowMapSPOT", light->ID, model->GetTextureSize() + i);
 				temp->SetArrayMatrix4("SpotLightMatrix", light->ID, light->lightSpaceMatrix, true);
 				break;
 			}
 			i++;
 		}
-		std::string name = "shadowMapPOINT[0]";
-		glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitPointIDs.size(), (GLint *)unitPointIDs.data());
-		name = "shadowMapSPOT[0]";
-		glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitSpotIDs.size(), (GLint *)unitSpotIDs.data());
+		//std::string name;
+		//if (unitPointIDs.size() > 0) {
+		//	name = "shadowMapPOINT[0]";
+		//	glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitPointIDs.size(), (GLint *)unitPointIDs.data());
+		//}
+		//if (unitPointIDs.size() > 0) {
+		//	name = "shadowMapSPOT[0]";
+		//	glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitSpotIDs.size(), (GLint *)unitSpotIDs.data());
+		//}
 	}
 	else {
 		temp = phong;
 	}
 	temp->use();
 
+	
 	// set the model component of our shader to the object model
 	glEnable(GL_BLEND);
 	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 	model->render(temp->ID);
+
+	if (model->GetTextureSize() > 0) {
+		int i = 0;
+		for (Light* light : sceneLights) {
+			glActiveTexture(GL_TEXTURE0 + model->GetTextureSize() + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+	}
+
 	glDisable(GL_BLEND);
+	
 	//debugShadow->use();
 	//debugShadow->setFloat("near_plane", 1.0f);
 	//debugShadow->setFloat("far_plane", 100.0f);
@@ -240,21 +256,21 @@ void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, i
 	texturePhong->use();
 	texturePhong->setInt("noOfPointLights", pointLightTotal);
 
-	texturePhong->use();
 	texturePhong->setInt("noOfSpotLights", spotLightTotal);
 
-	texturePhong->use();
 	texturePhong->setBool("blinn", false);
 
 	std::string stringID;
 	std::string stringItem;
 
+	texturePhong->SetVector3f("lightPos", light->position(), true);
+
 	switch(light->lType()){
 		case Light::LightType::DIRECTIONAL:
-			texturePhong->SetArrayVector3f("dirLights", "ambient", light->GetID(), light->lColour().ambient, true);
-			texturePhong->SetArrayVector3f("dirLights", "diffuse", light->GetID(), light->lColour().diffuse, true);
-			texturePhong->SetArrayVector3f("dirLights", "specular", light->GetID(), light->lColour().specular, true);
-			texturePhong->SetArrayVector3f("dirLights", "direction", light->GetID(), light->direction(), true);
+			texturePhong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
+			texturePhong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
+			texturePhong->SetVector3f("dirLight.specular", light->lColour().specular, true);
+			texturePhong->SetVector3f("dirLight.direction", light->direction(), true);
 
 			break;
 		case Light::LightType::POINT:
@@ -572,7 +588,7 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 	glUniformMatrix4fv(glGetUniformLocation(texturePhong->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
 
 	// be sure to activate shader when setting uniforms/drawing objects
-	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewDir"), 1, glm::value_ptr(cam->position()));
+	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
 }
 
 void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)

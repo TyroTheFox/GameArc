@@ -81,7 +81,7 @@ uniform sampler2D shadowMapSPOT[NR_SPOT_LIGHTS];
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix);  
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix);
-float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap);
+float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap, vec3 lightDir);
 
 //Debugging Value
 float d = 1.0;
@@ -94,11 +94,7 @@ void main()
 
     vec3 result = vec3(0.0);
 	//1: Directional Lights
-	//for(int i = 0; i < NR_DIRECTIONAL_LIGHTS; i++){
-		//if(i < noOfDirectionalLights){
-			result += CalcDirLight(dirLight, norm, viewDir, shadowMapDIR, fs_in.DirectionalFragPosLightSpace);
-		//}
-	//}
+	result += CalcDirLight(dirLight, norm, viewDir, shadowMapDIR, fs_in.DirectionalFragPosLightSpace);
 
 	//2: Point lights
     for(int j = 0; j < NR_POINT_LIGHTS; j++){
@@ -139,7 +135,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap
     vec3 diffuse  = light.diffuse  * diff * diffTextColour * material.diffuse;
     vec3 specular = light.specular * spec * diffTextColour * material.specular;
 
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 
     return lighting;
@@ -210,13 +206,13 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sam
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
     	
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 	
 	return lighting;
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap)
+float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap, vec3 lightDir)
 {	
    // perform perspective divide
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -228,7 +224,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap)
     float currentDepth = projCoords.z;
     // calculate bias (based on depth map resolution and slope)
     vec3 normal = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(lightPos - fs_in.FragPos);
+    //vec3 lightDir = normalize(lightPos - fs_in.FragPos);
     float bias = max(0.05 * (1.0 - dot(normal, -lightDir)), 0.005);
     // check whether current frag pos is in shadow
     // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
