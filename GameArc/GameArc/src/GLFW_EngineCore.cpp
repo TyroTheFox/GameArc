@@ -19,6 +19,13 @@ GLFW_EngineCore::~GLFW_EngineCore()
 	delete phong;
 	delete texturePhong;
 	delete textWriterShader;
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	for (Light* light : sceneLights) {
+		switch (light->lType()) {
+			glDeleteFramebuffers(1, &light->depthMapFBO);
+			glDeleteTextures(1, &light->depthMap);
+		}
+	}
 }
 
 bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
@@ -71,7 +78,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	// enable depth test
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-
+	glEnable(GL_CULL_FACE);
 	GLint flags = 0; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
 	{
@@ -208,15 +215,10 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 			}
 			i++;
 		}
-		//std::string name;
-		//if (unitPointIDs.size() > 0) {
-		//	name = "shadowMapPOINT[0]";
-		//	glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitPointIDs.size(), (GLint *)unitPointIDs.data());
-		//}
-		//if (unitPointIDs.size() > 0) {
-		//	name = "shadowMapSPOT[0]";
-		//	glUniform1iv(glGetUniformLocation(temp->ID, name.c_str()), unitSpotIDs.size(), (GLint *)unitSpotIDs.data());
-		//}
+		
+		glCullFace(GL_BACK);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	else {
 		temp = phong;
@@ -225,7 +227,7 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 
 	
 	// set the model component of our shader to the object model
-	glEnable(GL_BLEND);
+	
 	glUniformMatrix4fv(glGetUniformLocation(temp->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 	model->render(temp->ID);
 
@@ -235,9 +237,11 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 			glActiveTexture(GL_TEXTURE0 + model->GetTextureSize() + i);
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
+		
+		glDisable(GL_BLEND);
 	}
 
-	glDisable(GL_BLEND);
+	
 	
 	//debugShadow->use();
 	//debugShadow->setFloat("near_plane", 1.0f);
@@ -270,7 +274,7 @@ void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, i
 			texturePhong->SetVector3f("dirLight.ambient", light->lColour().ambient, true);
 			texturePhong->SetVector3f("dirLight.diffuse", light->lColour().diffuse, true);
 			texturePhong->SetVector3f("dirLight.specular", light->lColour().specular, true);
-			texturePhong->SetVector3f("dirLight.direction", light->direction(), true);
+			texturePhong->SetVector3f("dirLight.direction", -light->direction(), true);
 
 			break;
 		case Light::LightType::POINT:
@@ -285,7 +289,7 @@ void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, i
 			break;
 		case Light::LightType::SPOT:
 			texturePhong->SetArrayVector3f("spotLights", "position", light->GetID(), light->position(), true);
-			texturePhong->SetArrayVector3f("spotLights", "direction", light->GetID(), light->direction(), true);
+			texturePhong->SetArrayVector3f("spotLights", "direction", light->GetID(), -light->direction(), true);
 			texturePhong->SetArrayVector3f("spotLights", "ambient", light->GetID(), light->lColour().ambient, true);
 			texturePhong->SetArrayVector3f("spotLights", "diffuse", light->GetID(), light->lColour().diffuse, true);
 			texturePhong->SetArrayVector3f("spotLights", "specular", light->GetID(), light->lColour().specular, true);
@@ -306,8 +310,8 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 	float near_plane = 1.0f, far_plane = 100.0f;
 	//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
 	// note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
-	lightProjection = glm::ortho(-far_plane, far_plane, -far_plane, far_plane, near_plane, far_plane);
-
+	lightProjection = glm::ortho(-(GLfloat)(SHADOW_WIDTH * 0.1), (GLfloat)(SHADOW_WIDTH * 0.1), -(GLfloat)(SHADOW_HEIGHT * 0.1), (GLfloat)(SHADOW_HEIGHT * 0.1), near_plane, far_plane);
+	glCullFace(GL_FRONT);
 	std::map<std::string, GameObject*>::iterator it;
 	std::map<std::string, GameObject*> sceneObjects = game->m_currentScene->getGameObjects();
 	for (Light* light : sceneLights) { 
@@ -322,10 +326,10 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			//float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+			//glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 			// attach depth texture as FBO's depth buffer
 			glBindFramebuffer(GL_FRAMEBUFFER, light->depthMapFBO);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, light->depthMap, 0);
@@ -366,6 +370,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 	//glDisable(GL_BLEND);
 	glViewport(0, 0, m_screenWidth, m_screenHeight);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glCullFace(GL_BACK);
 }
 
 void GLFW_EngineCore::DisplayFramebufferTexture(GLuint textureID)
@@ -515,42 +520,7 @@ void GLFW_EngineCore::initCubeModel()
 		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f
 	};
 	
 	glGenVertexArrays(1, &cubeVAO);

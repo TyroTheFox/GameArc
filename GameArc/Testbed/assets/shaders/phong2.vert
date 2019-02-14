@@ -11,6 +11,7 @@ out VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
+	vec3 viewVertex;
     vec4 DirectionalFragPosLightSpace;
 	vec4 PointFragPosLightSpace[NR_POINT_LIGHTS];
 	vec4 SpotFragPosLightSpace[NR_SPOT_LIGHTS];
@@ -34,20 +35,21 @@ void main()
 	vs_out.TexCoords = aUV;
 	vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
 	vs_out.Normal = transpose(inverse(mat3(model))) * aNormal;
+	vs_out.viewVertex = normalize(-vec3(view * vec4(vs_out.FragPos, 1.0)));
 
 	//Shadows
-    vs_out.DirectionalFragPosLightSpace = DirectionalLightMatrix * vec4(aPos, 1.0f);
+    vs_out.DirectionalFragPosLightSpace = DirectionalLightMatrix * vec4(vs_out.FragPos, 1.0f);
 
 	uint nLights = min(noOfPointLights, NR_POINT_LIGHTS);
     for (uint i = 0u; i < nLights; ++i) {
-        vs_out.PointFragPosLightSpace[i] = PointLightMatrix[i] * vec4(aPos, 1.0f);
+        vs_out.PointFragPosLightSpace[i] = PointLightMatrix[i] * vec4(vs_out.FragPos, 1.0f);
     }
 
 	nLights = min(noOfSpotLights, NR_SPOT_LIGHTS);
     for (uint i = 0u; i < nLights; ++i) {
-        vs_out.SpotFragPosLightSpace[i] = SpotLightMatrix[i] * vec4(aPos, 1.0f);
+        vs_out.SpotFragPosLightSpace[i] = SpotLightMatrix[i] * vec4(vs_out.FragPos, 1.0f);
     }
 
 	//Final Position
-	gl_Position = projection * view * model * vec4(aPos, 1.0f);
+	gl_Position = projection * view * vec4(vs_out.FragPos, 1.0f);
 }

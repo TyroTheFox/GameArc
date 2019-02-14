@@ -8,6 +8,7 @@ in VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
+	vec3 viewVertex;
     vec4 DirectionalFragPosLightSpace;
 	vec4 PointFragPosLightSpace[NR_POINT_LIGHTS];
 	vec4 SpotFragPosLightSpace[NR_SPOT_LIGHTS];
@@ -94,19 +95,19 @@ void main()
 
     vec3 result = vec3(0.0);
 	//1: Directional Lights
-	result += CalcDirLight(dirLight, norm, viewDir, shadowMapDIR, fs_in.DirectionalFragPosLightSpace);
+	result += CalcDirLight(dirLight, norm, fs_in.viewVertex, shadowMapDIR, fs_in.DirectionalFragPosLightSpace);
 
 	//2: Point lights
     for(int j = 0; j < NR_POINT_LIGHTS; j++){
 		if(j < noOfPointLights){
-			result += CalcPointLight(pointLights[j], norm, fs_in.FragPos, viewDir);   
+			result += CalcPointLight(pointLights[j], norm, fs_in.FragPos, fs_in.viewVertex);   
 		}
 	}
 		
     //3: Spot light
 	for(int k = 0; k < NR_SPOT_LIGHTS; k++){
 		if(k < noOfSpotLights){
-			result += CalcSpotLight(spotLights[k], norm, fs_in.FragPos, viewDir, shadowMapSPOT[k], fs_in.SpotFragPosLightSpace[k]);  
+			result += CalcSpotLight(spotLights[k], norm, fs_in.FragPos, fs_in.viewVertex, shadowMapSPOT[k], fs_in.SpotFragPosLightSpace[k]);  
 		}
 	}  
 	FragColour = vec4(result, 1.0);
@@ -115,9 +116,9 @@ void main()
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix)
 {
 	vec3 diffTextColour = vec3(texture(texture_diffuse0, fs_in.TexCoords));
-    vec3 lightDir = normalize(light.direction);
+    vec3 lightDir = normalize(-light.direction);
     // diffuse shading
-    float diff = max(dot(lightDir, normal), 0.0);
+    float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
 	float spec = 0.0;
     if(blinn)
@@ -127,7 +128,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap
     }
     else
     {
-        vec3 reflectDir = reflect(lightDir, normal);
+        vec3 reflectDir = reflect(-lightDir, normal);
         spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     }
     // combine results
@@ -143,7 +144,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
-    vec3 lightDir = -normalize(light.position - fragPos);
+    vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
@@ -155,13 +156,12 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     }
     else
     {
-        vec3 reflectDir = reflect(lightDir, normal);
+        vec3 reflectDir = reflect(-lightDir, normal);
         spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     }
     // attenuation
     float distance    = length(light.position - fragPos);
-    float attenuation = 1.0 / (light.constant + light.linear * distance + 
-  			     light.quadratic * (distance * distance));    
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
     // combine results
     vec3 ambient  = light.ambient  * vec3(texture(texture_diffuse0, fs_in.TexCoords)) * material.diffuse;
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(texture_diffuse0, fs_in.TexCoords)) * material.diffuse;
@@ -176,7 +176,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix)
 {
 	vec3 diffTextColour = vec3(texture(texture_diffuse0, fs_in.TexCoords));
-    vec3 lightDir = -normalize(light.position - fragPos);
+    vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading
     float diff = max(dot(normal, lightDir), 0.0);
     // specular shading
@@ -188,7 +188,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sam
     }
     else
     {
-        vec3 reflectDir = reflect(lightDir, normal);
+        vec3 reflectDir = reflect(-lightDir, normal);
         spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     }
     // attenuation
