@@ -198,22 +198,22 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 			switch (light->lType()) {
 			case Light::LightType::DIRECTIONAL:
 				offset = model->GetTextureSize() + i;
+				temp->setInt("shadowMapDIR", offset);
 				glActiveTexture(GL_TEXTURE0 + offset);
 				glBindTexture(GL_TEXTURE_2D, light->depthMap);
-				temp->setInt("shadowMapDIR", offset);
 				temp->SetMatrix4("DirectionalLightMatrix", light->lightSpaceMatrix, true);
 				break;
 			case Light::LightType::POINT:
 				offset = model->GetTextureSize() + i;
+				temp->SetArrayInt("shadowMapPOINT", light->ID, offset);
 				glActiveTexture(GL_TEXTURE0 + offset);
 				glBindTexture(GL_TEXTURE_CUBE_MAP, light->depthMap);
-				temp->SetArrayInt("shadowMapPOINT", light->ID, offset);
 				break;
 			case Light::LightType::SPOT:
 				offset = model->GetTextureSize() + i;
+				temp->SetArrayInt("shadowMapSPOT", light->ID, offset);
 				glActiveTexture(GL_TEXTURE0 + offset);
 				glBindTexture(GL_TEXTURE_2D, light->depthMap);
-				temp->SetArrayInt("shadowMapSPOT", light->ID, offset);
 				temp->SetArrayMatrix4("SpotLightMatrix", light->ID, light->lightSpaceMatrix, true);
 				break;
 			}
@@ -241,17 +241,18 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		for (Light* light : sceneLights) {
 			switch (light->lType()) {
 			case Light::LightType::DIRECTIONAL:
-			case Light::LightType::POINT:
+			case Light::LightType::SPOT:
 				offset = model->GetTextureSize() + i;
 				glActiveTexture(GL_TEXTURE0 + offset);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				break;
-			case Light::LightType::SPOT:
+			case Light::LightType::POINT:
 				offset = model->GetTextureSize() + i;
 				glActiveTexture(GL_TEXTURE0 + offset);
 				glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 				break;
 			}
+			i++;
 		}
 		
 		glDisable(GL_BLEND);
@@ -322,7 +323,6 @@ void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, i
 void GLFW_EngineCore::calculateShadows(Game* game) {
 	//glEnable(GL_BLEND);
 	glm::mat4 projection, lightView;
-	std::vector<glm::mat4> shadowTransforms;
 
 	//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
 	// note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
@@ -358,6 +358,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 				glDrawBuffer(GL_NONE);
 				glReadBuffer(GL_NONE);
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 
 			lightView = light->GetMatrix();
@@ -381,6 +382,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 				glDrawBuffer(GL_NONE);
 				glReadBuffer(GL_NONE);
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 			}
 			break;
 		}
@@ -399,14 +401,14 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 			for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it) {
 				if (it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr && it->second->getComponent<ModelComponent>()->active) {
 					simpleDepth->SetMatrix4("model", it->second->getComponent<TransformComponent>()->getModelMatrix(), true);
-					it->second->getComponent<ModelComponent>()->model->render(simpleDepth->ID);
+					it->second->getComponent<ModelComponent>()->model->renderWithoutTextures(simpleDepth->ID);
 				}
 			}
 			break;
 		case Light::POINT:
 			pointDepth->use();
 			projection = glm::perspective(glm::radians(90.0f), (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT, near_plane, far_plane);
-
+			std::vector<glm::mat4> shadowTransforms;
 			shadowTransforms.push_back(projection * glm::lookAt(light->position(), light->position() + glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
 			shadowTransforms.push_back(projection * glm::lookAt(light->position(), light->position() + glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
 			shadowTransforms.push_back(projection * glm::lookAt(light->position(), light->position() + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
@@ -421,7 +423,7 @@ void GLFW_EngineCore::calculateShadows(Game* game) {
 			for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it) {
 				if (it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr && it->second->getComponent<ModelComponent>()->active) {
 					pointDepth->SetMatrix4("model", it->second->getComponent<TransformComponent>()->getModelMatrix(), true);
-					it->second->getComponent<ModelComponent>()->model->render(pointDepth->ID);
+					it->second->getComponent<ModelComponent>()->model->renderWithoutTextures(pointDepth->ID);
 				}
 			}
 			break;
@@ -563,11 +565,11 @@ void GLFW_EngineCore::setDefaultShaders()
 	///Use Default Phong for Showing Errors Loading Materials and Objects Without Materials
 	phong = new Shader("assets/shaders/defaultShader.vert", "assets/shaders/defaultShader.frag");
 	///Normal Blin-Phong Shader for proper rendering
-	texturePhong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");
-	simpleDepth = new Shader("assets/shaders/simpleShadow.vert", "assets/shaders/simpleShadow.frag");
-	pointDepth = new Shader("assets/shaders/pointShadow.vert", "assets/shaders/pointShadow.frag", "assets/shaders/pointShadow.geom");
-	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");
-	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");
+	texturePhong = new Shader("assets/shaders/phong2.vert", "assets/shaders/phong2.frag");//6
+	simpleDepth = new Shader("assets/shaders/simpleShadow.vert", "assets/shaders/simpleShadow.frag");//9
+	pointDepth = new Shader("assets/shaders/pointShadow.vert", "assets/shaders/pointShadow.frag", "assets/shaders/pointShadow.geom");//13
+	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");//16
+	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");//19
 
 	debugShadow = new Shader("assets/shaders/debugShadow.vert", "assets/shaders/debugShadow.frag");
 	debugBuffer = new Shader("assets/shaders/debugging.vert", "assets/shaders/debugging.frag");

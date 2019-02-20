@@ -58,7 +58,7 @@ void Mesh::render(const unsigned int shaderProgram)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	// return to default texture
-	glActiveTexture(GL_TEXTURE0);
+	//glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::renderWithoutTextures(const unsigned int shaderProgram)

@@ -208,6 +208,6 @@ unsigned int Model::TextureFromFile(const char* filepath, const string& director
 		std::cout << "Texture failed to load from: " << filepath << std::endl;
 		stbi_image_free(textureData);
 	}
-	
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return textureID;
 }

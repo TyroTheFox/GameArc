@@ -186,7 +186,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, s
     diffuse  *= attenuation;
     specular *= attenuation;
 
-	float shadow = PointShadowCalculation(fs_in.FragPos, light.position, shadowMap);                      
+	float shadow = PointShadowCalculation(fragPos, light.position, shadowMap);     
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour; 
 
 	return lighting;
@@ -279,7 +279,9 @@ float PointShadowCalculation(vec3 fragPos, vec3 lightPos, samplerCube shadowMap)
     float diskRadius = (1.0 + (viewDistance / far_plane)) / 25.0;
     for(int i = 0; i < samples; ++i)
     {
-        float closestDepth = texture(shadowMap, fragToLight + gridSamplingDisk[i] * diskRadius).r;
+		vec3 uv = fragToLight + gridSamplingDisk[i] * diskRadius;
+		uv.x = 1.0 - uv.x;
+        float closestDepth = texture(shadowMap, uv).r;
         closestDepth *= far_plane;   // undo mapping [0;1]
         if(currentDepth - bias > closestDepth){
             shadow += 1.0;
