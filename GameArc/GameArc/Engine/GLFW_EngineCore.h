@@ -68,6 +68,7 @@ private:
 	///Texture Phong Shader
 	Shader* texturePhong; 
 	Shader* simpleDepth;
+	Shader* pointDepth;
 	Shader* debugShadow;
 	Shader* debugBuffer;
 	///Text Writer Shader
@@ -75,8 +76,7 @@ private:
 	///2D Object Shader
 	Shader* Shader2D;
 	///Shadow Map FBO
-	//unsigned int depthMapFBO = 0;
-	unsigned int depthMap;
+	float near_plane = 1.0f, far_plane = 100.0f;
 	unsigned int cubeVBO, cubeVAO;
 	GLuint vaoDebugTexturedRect;
 	std::vector<Light*> sceneLights;

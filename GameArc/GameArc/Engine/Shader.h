@@ -92,7 +92,7 @@ public:
 			// open files
 			vShaderFile.open(vertexPath);
 			fShaderFile.open(fragmentPath);
-			gShaderFile.open(fragmentPath);
+			gShaderFile.open(geometryPath);
 			std::stringstream vShaderStream, fShaderStream, gShaderStream;
 			// read file's buffer contents into streams
 			vShaderStream << vShaderFile.rdbuf();
@@ -127,7 +127,7 @@ public:
 		glCompileShader(fragment);
 		checkCompileErrors(fragment, "FRAGMENT");
 		// geometry Shader
-		geometry = glCreateShader(GL_FRAGMENT_SHADER);
+		geometry = glCreateShader(GL_GEOMETRY_SHADER);
 		glShaderSource(geometry, 1, &gShaderCode, NULL);
 		glCompileShader(geometry);
 		checkCompileErrors(geometry, "GEOMETRY");
