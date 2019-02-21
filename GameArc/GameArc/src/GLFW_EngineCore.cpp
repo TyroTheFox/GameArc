@@ -186,6 +186,7 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 	Shader* temp;
 	if (model->GetTextureSize() > 0) {
 		temp = texturePhong;
+		temp->use();
 		temp->SetVector3f("material.ambient", model->modelColour.ambient, true);
 		temp->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
 		temp->SetVector3f("material.specular", model->modelColour.specular, true);
@@ -279,7 +280,7 @@ void GLFW_EngineCore::calculateLight(Light * light, int directionalLightTotal, i
 
 	texturePhong->setInt("noOfSpotLights", spotLightTotal);
 
-	texturePhong->setBool("blinn", false);
+	texturePhong->setBool("blinn", true);
 
 	std::string stringID;
 	std::string stringItem;

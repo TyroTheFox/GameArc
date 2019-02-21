@@ -76,7 +76,7 @@ private:
 	///2D Object Shader
 	Shader* Shader2D;
 	///Shadow Map FBO
-	float near_plane = 1.0f, far_plane = 100.0f;
+	float near_plane = 1.0f, far_plane = 1000.0f;
 	unsigned int cubeVBO, cubeVAO;
 	GLuint vaoDebugTexturedRect;
 	std::vector<Light*> sceneLights;
