@@ -32,7 +32,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 {
 	glfwInit();
 
-	//glfwWindowHint(GLFW_SAMPLES, 2); // 4x antialiasing
+	glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
@@ -101,6 +101,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	// message loop
 	game.init(inputHandler);
 	
+	camTexture = new CamToTexture(texturePhong, m_screenWidth, m_screenHeight);
 	//calculateShadows(gameptr);
 
 	if (game.m_MainCamera == nullptr) {
@@ -127,6 +128,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		else {
 			setCamera(game.m_MainCamera);
 		}
+		DrawToCamTexture(&game);
 		game.render(); // prepare game to send info to the renderer in engine core
 		glEnable(GL_FRAMEBUFFER_SRGB);
 		// swap buffers
@@ -660,6 +662,25 @@ GLenum GLFW_EngineCore::glCheckError_(const char *file, int line)
 	}
 	return errorCode;
 }
+
+void GLFW_EngineCore::DrawToCamTexture(Game * game)
+{
+	camTexture->PrepareToRender();
+
+	std::map<std::string, GameObject*>::iterator it;
+	std::map<std::string, GameObject*> sceneObjects = game->m_currentScene->getGameObjects();
+	for (it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
+	{
+		if (it->second->getComponent<ModelComponent>() != nullptr && it->second->getComponent<TransformComponent>() != nullptr) {
+			camTexture->RenderToTexture(it->second->getComponent<ModelComponent>()->model, it->second->getComponent<TransformComponent>()->getModelMatrix());
+		}
+	}
+
+	camTexture->RevertToNormalRendering();
+
+	DisplayFramebufferTexture(camTexture->getTextureID());
+}
+
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 void APIENTRY glDebugOutput(GLenum source,
@@ -706,4 +727,9 @@ void APIENTRY glDebugOutput(GLenum source,
 	case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
 	} std::cout << std::endl;
 	std::cout << std::endl;
+}
+
+void DrawToCamTexture(Game * game)
+{
+	
 }

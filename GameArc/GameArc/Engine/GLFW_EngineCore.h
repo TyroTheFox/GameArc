@@ -12,6 +12,9 @@
 #include "Model.h"
 #include "TextWriter.h"
 #include "InputHandler.h"
+
+#include "CamToTexture.h"
+
 // GL includes
 #include "Shader.h"
 // FreeType
@@ -102,5 +105,8 @@ private:
 	///Initialises internal cube model
 	void initCubeModel();
 	GLenum glCheckError_(const char *file, int line);
+
+	CamToTexture* camTexture;
+	void DrawToCamTexture(Game* game);
 };
 

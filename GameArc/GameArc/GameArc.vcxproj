@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="GameArc.cpp" />
     <ClCompile Include="src\2DRect.cpp" />
+    <ClCompile Include="src\CamToTexture.cpp" />
     <ClCompile Include="src\DebugHelper.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GLAD\glad.c" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Engine\2DRect.h" />
     <ClInclude Include="Engine\Camera.h" />
     <ClInclude Include="Engine\CameraComponent.h" />
+    <ClInclude Include="Engine\CamToTexture.h" />
     <ClInclude Include="Engine\ColourComponent.h" />
     <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\DebugHelper.h" />
