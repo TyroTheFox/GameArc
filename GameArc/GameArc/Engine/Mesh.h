@@ -19,6 +19,8 @@ struct Vertex
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 textureCoords;
+	glm::vec3 tangent;
+	glm::vec3 bitangent;
 };
 /** \struct Texture
 Used for texture information
@@ -56,4 +58,5 @@ private:
 	unsigned int VBO, EBO;
 	///Initialises all the buffer arrays
 	void setupMesh();
+	void computeTangents();
 };

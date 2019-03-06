@@ -74,6 +74,7 @@ private:
 	Shader* pointDepth;
 	Shader* debugShadow;
 	Shader* debugBuffer;
+	Shader* textureRender;
 	///Text Writer Shader
 	Shader* textWriterShader;
 	///2D Object Shader

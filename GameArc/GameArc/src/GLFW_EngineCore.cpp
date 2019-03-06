@@ -101,7 +101,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	// message loop
 	game.init(inputHandler);
 	
-	camTexture = new CamToTexture(texturePhong, m_screenWidth, m_screenHeight);
+	camTexture = new CamToTexture(textureRender, m_screenWidth, m_screenHeight);
 	//calculateShadows(gameptr);
 
 	if (game.m_MainCamera == nullptr) {
@@ -122,13 +122,13 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		game.update(delta); // update game logic
 		//calculateShadows(gameptr);
 		sceneLights = game.lightHandler->getLights();
+		DrawToCamTexture(&game);
 		if (game.m_MainCamera == nullptr) {
 			setCamera(&game.m_camera);
 		}
 		else {
 			setCamera(game.m_MainCamera);
 		}
-		DrawToCamTexture(&game);
 		game.render(); // prepare game to send info to the renderer in engine core
 		glEnable(GL_FRAMEBUFFER_SRGB);
 		// swap buffers
@@ -193,6 +193,7 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		temp->SetVector3f("material.diffuse", model->modelColour.diffuse, true);
 		temp->SetVector3f("material.specular", model->modelColour.specular, true);
 		temp->setFloat("material.shininess", model->modelColour.shininess);
+		temp->setFloat("heightScale", model->modelColour.mapHeight);
 
 		int i = 0;
 		int offset = 0;
@@ -573,6 +574,7 @@ void GLFW_EngineCore::setDefaultShaders()
 	pointDepth = new Shader("assets/shaders/pointShadow.vert", "assets/shaders/pointShadow.frag", "assets/shaders/pointShadow.geom");//13
 	textWriterShader = new Shader("assets/shaders/TextWriter.vert", "assets/shaders/TextWriter.frag");//16
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");//19
+	textureRender = new Shader("assets/shaders/TextureRender.vert", "assets/shaders/TextureRender.frag");
 
 	debugShadow = new Shader("assets/shaders/debugShadow.vert", "assets/shaders/debugShadow.frag");
 	debugBuffer = new Shader("assets/shaders/debugging.vert", "assets/shaders/debugging.frag");
