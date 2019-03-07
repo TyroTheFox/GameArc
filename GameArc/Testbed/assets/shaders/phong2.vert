@@ -41,17 +41,13 @@ void main()
 	vs_out.viewVertex = normalize(-vec3(view * vec4(vs_out.FragPos, 1.0)));
 
 	//TBN Matrix
-	//mat3 normalMatrix = transpose(inverse(mat3(model)));
-	//vec3 T = normalize(vec3(model * vec4(aTangent, 0.0)));
-	//vec3 N = normalize(vec3(model * vec4(aNormal, 0.0)));
-   // T = normalize(T - dot(T, N) * N);
-	//vec3 B = normalize(vec3(model * vec4(aBitangent, 0.0)));
 	vec3 T = normalize(mat3(model) * aTangent);
     vec3 B = normalize(mat3(model) * aBitangent);
     vec3 N = normalize(mat3(model) * aNormal);
+	T = normalize(T - dot(T, N) * N);
 	vs_out.TBN = transpose(mat3(T, B, N));  
 
-	vs_out.tanViewVertex = normalize(-viewPos * (vs_out.TBN * vs_out.FragPos));
+	vs_out.tanViewVertex = normalize(viewPos * (vs_out.TBN * vs_out.FragPos));
 
 	//Shadows
 	if(noOfDirectionalLights > 0){

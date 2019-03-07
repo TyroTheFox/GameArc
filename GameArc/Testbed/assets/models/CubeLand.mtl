@@ -3,15 +3,8 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd cubeland.bmp
+map_Kd -mm 0 0.503356 cubeland.bmp
 map_Ka cubeland.bmp
-bump normal_mapping_normal_map.png
-bump parallax_mapping_height_map.png
+map_Bump bricks2_normal.jpg
 Ni 1.00
-newmtl initialShadingGroup
-illum 4
-Kd 0.50 0.50 0.50
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-bump normal_mapping_normal_map.png -bm 1
-Ni 1.00
+Ks 0.50 0.50 0.50
