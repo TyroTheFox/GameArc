@@ -54,6 +54,7 @@ public:
 	std::vector<Mesh> getMeshes();
 	///Returns number of textures loaded
 	inline int GetTextureSize() { return v_textures.size(); }
+	inline string GetDirectory() { return directory; }
 private:
 	///Stored mesh information
 	std::vector<Mesh> v_meshes;

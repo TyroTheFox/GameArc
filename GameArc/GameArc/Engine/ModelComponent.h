@@ -57,13 +57,25 @@ public:
 	///Builds component from JSON values
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
+			string nMFile;
 			if (componentJSON.isMember("fileName")) {
 				const Json::Value& fileName = componentJSON["fileName"];
 				model = new Model(fileName.asCString(), modelHandler);
+				if (nMFile != "") {
+					unsigned int textureID = model->TextureFromFile(nMFile.c_str(), model->GetDirectory());
+				}
 			}
 			if (componentJSON.isMember("active")) {
 				const Json::Value& a = componentJSON["active"];
 				active = a.asBool();
+			}
+			if (componentJSON.isMember("normalMap")) {
+				const Json::Value& map = componentJSON["normalMap"];
+				nMFile = map.asCString();
+				if (model != nullptr) {
+					unsigned int textureID = model->TextureFromFile(nMFile.c_str(), model->GetDirectory());
+
+				}
 			}
 		}
 		catch (...) {

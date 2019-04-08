@@ -108,11 +108,6 @@ public:
 				m_position.y = position[1].asFloat();
 				m_position.z = position[2].asFloat();
 			}
-			else {
-				m_position.x = 0;
-				m_position.y = 0;
-				m_position.z = 0;
-			}
 			if (componentJSON.isMember("orientation")) {
 				const Json::Value& orientation = componentJSON["orientation"];
 				m_orientation.w = orientation[0].asFloat();
@@ -120,22 +115,11 @@ public:
 				m_orientation.y = orientation[2].asFloat();
 				m_orientation.z = orientation[3].asFloat();
 			}
-			else {
-				m_orientation.w = 1;
-				m_orientation.x = 0;
-				m_orientation.y = 0;
-				m_orientation.z = 0;
-			}
 			if (componentJSON.isMember("scale")) {
 				const Json::Value& scale = componentJSON["scale"];
 				m_scale.x = scale[0].asFloat();
 				m_scale.y = scale[1].asFloat();
 				m_scale.z = scale[2].asFloat();
-			}
-			else {
-				m_scale.x = 1;
-				m_scale.y = 1;
-				m_scale.z = 1;
 			}
 		}
 		catch (...) {
