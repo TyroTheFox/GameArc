@@ -26,17 +26,20 @@ void Mesh::render(const unsigned int shaderProgram)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		glUniform1i(glGetUniformLocation(shaderProgram, "normalMapped"), 0);
+		glUniform1i(glGetUniformLocation(shaderProgram, "heightMapped"), 0);
 		string number;
 		string name = textures[i].type;
 		if (name == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
 		else if (name == "texture_specular")
 			number = std::to_string(specularNr++);
-		else if (name == "texture_normal")
+		else if (name == "texture_normal") {
 			number = std::to_string(normalNr++);
+			glUniform1i(glGetUniformLocation(shaderProgram, "normalMapped"), 1);
+		}
 		else if (name == "texture_height") {
 			number = std::to_string(heightNr++);
-			glUniform1i(glGetUniformLocation(shaderProgram, "normalMapped"), 1);
+			glUniform1i(glGetUniformLocation(shaderProgram, "heightMapped"), 1);
 		}
 
 		// now set the sampler to the correct texture unit

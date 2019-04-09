@@ -20,14 +20,15 @@ uniform vec3 viewPos;
 uniform float far_plane;
 
 uniform sampler2D texture_diffuse1;
-//Because of ASSIMP, The Normal Map and Paralax Depth Map are considered Height Maps for some reason
+//Because of ASSIMP, The Normal Map and Paralax Depth Map are considered Height Maps for some reason when using an OBJ
 //Normal Map
-uniform sampler2D texture_height1;
+uniform sampler2D texture_normal1;
 //Paralax Depth Map
-uniform sampler2D texture_height2;
+uniform sampler2D texture_height1;
 
 uniform bool blinn;
 uniform bool normalMapped;
+uniform bool heightMapped;
 
 struct Material {
     vec3 ambient;
@@ -110,7 +111,7 @@ float PointShadowCalculation(vec3 fragPos, vec3 lightPos, samplerCube shadowMap)
 uniform float heightScale;
 vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir)
 { 
-    float height =  texture(texture_height2, texCoords).r;     
+    float height =  texture(texture_height1, texCoords).r;     
     return texCoords - viewDir.xy * (height * heightScale);        
 }
 
@@ -125,14 +126,16 @@ void main()
 	vec3 norm;
 	tCoords = fs_in.TexCoords;
 	if(normalMapped){
-		vec2 partexCoords = ParallaxMapping(fs_in.TexCoords, fs_in.viewVertex * fs_in.TBN);       
-		if(partexCoords.x > 1.0 || partexCoords.y > 1.0 || partexCoords.x < 0.0 || partexCoords.y < 0.0){
-			discard;
-		}else{
-			tCoords = partexCoords;
+		if(heightMapped){
+			vec2 partexCoords = ParallaxMapping(fs_in.TexCoords, fs_in.viewVertex * fs_in.TBN);       
+			if(partexCoords.x > 1.0 || partexCoords.y > 1.0 || partexCoords.x < 0.0 || partexCoords.y < 0.0){
+				discard;
+			}else{
+				tCoords = partexCoords;
+			}
 		}
 		// obtain normal from normal map in range [0,1]
-		vec3 normalTex = texture(texture_height1, tCoords).rgb;
+		vec3 normalTex = texture(texture_normal1, tCoords).rgb;
 		// transform normal vector to range [-1,1]
 		norm = normalize(normalTex * 2.0 - 1.0);  // this normal is in tangent space
 	}else{

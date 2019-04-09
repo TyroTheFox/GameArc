@@ -119,6 +119,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 		textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 	}
+
 	// return the mesh data
 	return Mesh(vertices, indices, textures);
 }

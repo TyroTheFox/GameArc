@@ -101,7 +101,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 	// message loop
 	game.init(inputHandler);
 	
-	camTexture = new CamToTexture(textureRender, m_screenWidth, m_screenHeight);
+	//camTexture = new CamToTexture(textureRender, m_screenWidth, m_screenHeight);
 	//calculateShadows(gameptr);
 
 	if (game.m_MainCamera == nullptr) {
@@ -122,7 +122,7 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		game.update(delta); // update game logic
 		//calculateShadows(gameptr);
 		sceneLights = game.lightHandler->getLights();
-		DrawToCamTexture(&game);
+		//DrawToCamTexture(&game);
 		if (game.m_MainCamera == nullptr) {
 			setCamera(&game.m_camera);
 		}
