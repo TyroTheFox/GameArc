@@ -22,11 +22,12 @@ void Mesh::render(const unsigned int shaderProgram)
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
 	unsigned int heightNr = 1;
+	unsigned int displaceNr = 1;
+	glUniform1i(glGetUniformLocation(shaderProgram, "normalMapped"), 0);
+	glUniform1i(glGetUniformLocation(shaderProgram, "displacementMapped"), 0);
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
-		glUniform1i(glGetUniformLocation(shaderProgram, "normalMapped"), 0);
-		glUniform1i(glGetUniformLocation(shaderProgram, "heightMapped"), 0);
 		string number;
 		string name = textures[i].type;
 		if (name == "texture_diffuse")
@@ -39,7 +40,10 @@ void Mesh::render(const unsigned int shaderProgram)
 		}
 		else if (name == "texture_height") {
 			number = std::to_string(heightNr++);
-			glUniform1i(glGetUniformLocation(shaderProgram, "heightMapped"), 1);
+		}
+		else if (name == "texture_displacement") {
+			number = std::to_string(displaceNr++);
+			glUniform1i(glGetUniformLocation(shaderProgram, "displacementMapped"), 1);
 		}
 
 		// now set the sampler to the correct texture unit

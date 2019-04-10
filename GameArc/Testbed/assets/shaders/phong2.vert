@@ -47,7 +47,7 @@ void main()
 	T = normalize(T - dot(T, N) * N);
 	vs_out.TBN = transpose(mat3(T, B, N));  
 
-	vs_out.tanViewVertex = normalize(viewPos * (vs_out.TBN * vs_out.FragPos));
+	vs_out.tanViewVertex = vs_out.TBN * viewPos;
 
 	//Shadows
 	if(noOfDirectionalLights > 0){
