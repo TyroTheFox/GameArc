@@ -190,6 +190,7 @@
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GLFW_EngineCore.h" />
     <ClInclude Include="Engine\global.h" />
+    <ClInclude Include="Engine\HDRRenderTarget.h" />
     <ClInclude Include="Engine\IEngineCore.h" />
     <ClInclude Include="Engine\InputHandler.h" />
     <ClInclude Include="Engine\json-forwards.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Engine\ModelHandler.h" />
     <ClInclude Include="Engine\ObjectManager.h" />
     <ClInclude Include="Engine\PlayerComponent.h" />
+    <ClInclude Include="Engine\RenderTarget.h" />
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="Engine\stb_image.h" />

@@ -188,6 +188,12 @@
     <ClInclude Include="Engine\CamToTexture.h">
       <Filter>Header Files\Engine Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\RenderTarget.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\HDRRenderTarget.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\TextWriter.frag">

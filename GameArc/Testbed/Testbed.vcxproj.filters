@@ -99,6 +99,24 @@
     <None Include="assets\shaders\TextureRender.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="assets\shaders\hdr.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\hdr.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\blur.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\blur.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\LightBox.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\LightBox.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Testbed.cpp">

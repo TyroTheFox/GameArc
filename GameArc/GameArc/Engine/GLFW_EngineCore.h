@@ -17,6 +17,7 @@
 
 // GL includes
 #include "Shader.h"
+#include "HDRRenderTarget.h"
 // FreeType
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -53,6 +54,7 @@ public:
 	void setCamera(const Camera* cam) override;
 	///Draws a cube from the test model
 	void drawCube(const glm::mat4& modelMatrix) override;
+	void drawLightCube(const glm::mat4& modelMatrix);
 	///Draw a given model using a given transformation matrix
 	void drawModel(Model* model, const glm::mat4& modelMatrix) override;
 	void calculateLight(Light* light, int directionalLightTotal, int pointLightTotal, int spotLightTotal) override;
@@ -75,10 +77,15 @@ private:
 	Shader* debugShadow;
 	Shader* debugBuffer;
 	Shader* textureRender;
+	Shader* lightBox;
 	///Text Writer Shader
 	Shader* textWriterShader;
 	///2D Object Shader
 	Shader* Shader2D;
+
+	//Render Target for HDR
+	HDRRenderTarget* hdrTarget;
+
 	///Shadow Map FBO
 	float near_plane = 1.0f, far_plane = 1000.0f;
 	unsigned int cubeVBO, cubeVAO;

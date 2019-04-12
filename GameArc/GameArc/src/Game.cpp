@@ -15,7 +15,7 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//	glm::vec3(0, 0, 0)
 	//);
 	lightHandler->createNewLight(
-		LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
+		LightColour(glm::vec3(1), glm::vec3(0.4f), glm::vec3(1)),
 		glm::vec3(-60, 10, 0)
 	);
 	//lightHandler->createNewLight(
@@ -58,7 +58,7 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//rotates BY, not TO
 	lightHandler->createNewLight(
 		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 1, 0), glm::vec3(1, 1, 1)),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 10, 0), glm::vec3(1, 1, 1)),
 		glm::vec3(0, -10.0f, 0),
 		glm::vec3(0, -170, 0)
 	);
@@ -71,13 +71,13 @@ Game::Game(string levelsFile, DebugHelper* debug)
 
 	testLight = lightHandler->createNewLight(
 		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 0, 0), glm::vec3(1, 1, 1)),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(15, 0, 0), glm::vec3(1, 1, 1)),
 		glm::vec3(0, 0.0f, 0)
 	);
 
 	lightHandler->createNewLight(
 		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 1), glm::vec3(1, 1, 1)),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 20), glm::vec3(1, 1, 1)),
 		glm::vec3(-5.0f, 0.0f, 0)
 	);
 
@@ -254,17 +254,7 @@ void Game::render()
 	std::vector<Light*> gameLights = lightHandler->getLights();
 	for (Light* light : gameLights) {
 		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
-		m_engineInterfacePtr->drawCube(glm::inverse(light->GetMatrix()));
-		
-		glm::mat4 marker = glm::toMat4(light->orientation());
-		glm::vec3 orient = glm::vec3(0.0f);
 		light->CalculateDirection();
-		orient = light->direction() * 5.0f;
-		marker *= glm::translate(light->GetMatrix(), light->position() + orient); 
-		marker *= glm::scale(marker, glm::vec3(0.5f));
-		
-		//std::cout << "Direction: " << light->direction().x * 5.0f << " " << light->direction().y * 5.0f << " " << light->direction().z * 5.0f << " " << std::endl;
-		m_engineInterfacePtr->drawCube(marker);
 	}
 
 	std::map<std::string, GameObject*>::iterator it;

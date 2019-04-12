@@ -81,6 +81,14 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
+	//Create HDR Render Target
+	hdrTarget = new HDRRenderTarget(
+		m_screenWidth, m_screenHeight, 
+		new Shader("assets/shaders/hdr.vert", "assets/shaders/hdr.frag"), 
+		new Shader("assets/shaders/blur.vert", "assets/shaders/blur.frag"), 
+		0.5f
+	);
+
 	GLint flags = 0; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
 	{
@@ -129,8 +137,27 @@ bool GLFW_EngineCore::runEngine(Game& game)
 		else {
 			setCamera(game.m_MainCamera);
 		}
+		hdrTarget->ClearBuffer();
 		game.render(); // prepare game to send info to the renderer in engine core
-		glEnable(GL_FRAMEBUFFER_SRGB);
+		hdrTarget->RenderToBuffer();
+		for (Light* light : sceneLights) {
+			if (light->lType() != Light::LightType::DIRECTIONAL) {
+				
+				lightBox->SetVector3f("lightColor", light->lColour().diffuse, true);
+				//drawLightCube(glm::inverse(light->GetMatrix()));
+				drawLightCube(light->GetMatrix());
+				glm::mat4 marker = glm::toMat4(light->orientation());
+				glm::vec3 orient = glm::vec3(0.0f);
+				light->CalculateDirection();
+				orient = light->direction() * 5.0f;
+				marker *= glm::translate(light->GetMatrix(), light->position() + orient);
+				marker *= glm::scale(marker, glm::vec3(0.5f));
+				drawCube(marker);
+			}
+		}
+		hdrTarget->UnbindBuffer();
+		//glEnable(GL_FRAMEBUFFER_SRGB);
+		hdrTarget->Render();
 		// swap buffers
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
@@ -186,6 +213,7 @@ void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, i
 void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 {
 	Shader* temp;
+	hdrTarget->RenderToBuffer();
 	if (model->GetTextureSize() > 0) {
 		temp = texturePhong;
 		temp->use();
@@ -226,7 +254,7 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		
 		glCullFace(GL_BACK);
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	else {
 		temp = phong;
@@ -261,8 +289,6 @@ void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
 		
 		glDisable(GL_BLEND);
 	}
-
-	
 	
 	//debugShadow->use();
 	//debugShadow->setFloat("near_plane", 1.0f);
@@ -576,6 +602,8 @@ void GLFW_EngineCore::setDefaultShaders()
 	Shader2D = new Shader("assets/shaders/Shader2D.vert", "assets/shaders/Shader2D.frag");//19
 	textureRender = new Shader("assets/shaders/TextureRender.vert", "assets/shaders/TextureRender.frag");
 
+	lightBox = new Shader("assets/shaders/LightBox.vert", "assets/shaders/LightBox.frag");
+
 	debugShadow = new Shader("assets/shaders/debugShadow.vert", "assets/shaders/debugShadow.frag");
 	debugBuffer = new Shader("assets/shaders/debugging.vert", "assets/shaders/debugging.frag");
 }
@@ -583,31 +611,65 @@ void GLFW_EngineCore::setDefaultShaders()
 // a simple function to initialise a cube model in memory
 void GLFW_EngineCore::initCubeModel()
 {
-	// set up vertex and normal data
 	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f
+		// back face
+		-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+			1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+			1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right         
+			1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
+		-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
+		-1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
+		// front face
+		-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+			1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
+			1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+			1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
+		-1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
+		-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+		// left face
+		-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+		-1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
+		-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+		-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
+		-1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+		-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+		// right face
+			1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+			1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+			1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right         
+			1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
+			1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
+			1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left     
+		// bottom face
+		-1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+			1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
+			1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+			1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
+		-1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+		-1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+		// top face
+		-1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+			1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+			1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-right     
+			1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
+		-1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
+		-1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left        
 	};
-	
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
-
-	glBindVertexArray(cubeVAO);
-
+	// fill buffer
 	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	// link vertex attributes
+	glBindVertexArray(cubeVAO);
 	glEnableVertexAttribArray(0);
-	// normal attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
-	
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);	
 }
 
 void GLFW_EngineCore::setCamera(const Camera* cam)
@@ -629,6 +691,15 @@ void GLFW_EngineCore::setCamera(const Camera* cam)
 
 	// be sure to activate shader when setting uniforms/drawing objects
 	glUniform3fv(glGetUniformLocation(texturePhong->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
+
+	lightBox->use();
+	// set the view and projection components of our shader to the camera values
+	glUniformMatrix4fv(glGetUniformLocation(lightBox->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+	glUniformMatrix4fv(glGetUniformLocation(lightBox->ID, "view"), 1, GL_FALSE, glm::value_ptr(cam->getViewMatrix()));
+
+	// be sure to activate shader when setting uniforms/drawing objects
+	glUniform3fv(glGetUniformLocation(lightBox->ID, "viewPos"), 1, glm::value_ptr(cam->position()));
 }
 
 void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)
@@ -637,6 +708,19 @@ void GLFW_EngineCore::drawCube(const glm::mat4& modelMatrix)
 	glBindVertexArray(cubeVAO);
 	// set the model component of our shader to the cube model
 	glUniformMatrix4fv(glGetUniformLocation(phong->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+	// the only thing we can draw so far is the cube, so we know it is bound already
+	// this will obviously have to change later
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindVertexArray(0);
+}
+
+void GLFW_EngineCore::drawLightCube(const glm::mat4& modelMatrix)
+{
+	lightBox->use();
+	glBindVertexArray(cubeVAO);
+	// set the model component of our shader to the cube model
+	glUniformMatrix4fv(glGetUniformLocation(lightBox->ID, "model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 	// the only thing we can draw so far is the cube, so we know it is bound already
 	// this will obviously have to change later
