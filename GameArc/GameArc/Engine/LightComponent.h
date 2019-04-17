@@ -145,6 +145,10 @@ public:
 				p.y = 0;
 				p.z = 0;
 			}
+			if (componentJSON.isMember("rotation")) {
+				const Json::Value& rotation = componentJSON["rotation"];
+				o = glm::vec3(rotation[0].asFloat(), rotation[1].asFloat(), rotation[2].asFloat());
+			}
 			if (componentJSON.isMember("orientation")) {
 				const Json::Value& orientation = componentJSON["orientation"];
 				o.x = orientation[0].asFloat();

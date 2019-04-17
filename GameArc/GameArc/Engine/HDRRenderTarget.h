@@ -97,6 +97,7 @@ public:
 	void ClearBuffer() override {
 		glBindFramebuffer(GL_FRAMEBUFFER, FBOid);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		first_iteration = true;
 	}
 
 	void RenderToBuffer() override {
@@ -108,19 +109,21 @@ public:
 	}
 
 	void Render() override {
-		blurShader->use();
-		for (unsigned int i = 0; i < blurAmount; i++)
-		{
-			//Renders the contents of the blur layers into the framebuffer
-			glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[horizontal]);
-			blurShader->setInt("horizontal", horizontal);
-			glBindTexture(GL_TEXTURE_2D, first_iteration ? colourBuffers[1] : pingpongColorbuffers[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
-			renderQuad();
-			horizontal = !horizontal;
-			if (first_iteration)
-				first_iteration = false;
+		if (first_iteration) {
+			blurShader->use();
+			for (unsigned int i = 0; i < blurAmount; i++)
+			{
+				//Renders the contents of the blur layers into the framebuffer
+				glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[horizontal]);
+				blurShader->setInt("horizontal", horizontal);
+				glBindTexture(GL_TEXTURE_2D, first_iteration ? colourBuffers[1] : pingpongColorbuffers[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
+				renderQuad();
+				horizontal = !horizontal;
+				if (first_iteration)
+					first_iteration = false;
+			}
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		hdrShader->use();

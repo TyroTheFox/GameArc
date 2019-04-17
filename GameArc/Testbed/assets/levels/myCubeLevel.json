@@ -34,7 +34,7 @@
         {
           "class": "TransformComponent",
           "orientation": [ 1, 0, 0, 0 ],
-          "position": [ 0, 0, -15 ],
+          "position": [ -5, 0, -15 ],
           "scale": [ 1, 1, 1 ]
         },
         {
@@ -60,6 +60,22 @@
       ],
       "visible": true,
       "name": "cubeLevel"
+    },
+    {
+      "components": [
+        {
+          "class": "TransformComponent",
+          "rotation": [ -1.6, 0, 0 ],
+          "position": [ 5, -2.2, -30 ],
+          "scale": [ 0.3, 0.3, 0.3 ]
+        },
+        {
+          "class": "ModelComponent",
+          "fileName": "assets/models/OTTO/ottoModel.fbx"
+        }
+      ],
+      "visible": true,
+      "name": "OTTO"
     },
     {
       "components": [

@@ -1,14 +1,14 @@
 {
   "Levels": [
-    {
-      "Name": "TitleScene",
-      "Address": "assets/levels/scene1.json",
-	  "StartingScene": true
-    },
-	{
-      "Name": "CubeLevel",
-      "Address": "assets/levels/myCubeLevel.json",
-	  "StartingScene": false
-    }
+    //{
+    //  "Name": "TitleScene",
+    //  "Address": "assets/levels/scene1.json",
+	  //"StartingScene": true
+    //},
+  {
+    "Name": "CubeLevel",
+    "Address": "assets/levels/myCubeLevel.json",
+    "StartingScene": true
+  }
   ]
 }

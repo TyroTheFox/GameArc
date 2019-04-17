@@ -31,14 +31,14 @@ public:
 	using InterpFunc = std::function<void(std::vector<std::string>)>;
 private:
 	///List of functors sorted by function name token
-	std::map<std::string, InterpFunc> parsedTokens;
+	std::multimap<std::string, InterpFunc> parsedTokens;
 public:
 	///Constructor
 	TextParser() {
 	}
 	///Add new token and function
 	void AddToken(std::string token, InterpFunc f) {
-		parsedTokens[token] = f;
+		parsedTokens.insert(std::make_pair(token, f));
 	}
 	///Parse string command to create a function action from the command
 	bool ParseToken(std::string command) {
@@ -53,7 +53,11 @@ public:
 		}
 		
 		if (parsedTokens.count(token) > 0) {
-			parsedTokens[token](argTokens);
+			auto search = parsedTokens.equal_range(token);
+			for (auto i = search.first; i != search.second; ++i){
+				(i->second)(argTokens);
+				//parsedTokens[token](argTokens);
+			}
 		}
 		else {
 			return false;
@@ -109,4 +113,6 @@ public:
 	void WriteErrorToConsole(std::string message);
 	///Adds a new console command for the TextParser to record and recognise when called
 	void AddConsoleCommand(std::string commandName, TextParser::InterpFunc f);
+
+	void RunCommand(std::string commandName);
 };

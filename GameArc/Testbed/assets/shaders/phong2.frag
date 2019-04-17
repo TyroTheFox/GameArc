@@ -1,5 +1,6 @@
 #version 430 core
-out vec4 FragColour;
+layout (location = 0) out vec4 FragColour;
+layout (location = 1) out vec4 BrightColor;
 
 #define NR_POINT_LIGHTS 8
 #define NR_SPOT_LIGHTS 8
@@ -16,7 +17,6 @@ in VS_OUT {
 } fs_in;
 
 uniform vec3 viewPos;
-
 uniform float far_plane;
 
 uniform sampler2D texture_diffuse1;
@@ -41,7 +41,7 @@ uniform Material material;
 //Directional Light Data
 struct DirLight {
     vec3 direction;
-  
+
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -100,8 +100,10 @@ vec3 gridSamplingDisk[20] = vec3[]
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix);  
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix, mat3 TBN);  
+
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, samplerCube shadowMap);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, samplerCube shadowMap, mat3 TBN);
+
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sampler2D shadowMap, vec4 lightSpaceMatrix, mat3 TBN);
 
@@ -202,6 +204,12 @@ void main()
 		}
 	}  
 	FragColour = vec4(result, 1.0);
+
+	float brightness = dot(FragColour.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if(brightness > 1.0)
+        BrightColor = vec4(FragColour.rgb, 1.0);
+	else
+		BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
 } 
 
 //DIRECTIONAL LIGHT
@@ -228,7 +236,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap
     vec3 diffuse  = light.diffuse  * diff * diffTextColour * material.diffuse;
     vec3 specular = light.specular * spec * diffTextColour * material.specular;
 
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, -lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 
     return lighting;
@@ -256,7 +264,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, sampler2D shadowMap
     vec3 diffuse  = light.diffuse  * diff * diffTextColour * material.diffuse;
     vec3 specular = light.specular * spec * diffTextColour * material.specular;
 
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, -lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 
     return lighting;
@@ -367,7 +375,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sam
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
     	
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, -lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 	
 	return lighting;
@@ -406,7 +414,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, sam
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
     	
-	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, lightDir);       
+	float shadow = ShadowCalculation(lightSpaceMatrix, shadowMap, -lightDir);       
     vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * diffTextColour;
 	
 	return lighting;
@@ -448,6 +456,7 @@ float ShadowCalculation(vec4 fragPosLightSpace, sampler2D shadowMap, vec3 lightD
 float PointShadowCalculation(vec3 fragPos, vec3 lightPos, samplerCube shadowMap){
 	// get vector between fragment position and light position
     vec3 fragToLight = fragPos - lightPos;
+	fragToLight.x = -fragToLight.x;
 
     // now get current linear depth as the length between the fragment and light position
     float currentDepth = length(fragToLight);

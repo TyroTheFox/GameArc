@@ -15,6 +15,8 @@ Handles transformation of the game object in 3D space
 */
 class TransformComponent : public Component
 {
+private:
+	bool autoRotate;
 public:
 	///Current position in 3D space
 	glm::vec3 m_position;
@@ -23,19 +25,31 @@ public:
 	///Current size
 	glm::vec3 m_scale;
 	///Default rate of movement for all transformations
-	float increaseStep = 0.1f;
+	float increaseStep = 0.01f;
 	///Constructor
-	TransformComponent() : m_position(0), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}
+	TransformComponent() : m_position(0), m_orientation(1, 0, 0, 0), m_scale(1.0f), autoRotate(false) {}
 	///Constructor
-	TransformComponent(const glm::vec3& pos) : m_position(pos), m_orientation(1, 0, 0, 0), m_scale(1.0f) {}
+	TransformComponent(const glm::vec3& pos) : m_position(pos), m_orientation(1, 0, 0, 0), m_scale(1.0f), autoRotate(false) {}
 	///Constructor
-	TransformComponent(const glm::vec3& pos, const glm::quat& orient) : m_position(pos), m_orientation(orient), m_scale(1.0f) {}
+	TransformComponent(const glm::vec3& pos, const glm::quat& orient) : m_position(pos), m_orientation(orient), m_scale(1.0f), autoRotate(false) {}
 	///Constructor
-	TransformComponent(const glm::vec3& pos, const glm::quat& orient, const glm::vec3& scale) : m_position(pos), m_orientation(orient), m_scale(scale) {}
+	TransformComponent(const glm::vec3& pos, const glm::quat& orient, const glm::vec3& scale) : m_position(pos), m_orientation(orient), m_scale(scale), autoRotate(false) {}
 	///Called when component is attached to object
-	void OnSetUp() override {	}
+	void OnSetUp() override {	
+		debug->AddConsoleCommand("autoRotate", TextParser::InterpFunc([this](std::vector<std::string> s) {
+			if (s.size() <= 0) { this->debug->WriteErrorToConsole("Missing value"); return; }
+			if (s.at(0) == parent->name) {
+				autoRotate = !autoRotate;
+				this->debug->WriteToConsole("Auto Rotate set on " + s.at(0));
+			}
+		}));
+	}
 	///Called on update tick
-	void OnUpdate(float dt) override{}
+	void OnUpdate(float dt) override{
+		if (autoRotate) {
+			yaw(increaseStep);
+		}
+	}
 	///Called on render instance
 	void OnRender(IEngineCore* m_engineInterfacePtr) override {}
 	///Called on event fire, handles transformation calls
@@ -107,6 +121,10 @@ public:
 				m_position.x = position[0].asFloat();
 				m_position.y = position[1].asFloat();
 				m_position.z = position[2].asFloat();
+			}
+			if (componentJSON.isMember("rotation")) {
+				const Json::Value& rotation = componentJSON["rotation"];
+				m_orientation = glm::quat(glm::vec3(rotation[0].asFloat(), rotation[1].asFloat(), rotation[2].asFloat()));
 			}
 			if (componentJSON.isMember("orientation")) {
 				const Json::Value& orientation = componentJSON["orientation"];

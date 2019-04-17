@@ -52,14 +52,11 @@ void main()
 	//Shadows
 	if(noOfDirectionalLights > 0){
 		vs_out.DirectionalFragPosLightSpace = DirectionalLightMatrix * vec4(vs_out.FragPos, 1.0f);
-		  
-		//vs_out.TangentLightPos = TBN * DirectionalLightMatrix;
 	}
 
 	uint nLights = min(noOfSpotLights, NR_SPOT_LIGHTS);
     for (uint i = 0u; i < nLights; ++i) {
         vs_out.SpotFragPosLightSpace[i] = SpotLightMatrix[i] * vec4(vs_out.FragPos, 1.0f);
-		//vs_out.TangentLightPos = TBN * SpotLightMatrix[i];
     }
 
 	//Final Position

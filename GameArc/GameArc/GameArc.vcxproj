@@ -207,6 +207,7 @@
     <ClInclude Include="Engine\RenderTarget.h" />
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\Shader.h" />
+    <ClInclude Include="Engine\ShadowRenderTarget.h" />
     <ClInclude Include="Engine\stb_image.h" />
     <ClInclude Include="Engine\TextUIComponent.h" />
     <ClInclude Include="Engine\TextWriter.h" />

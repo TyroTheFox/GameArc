@@ -9,15 +9,14 @@ Game::Game() {
 Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
-	//testLight = lightHandler->createNewLight(
-	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
-	//	glm::vec3(0.0f, 0.0f, 0.0f),
-	//	glm::vec3(0, 0, 0)
-	//);
-	lightHandler->createNewLight(
-		LightColour(glm::vec3(1), glm::vec3(0.4f), glm::vec3(1)),
-		glm::vec3(-60, 10, 0)
+	testLight = lightHandler->createNewLight(
+		LightColour(glm::vec3(1), glm::vec3(0.5), glm::vec3(1)),
+		glm::vec3(0.7, 0, 0)
 	);
+	//lightHandler->createNewLight(
+	//	LightColour(glm::vec3(1), glm::vec3(0.4f), glm::vec3(1)),
+	//	glm::vec3(-60, 10, 0)
+	//);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(1), glm::vec3(1)),
 	//	glm::vec3(-90, 20, 0)
@@ -56,30 +55,55 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	//);
 
 	//rotates BY, not TO
-	lightHandler->createNewLight(
+	spotLight1 = lightHandler->createNewLight(
 		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 10, 0), glm::vec3(1, 1, 1)),
-		glm::vec3(0, -10.0f, 0),
-		glm::vec3(0, -170, 0)
+		glm::vec3(0, 10, 20.0f),
+		glm::vec3(3, 3.14, 0)
+	);
+	spotLight2 = lightHandler->createNewLight(
+		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(10, 0, 0), glm::vec3(1, 1, 1)),
+		glm::vec3(10, 10, 20.0f),
+		glm::vec3(3, -3, 0)
+	);
+	spotLight3 = lightHandler->createNewLight(
+		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
+		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 10), glm::vec3(1, 1, 1)),
+		glm::vec3(-10, 10, 20.0f),
+		glm::vec3(3, 3, 0)
 	);
 	//testLight = lightHandler->createNewLight(
 	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)),
-	//	glm::vec3(0, 0.0f, 0),
+	//	glm::vec3(0, 7.0f, 5),
 	//	glm::vec3(0, 0, 0)
 	//);
 
-	testLight = lightHandler->createNewLight(
-		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(15, 0, 0), glm::vec3(1, 1, 1)),
-		glm::vec3(0, 0.0f, 0)
-	);
+	//testLight = lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(10, 0, 0), glm::vec3(1, 1, 1)),
+	//	glm::vec3(0, 0.0f, -120)
+	//);
 
-	lightHandler->createNewLight(
-		PointLightData(1, 0.014f, 0.0007f),
-		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 20), glm::vec3(1, 1, 1)),
-		glm::vec3(-5.0f, 0.0f, 0)
-	);
+	//pointLight1 = lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 10), glm::vec3(1, 1, 1)),
+	//	glm::vec3(-10, 5, 20.0f)
+	//);
+	//pointLight1->active = false;
+	//pointLight2 = lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 10, 0), glm::vec3(1, 1, 1)),
+	//	glm::vec3(0, 5, 20.0f)
+	//);
+	//pointLight2->active = false;
+	//pointLight3 = lightHandler->createNewLight(
+	//	PointLightData(1, 0.014f, 0.0007f),
+	//	LightColour(glm::vec3(1, 1, 1), glm::vec3(10, 0, 0), glm::vec3(1, 1, 1)),
+	//	glm::vec3(10, 5, 20.0f)
+	//);
+	//pointLight3->active = false;
 
 	debugHelper = debug;
 	ModelHandler* modelHandler = new ModelHandler();
@@ -130,6 +154,23 @@ Game::Game(string levelsFile, DebugHelper* debug)
 		}
 		this->debugHelper->WriteToConsole(temp);
 	}));
+
+	debugHelper->RunCommand("autoRotate OTTO");
+
+	keyEvent->subscribeToEvent("rotYawL-", [this]() { this->testLight->yaw(-0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotYawL+", [this]() { this->testLight->yaw(0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotPitL-", [this]() { this->testLight->pitch(-0.01); testLight->CalculateDirection(); });
+	keyEvent->subscribeToEvent("rotPitL+", [this]() { this->testLight->pitch(0.01); testLight->CalculateDirection(); });
+
+	keyEvent->subscribeToEvent("switchLights", [this]() { 
+		spotLight1->active = !spotLight1->active;
+		spotLight2->active = !spotLight2->active;
+		spotLight3->active = !spotLight3->active;
+
+		pointLight1->active = !pointLight1->active;
+		pointLight2->active = !pointLight2->active;
+		pointLight3->active = !pointLight3->active;
+	});
 }
 
 void Game::init(InputHandler* iH)
@@ -230,10 +271,6 @@ void Game::update(float dt)
 	{
 		it->second->updateAllComponents(dt);
 	}
-	keyEvent->subscribeToEvent("rotYawL-", [this]() { this->testLight->yaw(-0.01); testLight->CalculateDirection(); });
-	keyEvent->subscribeToEvent("rotYawL+", [this]() { this->testLight->yaw(0.01); testLight->CalculateDirection(); });
-	keyEvent->subscribeToEvent("rotPitL-", [this]() { this->testLight->pitch(-0.01); testLight->CalculateDirection(); });
-	keyEvent->subscribeToEvent("rotPitL+", [this]() { this->testLight->pitch(0.01); testLight->CalculateDirection(); });
 }
 
 void Game::render()
@@ -253,8 +290,10 @@ void Game::render()
 
 	std::vector<Light*> gameLights = lightHandler->getLights();
 	for (Light* light : gameLights) {
-		m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
-		light->CalculateDirection();
+		if (light->active) {
+			m_engineInterfacePtr->calculateLight(light, lightHandler->getDirectionalLightCount(), lightHandler->getPointLightCount(), lightHandler->getSpotLightCount());
+			light->CalculateDirection();
+		}
 	}
 
 	std::map<std::string, GameObject*>::iterator it;

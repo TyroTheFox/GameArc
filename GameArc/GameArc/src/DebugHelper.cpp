@@ -87,3 +87,13 @@ void DebugHelper::WriteErrorToConsole(std::string message)
 void DebugHelper::AddConsoleCommand(std::string commandName, TextParser::InterpFunc f) {
 	textParser->AddToken(commandName, f);
 }
+
+void DebugHelper::RunCommand(std::string commandName)
+{
+	if (textParser->ParseToken(commandName)) {
+		WriteToConsole(commandName);
+	}
+	else {
+		WriteToConsole("Command '" + commandName + "' Not Recognised");
+	}
+}

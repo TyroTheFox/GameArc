@@ -52,6 +52,12 @@ public:
 	///Main current camera among objects in a scene
 	Camera* m_MainCamera;
 	Light* testLight;
+	Light* spotLight1;
+	Light* spotLight2;
+	Light* spotLight3;
+	Light* pointLight1;
+	Light* pointLight2;
+	Light* pointLight3;
 	///Constructor
 	Game();
 	///Constructor

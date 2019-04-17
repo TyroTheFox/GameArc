@@ -194,6 +194,9 @@
     <ClInclude Include="Engine\HDRRenderTarget.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\ShadowRenderTarget.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\TextWriter.frag">

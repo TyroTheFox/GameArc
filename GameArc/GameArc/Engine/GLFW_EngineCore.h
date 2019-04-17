@@ -18,6 +18,7 @@
 // GL includes
 #include "Shader.h"
 #include "HDRRenderTarget.h"
+#include "ShadowRenderTarget.h"
 // FreeType
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -85,6 +86,7 @@ private:
 
 	//Render Target for HDR
 	HDRRenderTarget* hdrTarget;
+	ShadowRenderTarget* shadowTarget;
 
 	///Shadow Map FBO
 	float near_plane = 1.0f, far_plane = 1000.0f;

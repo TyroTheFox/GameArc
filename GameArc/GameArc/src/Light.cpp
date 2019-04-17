@@ -2,6 +2,7 @@
 
 Light::Light()
 {
+	active = true;
 	lightType = LightType::DIRECTIONAL;
 	lightColour = LightColour();
 	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -11,6 +12,7 @@ Light::Light()
 
 Light::Light(LightColour lC)
 {
+	active = true;
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
 	m_position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -20,6 +22,7 @@ Light::Light(LightColour lC)
 
 Light::Light(LightColour lC, glm::vec3 o)
 {
+	active = true;
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
@@ -32,6 +35,7 @@ Light::Light(LightColour lC, glm::vec3 o)
 
 Light::Light(LightColour lC, glm::vec3 p, glm::vec3 o)
 {
+	active = true;
 	lightType = LightType::DIRECTIONAL;
 	lightColour = lC;
 	m_orientation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
@@ -44,6 +48,7 @@ Light::Light(LightColour lC, glm::vec3 p, glm::vec3 o)
 
 Light::Light(PointLightData pLD, LightColour lC)
 {
+	active = true;
 	lightType = LightType::POINT;
 	lightColour = lC;
 	pointLightData = pLD;
@@ -54,6 +59,7 @@ Light::Light(PointLightData pLD, LightColour lC)
 
 Light::Light(PointLightData pLD, LightColour lC, glm::vec3 p)
 {
+	active = true;
 	lightType = LightType::POINT;
 	lightColour = lC;
 	pointLightData = pLD;
@@ -64,6 +70,7 @@ Light::Light(PointLightData pLD, LightColour lC, glm::vec3 p)
 
 Light::Light(SpotLightData sLD, LightColour lC)
 {
+	active = true;
 	lightType = LightType::SPOT;
 	lightColour = lC;
 	spotLightData = sLD;
@@ -74,6 +81,7 @@ Light::Light(SpotLightData sLD, LightColour lC)
 
 Light::Light(SpotLightData sLD, LightColour lC, glm::vec3 p)
 {
+	active = true;
 	lightType = LightType::SPOT;
 	lightColour = lC;
 	spotLightData = sLD;
@@ -84,6 +92,7 @@ Light::Light(SpotLightData sLD, LightColour lC, glm::vec3 p)
 
 Light::Light(SpotLightData sLD, LightColour lC, glm::vec3 p, glm::vec3 o)
 {
+	active = true;
 	lightType = LightType::SPOT;
 	lightColour = lC;
 	spotLightData = sLD;
