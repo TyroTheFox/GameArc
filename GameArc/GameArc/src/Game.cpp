@@ -154,6 +154,31 @@ Game::Game(string levelsFile, DebugHelper* debug)
 		}
 		this->debugHelper->WriteToConsole(temp);
 	}));
+	debugHelper->AddConsoleCommand("HDR", TextParser::InterpFunc([this](std::vector<std::string> s) { 
+		if (s.size() <= 0) { this->debugHelper->WriteErrorToConsole("Missing value"); return; }
+		if (s.at(0) == "true") {
+			this->m_engineInterfacePtr->getDisplayedRenderTarget()->SetHDR(true);
+		}
+		if (s.at(0) == "false") {
+			this->m_engineInterfacePtr->getDisplayedRenderTarget()->SetHDR(false);
+		}
+		if (s.at(0) != "true" && s.at(0) != "false") {
+			this->debugHelper->WriteErrorToConsole("Incorrect Syntax, true or false only"); return;
+		}
+	}));
+
+	debugHelper->AddConsoleCommand("Bloom", TextParser::InterpFunc([this](std::vector<std::string> s) {
+		if (s.size() <= 0) { this->debugHelper->WriteErrorToConsole("Missing value"); return; }
+		if (s.at(0) == "true") {
+			this->m_engineInterfacePtr->getDisplayedRenderTarget()->SetBloom(true);
+		}
+		if (s.at(0) == "false") {
+			this->m_engineInterfacePtr->getDisplayedRenderTarget()->SetBloom(false);
+		}
+		if (s.at(0) != "true" && s.at(0) != "false") {
+			this->debugHelper->WriteErrorToConsole("Incorrect Syntax, true or false only"); return;
+		}
+	}));
 
 	debugHelper->RunCommand("autoRotate OTTO");
 
@@ -161,6 +186,12 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	keyEvent->subscribeToEvent("rotYawL+", [this]() { this->testLight->yaw(0.01); testLight->CalculateDirection(); });
 	keyEvent->subscribeToEvent("rotPitL-", [this]() { this->testLight->pitch(-0.01); testLight->CalculateDirection(); });
 	keyEvent->subscribeToEvent("rotPitL+", [this]() { this->testLight->pitch(0.01); testLight->CalculateDirection(); });
+
+	keyEvent->subscribeToEvent("expo+", [this]() { this->m_engineInterfacePtr->getDisplayedRenderTarget()->exposure += 0.1f; });
+	keyEvent->subscribeToEvent("expo-", [this]() { this->m_engineInterfacePtr->getDisplayedRenderTarget()->exposure -= 0.1f; });
+
+	keyEvent->subscribeToEvent("gamma-", [this]() { this->m_engineInterfacePtr->getDisplayedRenderTarget()->gamma -= 0.1f; });
+	keyEvent->subscribeToEvent("gamma+", [this]() { this->m_engineInterfacePtr->getDisplayedRenderTarget()->gamma += 0.1f; });
 
 	keyEvent->subscribeToEvent("switchLights", [this]() { 
 		spotLight1->active = !spotLight1->active;
@@ -271,6 +302,7 @@ void Game::update(float dt)
 	{
 		it->second->updateAllComponents(dt);
 	}
+	testLight->yaw(0.001f);
 }
 
 void Game::render()

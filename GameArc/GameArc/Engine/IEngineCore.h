@@ -6,6 +6,7 @@
 #include "TextWriter.h"
 #include "Light.h"
 #include <glm/mat4x4.hpp>
+#include "HDRRenderTarget.h"
 
 ///Forward Declared
 class Camera;
@@ -16,6 +17,8 @@ class Model;
 ///Forward Declared
 struct Character;
 class Light;
+class HDRRenderTarget;
+
 /** \class IEngineCore
 * \file IEngineCore.h
 * \brief A basis template for engine cores
@@ -45,4 +48,5 @@ public:
 	///Used for drawing 2D rectandles to the screen
 	virtual void draw2DRect(glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, GLuint quadVAO) = 0;
 	virtual void calculateShadows(Game* game) = 0;
+	virtual HDRRenderTarget* getDisplayedRenderTarget() = 0;
 };

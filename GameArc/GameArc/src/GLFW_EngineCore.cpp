@@ -217,6 +217,14 @@ void GLFW_EngineCore::windowResizeCallbackEvent(GLFWwindow* window, int width, i
 	m_screenWidth = width;
 	m_screenHeight = height;
 	glViewport(0, 0, width, height);
+	glfwSwapBuffers(window);
+}
+
+void GLFW_EngineCore::windowMaximiseCallbackEvent(GLFWwindow * window, int maximized)
+{
+	glfwGetWindowSize(window, &m_screenWidth, &m_screenHeight);
+	glViewport(0, 0, m_screenWidth, m_screenHeight);
+	glfwSwapBuffers(window);
 }
 
 void GLFW_EngineCore::drawModel(Model* model, const glm::mat4& modelMatrix)
@@ -438,6 +446,11 @@ void GLFW_EngineCore::DisplayFramebufferTexture(GLuint textureID)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
 	glUseProgram(0);
+}
+
+HDRRenderTarget* GLFW_EngineCore::getDisplayedRenderTarget()
+{
+	return hdrTarget;
 }
 
 void GLFW_EngineCore::drawText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color,

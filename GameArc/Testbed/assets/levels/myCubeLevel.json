@@ -14,8 +14,7 @@
       "components": [
         {
           "class": "TransformComponent",
-          "orientation": [ 1, 0, 0, 0 ],
-          "position": [ 0, 0, -30 ],
+          "position": [ 0, 10, 60 ],
           "scale": [ 1, 1, 1 ]
         },
         {
@@ -23,7 +22,8 @@
           "fileName": "assets/models/testObj.obj"
         },
         {
-          "class": "PlayerComponent"
+          "class": "PlayerComponent",
+          "defaultRotation": [30, 0, 0]
         }
       ],
       "visible": true,

@@ -109,7 +109,9 @@ private:
 	static void characterCallbackEvent(GLFWwindow * window, unsigned int codepoint);
 	///Called when window is resized
 	static void windowResizeCallbackEvent(GLFWwindow* window, int width, int height); 
+	static void windowMaximiseCallbackEvent(GLFWwindow* window, int maximized);
 	void DisplayFramebufferTexture(GLuint textureID);
+	HDRRenderTarget* getDisplayedRenderTarget() override;
 	///Sets default shaders up
 	void setDefaultShaders();
 	///Initialises internal cube model

@@ -128,6 +128,10 @@ public:
 	///Builds object from JSON, though isn't necessary right now
 	void BuildFromJson(const Json::Value& componentJSON) override {
 		try {
+			if (componentJSON.isMember("defaultRotation")) {
+				const Json::Value& rotation = componentJSON["defaultRotation"];
+				camera->GetCamera()->m_orientation = glm::quat(glm::vec3(rotation[0].asFloat(), rotation[1].asFloat(), rotation[2].asFloat()));
+			}
 		}
 		catch (...) {
 			std::cout << "Exception thrown in parsing BuildFromJson in PlayerComponent." << std::endl;

@@ -47,6 +47,22 @@
     {
       "Key": "J",
       "EventName": "rotPitL+"
+    },
+    {
+      "Key": "G",
+      "EventName": "gamma-"
+    },
+    {
+      "Key": "T",
+      "EventName": "gamma+"
+    },
+    {
+      "Key": "F",
+      "EventName": "expo-"
+    },
+    {
+      "Key": "R",
+      "EventName": "expo+"
     }
   ]
 }
