@@ -92,7 +92,7 @@ bool GLFW_EngineCore::initWindow(int width, int height, std::string windowName)
 	shadowTarget = new ShadowRenderTarget(
 		m_screenWidth, m_screenHeight,
 		SHADOW_WIDTH, SHADOW_HEIGHT,
-		0.1f, 1000,
+		0.00001f, 2000,
 		new Shader("assets/shaders/simpleShadow.vert", "assets/shaders/simpleShadow.frag"),
 		new Shader("assets/shaders/pointShadow.vert", "assets/shaders/pointShadow.frag", "assets/shaders/pointShadow.geom")
 	);

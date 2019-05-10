@@ -10,8 +10,8 @@ Game::Game(string levelsFile, DebugHelper* debug)
 {
 	lightHandler = new LightHandler();
 	testLight = lightHandler->createNewLight(
-		LightColour(glm::vec3(1), glm::vec3(0.5), glm::vec3(1)),
-		glm::vec3(0.7, 0, 0)
+		LightColour(glm::vec3(1), glm::vec3(0.3f), glm::vec3(1)),
+		glm::vec3(3.006, 0.812, -2.266)
 	);
 	//lightHandler->createNewLight(
 	//	LightColour(glm::vec3(1), glm::vec3(0.4f), glm::vec3(1)),
@@ -58,20 +58,20 @@ Game::Game(string levelsFile, DebugHelper* debug)
 	spotLight1 = lightHandler->createNewLight(
 		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 10, 0), glm::vec3(1, 1, 1)),
-		glm::vec3(0, 10, 20.0f),
-		glm::vec3(3, 3.14, 0)
+		glm::vec3(0, 10, 15.0f),
+		glm::vec3(0, 3.142, 3.142f)
 	);
 	spotLight2 = lightHandler->createNewLight(
 		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 		LightColour(glm::vec3(1, 1, 1), glm::vec3(10, 0, 0), glm::vec3(1, 1, 1)),
-		glm::vec3(10, 10, 20.0f),
-		glm::vec3(3, -3, 0)
+		glm::vec3(10, 10, 15.0f),
+		glm::vec3(0, 2.666, 3.142f)
 	);
 	spotLight3 = lightHandler->createNewLight(
 		SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),
 		LightColour(glm::vec3(1, 1, 1), glm::vec3(0, 0, 10), glm::vec3(1, 1, 1)),
-		glm::vec3(-10, 10, 20.0f),
-		glm::vec3(3, 3, 0)
+		glm::vec3(-10, 10, 15.0f),
+		glm::vec3(0, -2.666, 3.142f)
 	);
 	//testLight = lightHandler->createNewLight(
 	//	SpotLightData(1, 0.014f, 0.0007f, glm::cos(glm::radians(50.0f)), glm::cos(glm::radians(55.0f))),

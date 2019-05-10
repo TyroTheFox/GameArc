@@ -152,7 +152,7 @@ int Light::GetID()
 
 void Light::CalculateDirection()
 {
-	matrix = glm::translate(glm::mat4_cast(m_orientation), m_position);
+	matrix = glm::translate(glm::mat4_cast(inverse(m_orientation * glm::quat(0.0f, 0.0f, 1.0f, 0.0f))), -m_position);
 	m_right = glm::vec3(matrix[0].x, matrix[1].x, matrix[2].x);
 	m_direction = glm::vec3(matrix[0].z, matrix[1].z, matrix[2].z);
 	m_up = glm::vec3(matrix[0].y, matrix[1].y, matrix[2].y);
@@ -160,7 +160,7 @@ void Light::CalculateDirection()
 
 glm::mat4 Light::GetMatrix()
 {
-	return glm::translate(glm::mat4_cast(m_orientation), m_position);
+	return glm::translate(glm::mat4_cast(inverse(m_orientation * glm::quat(0.0f, 0.0f, 1.0f, 0.0f))), -m_position);
 }
 
 void Light::translate(const glm::vec3 & v)
